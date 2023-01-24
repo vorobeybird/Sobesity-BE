@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: ./etc/backend/Dockerfile
+      target: dev
+    env_file:
+      - ./etc/backend/env/dev.env
+    depends_on:
+      - db
+    #volumes:
+    #  - ./src/:/home/sobesity/code
+    ports:
+      - 5150:5150
+
+
+
+  db:
+    image: postgres:15.1
+    volumes:
+      - ./etc/db/entypoints:/docker-entrypoint-initdb.d
+      - pgdata:/var/lib/postgresql/data
+    env_file:
+      - ./etc/db/env/dev.env
+    ports:
+      - 5454:5432
+
+  migrator:
+    build:
+      context: ./
+      dockerfile: ./etc/backend/Dockerfile
+      target: migrator
+    env_file:
+      - ./etc/backend/env/dev.env
+    depends_on:
+      - db
+    volumes:
+      - ./src/:/home/sobesity/
+
+
+volumes:
+  pgdata:
