@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
 
-echo activate venv
-source ./.venv/bin/activate
-echo activated
+source /code/.venv/bin/activate
 
-exec ./wait-for-it.sh $POSTGRES_APP_HOST:$POSTGRES_APP_PORT -- "$@"
+exec /entr/wait-for-it.sh $POSTGRES_HOST:$POSTGRES_PORT -- "$@"

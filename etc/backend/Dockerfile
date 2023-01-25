@@ -1,12 +1,14 @@
 FROM python:3.11-buster as dev
 
 ARG APP_USER=sobesity\
-    APP_GROUP=sobesity
+    APP_GROUP=sobesity\
+    CODE_FOLDER=/code
 
 ENV YOUR_ENV=${YOUR_ENV} \
     PYTHONFAULTHANDLER=1 \
     PYTHONUNBUFFERED=1 \
     PYTHONHASHSEED=random \
+    PYTHONPATH=$CODE_FOLDER \
     PIP_NO_CACHE_DIR=off \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
     PIP_DEFAULT_TIMEOUT=100 \
@@ -21,25 +23,30 @@ RUN groupadd $APP_GROUP && useradd -m -s /bin/bash -g $APP_GROUP $APP_USER
 
 ENV APP_HOME=/home/$APP_USER
 
+WORKDIR $CODE_FOLDER
+
 RUN chown -R $APP_USER:$APP_GROUP $APP_HOME
+RUN chown -R $APP_USER:$APP_GROUP $CODE_FOLDER
+
 USER $APP_USER
 ENV PATH="$PATH:$APP_HOME/.local/bin"
 
 RUN pip install -U pip && pip install "poetry==$POETRY_VERSION"
 
-WORKDIR /code
 
 COPY --chown=$APP_USER ./poetry.lock ./pyproject.toml ./
 RUN poetry config virtualenvs.in-project true && poetry install
 
-COPY ./etc/backend/wait-for-it.sh ./etc/backend/entrypoint.sh  ./
+COPY ./etc/backend/wait-for-it.sh ./etc/backend/entrypoint.sh  /entr/
 
-COPY src tox.ini ./
+COPY tox.ini .
 
-ENTRYPOINT ["./entrypoint.sh"]
+COPY --chown=$APP_USER ./src ./
+
+ENTRYPOINT ["/entr/entrypoint.sh"]
 
 CMD ["uwsgi", "--py-autoreload", "1", "--http", "localhost:5150", "--master", "-p", "4", "-w", "sobesity.webapp:app"]
 
 FROM dev as migrator
 
-CMD ["echo", "works fine"]
+CMD ["alembic", "upgrade", "head"]

@@ -7,27 +7,19 @@ services:
       dockerfile: ./etc/backend/Dockerfile
       target: dev
     env_file:
-      - ./etc/backend/env/dev.env
+      - ./etc/backend/env/test.env
     depends_on:
       - db
     volumes:
       - ./src/sobesity:/code/sobesity
-      - ./pyproject.toml:/code/pyproject.toml
-      - ./poetry.lock:/code/poetry.lock
-    ports:
-      - 5150:5150
-
-
+      - ./src/tests:/code/tests
 
   db:
     image: postgres:14.6
     volumes:
       - ./etc/db/entypoints:/docker-entrypoint-initdb.d
-      - pgdata:/var/lib/postgresql/data
     env_file:
-      - ./etc/db/env/dev.env
-    ports:
-      - 5454:5432
+      - ./etc/db/env/test.env
 
   migrator:
     build:
@@ -35,12 +27,9 @@ services:
       dockerfile: ./etc/backend/Dockerfile
       target: migrator
     env_file:
-      - ./etc/backend/env/dev.env
+      - ./etc/backend/env/test.env
     depends_on:
       - db
     volumes:
       - ./src/alembic/:/code/alembic/
 
-
-volumes:
-  pgdata:

@@ -25,7 +25,7 @@ class DatabaseSettings(BaseSettings):
         )
 
     class Config:
-        env_prefix = "POSTGRES_APP_"
+        env_prefix = "POSTGRES_"
 
 
 class Settings(BaseSettings):

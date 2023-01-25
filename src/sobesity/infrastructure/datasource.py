@@ -6,10 +6,15 @@ from sobesity.config import Settings
 
 metadata = MetaData()
 
+
 engine = create_engine(Settings().db.url)
+
+
 
 
 @contextmanager
 def get_connection():
-    with engine.begin() as conn:
-        yield conn
+    with engine.connect() as connection:
+        yield connection
+
+datasource = lambda : get_connection

@@ -1,5 +1,6 @@
-PROJECT_CODE_PATH=/home/room_booking/room_booking
+PROJECT_CODE_PATH=/code
 DOCKER_COMPOSE=COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose
+TEST_DOCKER_COMPOSE=${DOCKER_COMPOSE} -f docker-compose.test.yml
 
 
 .PHONY: build
@@ -12,11 +13,11 @@ db-bash:
 
 .PHONY: db-shell
 db-shell:
-	${DOCKER_COMPOSE} exec db psql -U room_booking -d room_booking_db
+	${DOCKER_COMPOSE} exec db psql -U sobesity -d sobesity_db
 
 .PHONY: app-bash
 app-bash:
-	${DOCKER_COMPOSE} exec app bash
+	${DOCKER_COMPOSE} run --rm app bash
 
 .PHONY: format
 format:
@@ -40,11 +41,11 @@ flake8:
 
 .PHONY: migrate
 migrate:
-	${DOCKER_COMPOSE} run --rm migrator
+	${DOCKER_COMPOSE} up migrator
 
 .PHONY: create-migration
 create-migration:
-	${DOCKER_COMPOSE} run --rm migrator 
+	${DOCKER_COMPOSE} run --rm migrator alembic revision -m "$(message)"
 
 .PHONY: lint
 lint: flake8 import-check format-check
@@ -55,6 +56,16 @@ format-all: format fix-imports
 .PHONY: run
 run:
 	${DOCKER_COMPOSE} up -d
-	make migrate
 
+.PHONY: build-test
+build-test:
+	${TEST_DOCKER_COMPOSE} up -d --build
+
+.PHONY: test-integration
+test-integration:
+	${TEST_DOCKER_COMPOSE} run --rm app pytest -s tests/
+
+.PHONY: down-test
+down-test:
+	${TEST_DOCKER_COMPOSE} down -v
 

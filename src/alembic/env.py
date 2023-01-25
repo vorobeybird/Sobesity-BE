@@ -5,6 +5,7 @@ from sqlalchemy import pool
 from alembic import context
 
 from sobesity.config import Settings
+from sobesity.infrastructure.datasource import engine
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -26,6 +27,7 @@ target_metadata = None
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
+DB_URL = Settings().db.url
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
@@ -39,9 +41,8 @@ def run_migrations_offline() -> None:
     script output.
 
     """
-    url = Settings().db.url
     context.configure(
-        url=url,
+        url=DB_URL,
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
@@ -58,12 +59,7 @@ def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
-    connectable = engine_from_config(
-        config.get_section(config.config_ini_section),
-        prefix="sqlalchemy.",
-        poolclass=pool.NullPool,
-    )
-
+    connectable = engine
     with connectable.connect() as connection:
         context.configure(
             connection=connection, target_metadata=target_metadata

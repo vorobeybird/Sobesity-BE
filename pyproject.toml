@@ -10,12 +10,15 @@ python = "^3.11"
 Flask = "^2.2.2"
 pydantic = "^1.10.4"
 dependency-injector = "^4.41.0"
-sqlalchemy = "^1.4.46"
+sqlalchemy = "2.0.0rc3"
 uwsgi = "^2.0.21"
+flask-openapi3 = "^2.2.2"
+psycopg2 = "^2.9.5"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.2.1"
 alembic = "^1.9.2"
+ipython = "^8.8.0"
 
 [build-system]
 requires = ["poetry-core"]
