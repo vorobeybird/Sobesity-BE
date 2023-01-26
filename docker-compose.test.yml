@@ -20,6 +20,8 @@ services:
       - ./etc/db/entypoints:/docker-entrypoint-initdb.d
     env_file:
       - ./etc/db/env/test.env
+    ports:
+      - 7777:5432
 
   migrator:
     build:

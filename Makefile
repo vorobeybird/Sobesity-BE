@@ -1,6 +1,6 @@
 PROJECT_CODE_PATH=/code
 DOCKER_COMPOSE=COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose
-TEST_DOCKER_COMPOSE=${DOCKER_COMPOSE} -f docker-compose.test.yml
+TEST_DOCKER_COMPOSE=${DOCKER_COMPOSE} -p test_sobesity -f docker-compose.test.yml
 
 
 .PHONY: build
@@ -59,13 +59,24 @@ run:
 
 .PHONY: build-test
 build-test:
-	${TEST_DOCKER_COMPOSE} up -d --build
+	${TEST_DOCKER_COMPOSE} build
+
+.PHONY: test-unit
+test-unit:
+	${TEST_DOCKER_COMPOSE} run --rm app pytest -s tests/unit
 
 .PHONY: test-integration
 test-integration:
-	${TEST_DOCKER_COMPOSE} run --rm app pytest -s tests/
+	${TEST_DOCKER_COMPOSE} run --rm app pytest -s tests/intergration/
 
-.PHONY: down-test
-down-test:
+.PHONY: up-test
+up-test:
+	${TEST_DOCKER_COMPOSE} up -d
+
+.PHONY: reset-test
+reset-test:
 	${TEST_DOCKER_COMPOSE} down -v
 
+
+.PHONY: tests
+tests: build-test up-test test-unit test-integration

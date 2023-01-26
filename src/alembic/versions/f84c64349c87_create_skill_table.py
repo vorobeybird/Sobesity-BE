@@ -22,7 +22,7 @@ def upgrade() -> None:
     op.create_table(
         "skill",
         sa.Column('skill_id', sa.Integer, skill_id_seq, primary_key=True,  server_default=sa.text(f"nextval('{skill_id_seq.name}'::regclass)")),
-        sa.Column('name', sa.String(50), nullable=False),
+        sa.Column('name', sa.String(50), nullable=False, unique=True),
     )
 
 

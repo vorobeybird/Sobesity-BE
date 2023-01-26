@@ -12,7 +12,7 @@ class ISkillRepository(ABC):
         pass
 
     @abstractclassmethod
-    def create(self, skill: SkillEntity) -> None:
+    def batch_create(self, skills: list[SkillEntity]) -> None:
         pass
 
     @abstractclassmethod
@@ -22,5 +22,5 @@ class ISkillRepository(ABC):
         pass
 
     @abstractclassmethod
-    def delete(self, skill_id: SkillId) -> None:
+    def delete(self, skill_ids: list[SkillId]) -> None:
         pass

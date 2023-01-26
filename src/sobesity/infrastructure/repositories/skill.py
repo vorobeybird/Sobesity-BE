@@ -1,11 +1,19 @@
+import logging
+from dataclasses import asdict
 from typing import Optional
 
-from sqlalchemy import insert, select
+from psycopg2.errors import UniqueViolation
+from sqlalchemy import delete, insert, select
+from sqlalchemy.exc import IntegrityError
 
 from sobesity.domain.entities import SkillEntity, SkillFilterEnitity, SkillId
+from sobesity.domain.exceptions import SkillNameUniqueViolation
 from sobesity.domain.interfaces import ISkillRepository
+from sobesity.infrastructure.constants import ModelFields
 from sobesity.infrastructure.models import skill_table
 from sobesity.infrastructure.repositories.mapper import build_skill_entity
+
+logger = logging.getLogger(__name__)
 
 
 class SkillRepository(ISkillRepository):
@@ -32,15 +40,29 @@ class SkillRepository(ISkillRepository):
 
         return [build_skill_entity(cur) for cur in result]
 
-    def create(self, skill: SkillEntity) -> None:
-        query = insert(skill_table).values(name=skill.name)
+    def batch_create(self, skills: list[SkillEntity]) -> None:
+        values = []
+        for skill in skills:
+            skill_value = asdict(skill)
+            skill_value.pop(ModelFields.SKILL_ID)
+            values.append(skill_value)
+
+        query = insert(skill_table).values(values)
         with self.datasource() as conn:
-            conn.execute(query)
+            try:
+                conn.execute(query)
+            except IntegrityError as exc:
+                if isinstance(exc.orig, UniqueViolation):
+                    logger.exception(exc)
+                    raise SkillNameUniqueViolation()
 
     def update(
         self, old_skill: SkillEntity, update: SkillFilterEnitity
     ) -> list[SkillId]:
-        pass
+        update(skill_table)
 
-    def delete(self, skill_id: SkillId) -> None:
-        pass
+    def delete(self, skill_ids: list[SkillId]) -> None:
+        query = delete(skill_table).where(skill_table.c.skill_id.in_(skill_ids))
+
+        with self.datasource() as conn:
+            conn.execute(query)
