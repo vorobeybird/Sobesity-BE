@@ -1,9 +1,6 @@
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
 from alembic import context
-
 from sobesity.config import Settings
 from sobesity.infrastructure.datasource import engine
 
@@ -28,6 +25,7 @@ target_metadata = None
 # ... etc.
 
 DB_URL = Settings().db.url
+
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
@@ -61,9 +59,7 @@ def run_migrations_online() -> None:
     """
     connectable = engine
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()

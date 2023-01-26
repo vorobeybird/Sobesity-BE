@@ -1,5 +1,6 @@
 from dependency_injector import containers, providers
 
+from sobesity.domain.services import SkillService
 from sobesity.infrastructure.datasource import datasource
 from sobesity.infrastructure.repositories import SkillRepository
 
@@ -15,6 +16,7 @@ class Repositories(containers.DeclarativeContainer):
 
 class Services(containers.DeclarativeContainer):
     repositories = providers.DependenciesContainer()
+    skill_service = providers.Factory(SkillService, repositories.skill_repository)
 
 
 class Application(containers.DeclarativeContainer):
