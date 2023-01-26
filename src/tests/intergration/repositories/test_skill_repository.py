@@ -1,5 +1,5 @@
 import pytest
-from sobesity.domain.entities.skill import SkillEntity, SkillId
+from sobesity.domain.entities.skill import SkillEntity, SkillFilterEnitity, SkillId
 from sobesity.domain.exceptions import SkillNameUniqueViolation
 
 
@@ -32,7 +32,25 @@ def test_batch_create__only_unique__raise_error(skill_repository):
     with pytest.raises(SkillNameUniqueViolation):
         skill_repository.batch_create(skills_to_create)
 
-def test_delete__row_not_exists__raise_error(skill_repository):
+def test_update__particular_rows_udated(skill_repository):
+    skills_to_create = [
+            SkillEntity(skill_id=None, name='JavaScript'),
+        ]
+    skill_repository.batch_create(skills_to_create)
+    skill_before = skill_repository.get_list()[0]
+
+
+    to_set = SkillFilterEnitity(name="Python")
+    where = [SkillFilterEnitity(skill_id=skill_before.skill_id)]
+    updated_ids = skill_repository.update(to_set, where)
+
+    skill_after = skill_repository.get_list()[0]
+
+    assert skill_before.skill_id == skill_after.skill_id == updated_ids[0]
+    assert skill_after.name == to_set.name
+
+
+def test_delete__particular_rows_deleted(skill_repository):
     skills_to_create = [
             SkillEntity(skill_id=None, name='JavaScript'),
             SkillEntity(skill_id=None, name='Python'),
