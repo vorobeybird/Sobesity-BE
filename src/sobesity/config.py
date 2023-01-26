@@ -30,4 +30,3 @@ class DatabaseSettings(BaseSettings):
 
 class Settings(BaseSettings):
     db: DatabaseSettings = DatabaseSettings()
-

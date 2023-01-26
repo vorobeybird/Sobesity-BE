@@ -4,11 +4,11 @@ from typing import Optional
 from sobesity.domain.entities import SkillEntity, SkillFilterEnitity, SkillId
 
 
-
-
 class ISkillRepository(ABC):
     @abstractclassmethod
-    def get_list(self, skill_filter: Optional[SkillFilterEnitity] = None) -> list[SkillEntity]:
+    def get_list(
+        self, skill_filter: Optional[SkillFilterEnitity] = None
+    ) -> list[SkillEntity]:
         pass
 
     @abstractclassmethod
@@ -16,7 +16,9 @@ class ISkillRepository(ABC):
         pass
 
     @abstractclassmethod
-    def update(self, old_skill: SkillEntity, update: SkillFilterEnitity) -> list[SkillId]:
+    def update(
+        self, old_skill: SkillEntity, update: SkillFilterEnitity
+    ) -> list[SkillId]:
         pass
 
     @abstractclassmethod

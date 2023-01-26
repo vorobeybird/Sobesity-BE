@@ -1,14 +1,17 @@
 from dependency_injector import containers, providers
-from sobesity.infrastructure.repositories import SkillRepository
 
 from sobesity.infrastructure.datasource import datasource
+from sobesity.infrastructure.repositories import SkillRepository
+
 
 class Resource(containers.DeclarativeContainer):
     datasource = providers.Callable(datasource)
 
+
 class Repositories(containers.DeclarativeContainer):
     resources = providers.DependenciesContainer()
     skill_repository = providers.Factory(SkillRepository, resources.datasource)
+
 
 class Services(containers.DeclarativeContainer):
     repositories = providers.DependenciesContainer()

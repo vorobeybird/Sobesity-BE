@@ -1,7 +1,8 @@
-from typing import Optional, NewType
 from dataclasses import dataclass
+from typing import NewType, Optional
 
-SkillId = NewType('SkillId', int)
+SkillId = NewType("SkillId", int)
+
 
 @dataclass
 class SkillEntity:
