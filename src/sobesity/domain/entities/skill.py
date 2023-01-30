@@ -12,5 +12,5 @@ class SkillEntity:
 
 @dataclass
 class SkillFilterEnitity:
-    skill_id: Optional[list[SkillId]] = None
-    name: Optional[list[str]] = None
+    skill_ids: Optional[list[SkillId]] = None
+    names: Optional[list[str]] = None

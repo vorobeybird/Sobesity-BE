@@ -20,20 +20,11 @@ class SkillRepository(ISkillRepository):
     def __init__(self, datasource) -> None:
         self.datasource = datasource
 
-    def _patch_query(self, query, skill_filters: list[SkillFilterEnitity]):
-        ids = []
-        names = []
-
-        for skill_filter in skill_filters:
-            if skill_filter.skill_id is not None:
-                ids.append(skill_filter.skill_id)
-            if skill_filter.name is not None:
-                names.append(skill_filter.name)
-
-        if ids:
-            query = query.where(skill_table.c.skill_id.in_(ids))
-        if names:
-            query = query.where(skill_table.c.name.in_(names))
+    def _patch_query(self, query, skill_filter: SkillFilterEnitity):
+        if skill_filter.skill_ids is not None:
+            query = query.where(skill_table.c.skill_id.in_(skill_filter.skill_ids))
+        if skill_filter.names is not None:
+            query = query.where(skill_table.c.name.in_(skill_filter.names))
         return query
 
     def get_list(
@@ -42,7 +33,7 @@ class SkillRepository(ISkillRepository):
         query = select(skill_table)
 
         if skill_filter is not None:
-            query = self._patch_query(query, [skill_filter])
+            query = self._patch_query(query, skill_filter)
 
         with self.datasource() as conn:
             result = conn.execute(query).fetchall()
@@ -67,8 +58,8 @@ class SkillRepository(ISkillRepository):
 
     def update(
         self,
-        to_set: SkillFilterEnitity,
-        where: list[SkillFilterEnitity],
+        to_set: SkillEntity,
+        where: SkillFilterEnitity,
     ) -> list[SkillId]:
         query = update(skill_table)
 

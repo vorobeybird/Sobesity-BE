@@ -11,12 +11,12 @@ class Resource(containers.DeclarativeContainer):
 
 class Repositories(containers.DeclarativeContainer):
     resources = providers.DependenciesContainer()
-    skill_repository = providers.Factory(SkillRepository, resources.datasource)
+    skill = providers.Factory(SkillRepository, resources.datasource)
 
 
 class Services(containers.DeclarativeContainer):
     repositories = providers.DependenciesContainer()
-    skill_service = providers.Factory(SkillService, repositories.skill_repository)
+    skill = providers.Factory(SkillService, repositories.skill)
 
 
 class Application(containers.DeclarativeContainer):

@@ -7,6 +7,11 @@ TEST_DOCKER_COMPOSE=${DOCKER_COMPOSE} -p test_sobesity -f docker-compose.test.ym
 build:
 	${DOCKER_COMPOSE} build
 
+.PHONY: debug-app
+debug-app:
+	${DOCKER_COMPOSE} stop app
+	${DOCKER_COMPOSE} run --rm --service-ports app
+
 .PHONY: db-bash
 db-bash:
 	${DOCKER_COMPOSE} exec db bash
@@ -77,6 +82,13 @@ up-test:
 reset-test:
 	${TEST_DOCKER_COMPOSE} down -v
 
-
 .PHONY: tests
 tests: build-test up-test test-unit test-integration
+
+.PHONY: restart-app
+restart-app:
+	${DOCKER_COMPOSE} restart app
+
+.PHONY: add-lib
+add-lib:
+	${DOCKER_COMPOSE} run --rm app poetry add ${lib}

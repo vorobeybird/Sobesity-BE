@@ -2,12 +2,12 @@ from contextlib import contextmanager
 
 import pytest
 
-from sobesity.containers import Application
+from sobesity.webapp import create_app
 
 
 @pytest.fixture
-def di():
-    return Application()
+def di(app):
+    return app.container
 
 
 @pytest.fixture(autouse=True)
@@ -21,3 +21,14 @@ def db(di):
         yield di.resources.datasource.override(rollback_conn)
 
         connection.rollback()
+
+
+@pytest.fixture
+def app():
+    app = create_app()
+    yield app
+
+
+@pytest.fixture
+def client(app):
+    return app.test_client()

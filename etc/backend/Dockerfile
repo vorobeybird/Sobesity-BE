@@ -45,7 +45,7 @@ COPY --chown=$APP_USER ./src ./
 
 ENTRYPOINT ["/entr/entrypoint.sh"]
 
-CMD ["uwsgi", "--py-autoreload", "1", "--http", "localhost:5150", "--master", "-p", "4", "-w", "sobesity.webapp:app"]
+CMD ["gunicorn", "--reload", "-b", "0.0.0.0:5150", "--timeout", "120", "sobesity.webapp:create_app"]
 
 FROM dev as migrator
 

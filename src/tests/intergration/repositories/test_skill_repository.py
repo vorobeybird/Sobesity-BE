@@ -39,8 +39,8 @@ def test_update__particular_rows_udated(skill_repository):
     skill_repository.batch_create(skills_to_create)
     skill_before = skill_repository.get_list()[0]
 
-    to_set = SkillFilterEnitity(name="Python")
-    where = [SkillFilterEnitity(skill_id=skill_before.skill_id)]
+    to_set = SkillEntity(skill_id=None, name="Python")
+    where = SkillFilterEnitity(skill_ids=[skill_before.skill_id])
     updated_ids = skill_repository.update(to_set, where)
 
     skill_after = skill_repository.get_list()[0]

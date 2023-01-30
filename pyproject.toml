@@ -11,9 +11,9 @@ Flask = "^2.2.2"
 pydantic = "^1.10.4"
 dependency-injector = "^4.41.0"
 sqlalchemy = "2.0.0rc3"
-uwsgi = "^2.0.21"
 flask-openapi3 = "^2.2.2"
 psycopg2 = "^2.9.5"
+gunicorn = "^20.1.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.2.1"
@@ -23,6 +23,7 @@ black = "^22.12.0"
 flake8 = "^6.0.0"
 autoflake = "^2.0.0"
 isort = "^5.11.4"
+mock = "^5.0.1"
 
 [build-system]
 requires = ["poetry-core"]
