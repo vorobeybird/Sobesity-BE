@@ -45,7 +45,7 @@ COPY --chown=$APP_USER ./src ./
 
 ENTRYPOINT ["/entr/entrypoint.sh"]
 
-CMD ["gunicorn", "--reload", "-b", "0.0.0.0:5150", "--timeout", "120", "sobesity.webapp:create_app"]
+CMD ["gunicorn", "--reload", "-b", "0.0.0.0:5150", "--timeout", "120", "sobesity.webapp:create_app()"]
 
 FROM dev as migrator
 
