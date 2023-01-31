@@ -6,7 +6,7 @@ To run the app:
 make run
 ```
 
-API Documentation: http://localhost:5150/openapi/
+API Documentation: <a href="http://localhost:5150/openapi/" target="_blank">http://localhost:5150/openapi/</a>
 
 ## Useful dev commands
 To build the app:
