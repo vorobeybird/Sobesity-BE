@@ -8,7 +8,7 @@ from sqlalchemy.exc import IntegrityError
 
 from sobesity.domain.entities import SkillEntity, SkillFilterEnitity, SkillId
 from sobesity.domain.exceptions import SkillNameUniqueViolation
-from sobesity.domain.interfaces import ISkillRepository
+from sobesity.domain.interfaces.repositories import ISkillRepository
 from sobesity.infrastructure.constants import ModelFields
 from sobesity.infrastructure.models import skill_table
 from sobesity.infrastructure.repositories.mapper import build_skill_entity
@@ -32,12 +32,14 @@ class SkillRepository(ISkillRepository):
     ) -> list[SkillEntity]:
         query = select(skill_table)
 
+        logger.info("Going to get skills")
         if skill_filter is not None:
             query = self._patch_query(query, skill_filter)
 
         with self.datasource() as conn:
             result = conn.execute(query).fetchall()
 
+        logger.info("Got Skills")
         return [build_skill_entity(cur) for cur in result]
 
     def batch_create(self, skills: list[SkillEntity]) -> None:

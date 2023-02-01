@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Date, Integer, Sequence, String, Table
+from sqlalchemy import Column, DateTime, Integer, Sequence, String, Table
 
 from sobesity.infrastructure.datasource import metadata
 
@@ -8,9 +8,8 @@ user_table = Table(
     metadata,
     Column("user_id", Integer, user_id_seq, primary_key=True),
     Column("nickname", String(20)),
-    Column("password", String(64)),
+    Column("hashed_password", String(64)),
     Column("salt", String(32)),
     Column("email", String),
-    Column("registered_at", Date),
-
+    Column("registered_at", DateTime),
 )
