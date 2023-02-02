@@ -4,6 +4,7 @@ from datetime import datetime
 from sqlalchemy import insert, select
 
 from sobesity.domain.entities import UserEntity, UserFilter
+from sobesity.domain.exceptions import UserNotFound
 from sobesity.domain.interfaces.repositories import IUserRepository
 from sobesity.infrastructure.constants import ModelFields
 from sobesity.infrastructure.models import user_table
@@ -37,4 +38,8 @@ class UserRepository(IUserRepository):
 
         with self._datasource() as conn:
             cursor = conn.execute(query).fetchone()
+
+        if cursor is None:
+            raise UserNotFound(user_filter)
+
         return build_user_entity(cursor)

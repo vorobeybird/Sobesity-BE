@@ -1,5 +1,3 @@
-import json
-
 from sobesity.domain.entities import SkillEntity
 
 
@@ -25,15 +23,15 @@ def test_get__has_data__return_data(client, mock_skill_repository):
 
 def test_create(client, mock_skill_repository):
     body = [{"name": "Ruby"}]
-    response = client.post("/api/skill", json=json.dumps(body))
+    response = client.post("/api/skill", json=body)
 
     assert response.status_code == 201
     assert mock_skill_repository.batch_create.called
 
 
 def test_detele(client, mock_skill_repository):
-    body = {"skill_ids": [1, 2, 3, 4]}
-    response = client.delete("/api/skill", json=json.dumps(body))
+    body = {"skillIds": [1, 2, 3, 4]}
+    response = client.delete("/api/skill", json=body)
 
     assert response.status_code == 204
     assert mock_skill_repository.delete.called
@@ -41,10 +39,10 @@ def test_detele(client, mock_skill_repository):
 
 def test_update(client, mock_skill_repository):
     skill_id = 10
-    body = {"skill_id": skill_id, "name": "Rust"}
+    body = {"skillId": skill_id, "name": "Rust"}
     expected_affected_ids = [skill_id]
     mock_skill_repository.update.return_value = expected_affected_ids
-    response = client.patch("/api/skill", json=json.dumps(body))
+    response = client.patch("/api/skill", json=body)
 
     assert response.status_code == 200
     assert mock_skill_repository.update.called

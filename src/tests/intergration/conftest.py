@@ -1,6 +1,6 @@
 import pytest
 
-from sobesity.domain.entities import CreateUserEntity
+from sobesity.domain.entities import UserFilter
 
 
 @pytest.fixture
@@ -14,9 +14,6 @@ def user_service(di):
 
 
 @pytest.fixture
-def user_for_create():
-    return CreateUserEntity(
-        nickname="someuser1",
-        email="valid@test.com",
-        password="Foo#boo2",
-    )
+def created_user(user_service, user_for_create):
+    user_service.create_user(user_for_create)
+    return user_service.get_user(UserFilter(nickname=user_for_create.nickname))

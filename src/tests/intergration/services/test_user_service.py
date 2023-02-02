@@ -21,3 +21,11 @@ def test_create_user__invalid_email__raise_error(user_service, user_for_create):
     user_for_create.email = "invalid@dom.o"
     with pytest.raises(InvalidEmail):
         user_service.create_user(user_for_create)
+
+
+def test_get_user__can_get_by_all_params__return_user(user_service, created_user):
+    user_by_id = user_service.get_user(UserFilter(user_id=created_user.user_id))
+    user_by_nickname = user_service.get_user(UserFilter(nickname=created_user.nickname))
+    user_by_email = user_service.get_user(UserFilter(email=created_user.email))
+
+    assert user_by_id == user_by_nickname == user_by_email == created_user
