@@ -8,6 +8,8 @@ services:
       target: dev
     env_file:
       - ./etc/backend/env/dev.env
+    restart:
+      unless-stopped
     depends_on:
       - db
     volumes:
@@ -18,8 +20,6 @@ services:
       - ./poetry.lock:/code/poetry.lock
     ports:
       - 5150:5150
-
-
 
   db:
     image: postgres:14.6
@@ -42,6 +42,7 @@ services:
       - db
     volumes:
       - ./src/alembic/:/code/alembic/
+      - ./src/sobesity:/code/sobesity
 
 
 volumes:
