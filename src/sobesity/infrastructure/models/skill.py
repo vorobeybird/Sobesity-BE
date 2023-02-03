@@ -7,5 +7,5 @@ skill_table = Table(
     "skill",
     metadata,
     Column("skill_id", Integer, skill_id_seq, primary_key=True),
-    Column("name", String),
+    Column("name", String, unique=True, nullable=False),
 )
