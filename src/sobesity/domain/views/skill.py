@@ -1,8 +1,10 @@
 from dataclasses import asdict
+from flask import abort
 
 from dependency_injector.wiring import Provide, inject
 from flask import Response
 from flask_openapi3 import APIBlueprint, Tag
+
 
 from sobesity.containers import Services
 from sobesity.domain.entities.skill import SkillFilterEnitity
@@ -46,8 +48,13 @@ def get_skill(
 def create_skills(
     body: PostSkillBody, skill_service: ISkillService = Provide[Services.skill]
 ):
-    skill_service.batch_create(body.to_domain())
-    return Response(), 201
+    try:
+        skill_service.batch_create(body.to_domain())
+        return Response(), 201
+    except Exception as e:
+        abort(400, str(e))
+        
+    
 
 
 @skill_bp.delete("", responses={"204": None})
