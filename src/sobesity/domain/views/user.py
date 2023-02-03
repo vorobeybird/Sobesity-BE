@@ -43,3 +43,5 @@ def create_user(
     except InvalidEmail as exc:
         return BadRequestSerializer(message=exc.message).dict(), 400
     return Response(), 201
+
+#TODO add login view and refresh token

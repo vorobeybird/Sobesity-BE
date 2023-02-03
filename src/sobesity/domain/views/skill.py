@@ -23,6 +23,7 @@ skill_bp = APIBlueprint(
     url_prefix="/api/skill",
     abp_tags=[Tag(name="skill", description="User's skills")],
     doc_ui=True,
+    abp_security=[{"jwt": []}]
 )
 
 
