@@ -1,3 +1,4 @@
+from http import HTTPStatus
 
 from dependency_injector.wiring import Provide, inject
 from flask import Response
@@ -29,7 +30,7 @@ def get_user(query: UserQuery, user_service: IUserService = Provide[Services.use
     try:
         user = user_service.get_user(query.to_domain())
     except UserNotFound as exc:
-        return NotFoundSerializer(message=exc.message).dict(), 404
+        return NotFoundSerializer(message=exc.message).dict(), HTTPStatus.NOT_FOUND
     return GetUserSerializer.from_domain(user).dict()
 
 
@@ -41,7 +42,8 @@ def create_user(
     try:
         user_service.create_user(body.to_domain())
     except InvalidEmail as exc:
-        return BadRequestSerializer(message=exc.message).dict(), 400
-    return Response(), 201
+        return BadRequestSerializer(message=exc.message).dict(), HTTPStatus.BAD_REQUEST
+    return Response(), HTTPStatus.CREATED
 
-#TODO add login view and refresh token
+
+# TODO add login view and refresh token

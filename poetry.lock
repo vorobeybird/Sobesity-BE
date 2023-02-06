@@ -501,6 +501,17 @@ setproctitle = ["setproctitle"]
 tornado = ["tornado (>=0.2)"]
 
 [[package]]
+name = "http-constants"
+version = "0.5.0"
+description = "The set of standard http constants for headers and statuses"
+category = "main"
+optional = false
+python-versions = ">=3.6.0"
+files = [
+    {file = "http-constants-0.5.0.tar.gz", hash = "sha256:151cb595a0964110ee51e1f5bf09c1b30b025de37f32688f3d0ca58fc8dae43e"},
+]
+
+[[package]]
 name = "idna"
 version = "3.4"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -1251,4 +1262,4 @@ watchdog = ["watchdog"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "092e1599fd58382371fe1bebc371d9e081f592cadf375a90a7c0f848978c697d"
+content-hash = "0b911165362d09ff29508fc56829f653eac3a890d55d8138be628e4518e7c957"
