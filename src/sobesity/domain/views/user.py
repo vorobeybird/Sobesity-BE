@@ -1,5 +1,4 @@
 from http import HTTPStatus
-
 from dependency_injector.wiring import Provide, inject
 from flask import Response
 from flask_openapi3 import APIBlueprint, Tag

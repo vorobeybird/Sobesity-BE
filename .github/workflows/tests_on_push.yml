@@ -1,0 +1,16 @@
+name: CI
+on:
+  push:
+    branches: '*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    # Checkout code
+    - uses: actions/checkout@master
+
+    - name: Run check
+      run: make format-check
+
+    - name: Run tests
+      run: make tests
