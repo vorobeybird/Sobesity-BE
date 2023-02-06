@@ -4,6 +4,7 @@ from flask import abort
 from dependency_injector.wiring import Provide, inject
 from flask import Response
 from flask_openapi3 import APIBlueprint, Tag
+from sobesity.domain.exceptions.skill import SkillNameUniqueViolation
 
 
 from sobesity.containers import Services
@@ -51,9 +52,10 @@ def create_skills(
     try:
         skill_service.batch_create(body.to_domain())
         return Response(), 201
+    except SkillNameUniqueViolation as e:
+        abort(403, e)
     except Exception as e:
         abort(400, str(e))
-        
     
 
 
