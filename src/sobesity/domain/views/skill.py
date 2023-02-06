@@ -1,5 +1,4 @@
 from dataclasses import asdict
-from flask import abort
 
 from dependency_injector.wiring import Provide, inject
 from flask import Response
@@ -18,6 +17,7 @@ from sobesity.domain.serializers import (
     PostSkillBody,
     SkillIdsSerializer,
     SkillSerializer,
+    BadRequestSerializer,
 )
 
 skill_bp = APIBlueprint(
@@ -44,19 +44,16 @@ def get_skill(
     return SkillSerializer(**asdict(skill)).dict()
 
 
-@skill_bp.post("", responses={"201": None})
+@skill_bp.post("", responses={"201": None, "403": BadRequestSerializer})
 @inject
 def create_skills(
     body: PostSkillBody, skill_service: ISkillService = Provide[Services.skill]
 ):
     try:
         skill_service.batch_create(body.to_domain())
-        return Response(), 201
-    except SkillNameUniqueViolation as e:
-        abort(403, e)
-    except Exception as e:
-        abort(400, str(e))
-    
+    except SkillNameUniqueViolation as exc:
+        return BadRequestSerializer(message=exc.message).dict(), 403
+    return Response(), 201
 
 
 @skill_bp.delete("", responses={"204": None})
