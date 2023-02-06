@@ -8,8 +8,8 @@ from sobesity.domain.exceptions.skill import SkillNameUniqueViolation
 
 
 from sobesity.containers import Services
-from sobesity.domain.entities.skill import SkillFilterEnitity
-from sobesity.domain.interfaces.services.skill import ISkillService
+from sobesity.domain.entities import SkillFilterEnitity
+from sobesity.domain.interfaces.services import ISkillService
 from sobesity.domain.serializers import (
     DeleteSkillBody,
     GetSkills,

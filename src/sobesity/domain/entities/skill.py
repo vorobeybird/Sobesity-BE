@@ -6,7 +6,7 @@ SkillId = NewType("SkillId", int)
 
 @dataclass
 class SkillEntity:
-    skill_id: SkillId
+    skill_id: Optional[SkillId]
     name: str
 
 
