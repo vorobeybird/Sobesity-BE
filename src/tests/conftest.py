@@ -1,5 +1,6 @@
 from contextlib import contextmanager
 from datetime import datetime
+from http_constants.headers import HttpHeaders
 
 import pytest
 
@@ -82,3 +83,14 @@ def login_body(created_user, user_for_create):
 @pytest.fixture
 def jwt_resource(di):
     return di.resources.jwt()
+
+
+
+@pytest.fixture
+def jwt_token(jwt_resource):
+    user_id = UserId(1111)
+    return jwt_resource.encode_jwt(user_id)
+
+@pytest.fixture
+def auth_header(jwt_token):
+    return {HttpHeaders.AUTHORIZATION: f'Bearer {jwt_token}'}

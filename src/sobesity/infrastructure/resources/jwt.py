@@ -42,7 +42,12 @@ class JWTResource(IJWTResource):
             self.unauthorized_abort("No token provided")
 
         token = auth_header.split(" ")[1]
-        self.get_user_id_from_jwt(token)
+        try:
+            self.get_user_id_from_jwt(token)
+        except CorruptedToken as exc:
+            self.unauthorized_abort(exc.message)
+        except ExpiredToken as exc:
+            self.unauthorized_abort(exc.message)
 
     def get_user_id_from_jwt(self, token) -> UserId:
         try:
