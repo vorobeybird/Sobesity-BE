@@ -1,8 +1,8 @@
 from contextlib import contextmanager
 from datetime import datetime
-from http_constants.headers import HttpHeaders
 
 import pytest
+from http_constants.headers import HttpHeaders
 
 from sobesity.domain.entities import CreateUserEntity, UserEntity, UserFilter, UserId
 from sobesity.webapp import create_app
@@ -85,12 +85,12 @@ def jwt_resource(di):
     return di.resources.jwt()
 
 
-
 @pytest.fixture
 def jwt_token(jwt_resource):
     user_id = UserId(1111)
     return jwt_resource.encode_jwt(user_id)
 
+
 @pytest.fixture
 def auth_header(jwt_token):
-    return {HttpHeaders.AUTHORIZATION: f'Bearer {jwt_token}'}
+    return {HttpHeaders.AUTHORIZATION: f"Bearer {jwt_token}"}

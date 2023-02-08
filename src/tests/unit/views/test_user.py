@@ -1,8 +1,6 @@
 from copy import deepcopy
 from http import HTTPStatus
 
-import pytest
-
 from sobesity.domain.entities.user import UserFilter
 from sobesity.domain.exceptions import UserNotFound
 
@@ -36,4 +34,3 @@ def test_create_user__invalid_body__return_422(client, valid_user_create_body):
         invalid_body.pop(field_to_exclude)
         response = client.post("api/user", json=invalid_body)
         assert response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY
-

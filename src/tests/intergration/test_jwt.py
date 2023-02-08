@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
-from freezegun import freeze_time
+
 import pytest
+from freezegun import freeze_time
 
 from sobesity.domain.entities import UserId
 from sobesity.domain.exceptions import CorruptedToken, ExpiredToken
@@ -29,4 +30,3 @@ def test_jwt__verify_jwt__time_out__raise_error(jwt_resource, jwt_token):
         frozen_time.move_to(datetime.now() + timedelta(days=60))
         with pytest.raises(ExpiredToken):
             jwt_resource.get_user_id_from_jwt(jwt_token)
-

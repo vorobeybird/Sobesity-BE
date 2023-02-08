@@ -7,10 +7,10 @@ import jwt
 from flask import abort, jsonify, request
 from http_constants.headers import HttpHeaders
 
-from sobesity.domain.entities import JWTEntity, UserId, JWTToken
+from sobesity.domain.entities import JWTEntity, JWTToken, UserId
+from sobesity.domain.exceptions import CorruptedToken, ExpiredToken
 from sobesity.domain.interfaces.resources import IJWTResource
 from sobesity.domain.serializers.base import BadRequestSerializer
-from sobesity.domain.exceptions import CorruptedToken, ExpiredToken
 
 UNPROTECTED_ENDPOINTS = ("openapi\..*", "user\..*")
 
