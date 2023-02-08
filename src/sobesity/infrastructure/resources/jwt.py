@@ -7,16 +7,19 @@ import jwt
 from flask import abort, jsonify, request
 from http_constants.headers import HttpHeaders
 
-from sobesity.domain.entities import JWTEntity, UserId
+from sobesity.domain.entities import JWTEntity, UserId, JWTToken
 from sobesity.domain.interfaces.resources import IJWTResource
 from sobesity.domain.serializers.base import BadRequestSerializer
+from sobesity.domain.exceptions import CorruptedToken, ExpiredToken
 
 UNPROTECTED_ENDPOINTS = ("openapi\..*", "user\..*")
 
 
 class JWTResource(IJWTResource):
-    def __init__(self, secret):
+    def __init__(self, secret, access_token_duration_days, refresh_token_duration_days):
         self.secret = secret
+        self.access_token_duration_days = access_token_duration_days
+        self.refresh_token_duration_days = refresh_token_duration_days
         self.algorithm = "HS256"
 
     def is_endpoint_protected(self, endpoint) -> bool:
@@ -39,20 +42,24 @@ class JWTResource(IJWTResource):
             self.unauthorized_abort("No token provided")
 
         token = auth_header.split(" ")[1]
-        try:
-            self.get_user_id_from_jwt(token)
-        except Exception as exc:
-            pass
+        self.get_user_id_from_jwt(token)
 
     def get_user_id_from_jwt(self, token) -> UserId:
-        payload = jwt.decode(token, self.secret, algorithms=[self.algorithm])
+        try:
+            payload = jwt.decode(token, self.secret, algorithms=[self.algorithm])
+        except jwt.DecodeError:
+            raise CorruptedToken()
+        except jwt.ExpiredSignatureError:
+            raise ExpiredToken()
+
         jwt_entity = JWTEntity(**payload)
         return jwt_entity.sub
 
-    def encode_jwt(self, user_id: UserId) -> str:
+    def encode_jwt(self, user_id: UserId) -> JWTToken:
         jwt_entity = JWTEntity(
             sub=user_id,
-            exp=datetime.now() + timedelta(minutes=5),
+            exp=datetime.now() + timedelta(days=self.access_token_duration_days),
             iat=datetime.now(),
         )
-        return jwt.encode(asdict(jwt_entity), self.secret, algorithm=self.algorithm)
+        token = jwt.encode(asdict(jwt_entity), self.secret, algorithm=self.algorithm)
+        return JWTToken(token)

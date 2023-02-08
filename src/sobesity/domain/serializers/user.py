@@ -3,7 +3,13 @@ from typing import Optional
 
 from pydantic import BaseModel, EmailStr, Field
 
-from sobesity.domain.entities import CreateUserEntity, UserEntity, UserFilter, UserId
+from sobesity.domain.entities import (
+    CreateUserEntity,
+    LoginUserEntity,
+    UserEntity,
+    UserFilter,
+    UserId,
+)
 
 
 class GetUserSerializer(BaseModel):
@@ -35,7 +41,7 @@ class UserQuery(BaseModel):
         )
 
 
-class PostUserSerializer(BaseModel):
+class CreateUserSerializer(BaseModel):
     nickname: str
     email: EmailStr
     password: str = Field(..., min_length=6)
@@ -46,3 +52,15 @@ class PostUserSerializer(BaseModel):
             email=self.email,
             password=self.password,
         )
+
+
+class LoginUserSerializer(BaseModel):
+    email: EmailStr
+    password: str = Field(..., min_length=6)
+
+    def to_domain(self) -> LoginUserEntity:
+        return LoginUserEntity(email=self.email, password=self.password)
+
+
+class AccessGrantedSerializer(BaseModel):
+    access_token: str

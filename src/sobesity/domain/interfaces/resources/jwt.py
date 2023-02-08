@@ -1,6 +1,6 @@
 from abc import ABC, abstractclassmethod
 
-from sobesity.domain.entities import UserId
+from sobesity.domain.entities import JWTToken, UserId
 
 
 class IJWTResource(ABC):
@@ -13,5 +13,5 @@ class IJWTResource(ABC):
         pass
 
     @abstractclassmethod
-    def encode_jwt(self, user_id: UserId) -> str:
+    def encode_jwt(self, user_id: UserId) -> JWTToken:
         pass

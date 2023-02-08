@@ -1,19 +1,9 @@
 import pytest
 
-from sobesity.domain.entities import UserFilter
+from sobesity.domain.entities import UserId
 
 
 @pytest.fixture
-def skill_repository(di):
-    return di.repositories.skill()
-
-
-@pytest.fixture
-def user_service(di):
-    return di.services.user()
-
-
-@pytest.fixture
-def created_user(user_service, user_for_create):
-    user_service.create_user(user_for_create)
-    return user_service.get_user(UserFilter(nickname=user_for_create.nickname))
+def jwt_token(jwt_resource):
+    user_id = UserId(1111)
+    return jwt_resource.encode_jwt(user_id)

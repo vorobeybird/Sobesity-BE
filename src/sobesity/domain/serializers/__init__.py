@@ -8,4 +8,10 @@ from .skill import (
     SkillIdsSerializer,
     SkillSerializer,
 )
-from .user import GetUserSerializer, PostUserSerializer, UserQuery
+from .user import (
+    AccessGrantedSerializer,
+    CreateUserSerializer,
+    GetUserSerializer,
+    LoginUserSerializer,
+    UserQuery,
+)

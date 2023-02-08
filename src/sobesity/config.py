@@ -27,11 +27,15 @@ class DatabaseSettings(BaseSettings):
     class Config:
         env_prefix = "POSTGRES_"
 
+
 class JWTSettings(BaseSettings):
     secret: str
+    access_token_duration_days: int = 1
+    refresh_token_duration_days: int = 30
 
     class Config:
         env_prefix = "JWT_"
+
 
 class Settings(BaseSettings):
     db: DatabaseSettings = DatabaseSettings()

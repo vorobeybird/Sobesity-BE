@@ -1,11 +1,13 @@
 from copy import deepcopy
 
+import pytest
+
 from sobesity.domain.entities.user import UserFilter
 from sobesity.domain.exceptions import UserNotFound
 
 
-def test_get_user_by_filter__not_found__return_404(client, mock_user_service):
-    mock_user_service.get_user.side_effect = UserNotFound(UserFilter(user_id=11))
+def test_get_user_by_filter__not_found__return_404(client, mock_user_repository):
+    mock_user_repository.get_user.side_effect = UserNotFound(UserFilter(user_id=11))
     response = client.get("api/user?userId=11")
     assert response.status_code == 404
 
@@ -33,3 +35,8 @@ def test_create_user__invalid_body__return_422(client, valid_user_create_body):
         invalid_body.pop(field_to_exclude)
         response = client.post("api/user", json=invalid_body)
         assert response.status_code == 422
+
+
+@pytest.mark.xfail
+def test_login_user__incorrect_email__and_password__return_400():
+    pass

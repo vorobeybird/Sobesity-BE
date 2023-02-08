@@ -2,17 +2,27 @@ from dataclasses import asdict
 
 from email_validator import EmailNotValidError, validate_email
 
-from sobesity.domain.entities import CreateUserEntity, UserEntity, UserFilter
-from sobesity.domain.exceptions import InvalidEmail
+from sobesity.domain.entities import (
+    CreateUserEntity,
+    JWTToken,
+    LoginUserEntity,
+    UserEntity,
+    UserFilter,
+)
+from sobesity.domain.exceptions import InvalidEmail, UserNotFound
 from sobesity.domain.interfaces.repositories import IUserRepository
+from sobesity.domain.interfaces.resources import IJWTResource
 from sobesity.domain.interfaces.services import IUserService
-from sobesity.domain.utils.password import hash_password
+from sobesity.domain.utils.password import check_password, hash_password
 from sobesity.infrastructure.constants import ModelFields
 
 
 class UserService(IUserService):
-    def __init__(self, user_repository: IUserRepository) -> None:
+    def __init__(
+        self, user_repository: IUserRepository, jwt_resource: IJWTResource
+    ) -> None:
         self._user_repository = user_repository
+        self._jwt_resource = jwt_resource
 
     def validate_email(self, email):
         try:
@@ -34,3 +44,15 @@ class UserService(IUserService):
 
     def get_user(self, user_filter: UserFilter) -> UserEntity:
         return self._user_repository.get_user(user_filter)
+
+    def check_password(self, password: str, hashed_password: str):
+        if not check_password(password, hashed_password):
+            raise ValueError("Invalid password")
+
+    def login(self, login_user: LoginUserEntity) -> JWTToken:
+        try:
+            user = self.get_user(UserFilter(email=login_user.email))
+        except UserNotFound:
+            raise ValueError("Incorrect email")
+        self.check_password(login_user.password, user.hashed_password)
+        return self._jwt_resource.encode_jwt(user.user_id)

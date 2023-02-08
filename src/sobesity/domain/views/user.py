@@ -1,4 +1,5 @@
 from http import HTTPStatus
+
 from dependency_injector.wiring import Provide, inject
 from flask import Response
 from flask_openapi3 import APIBlueprint, Tag
@@ -7,10 +8,12 @@ from sobesity.containers import Services
 from sobesity.domain.exceptions import InvalidEmail, UserNotFound
 from sobesity.domain.interfaces.services import IUserService
 from sobesity.domain.serializers import (
+    AccessGrantedSerializer,
     BadRequestSerializer,
+    CreateUserSerializer,
     GetUserSerializer,
+    LoginUserSerializer,
     NotFoundSerializer,
-    PostUserSerializer,
     UserQuery,
 )
 
@@ -36,7 +39,7 @@ def get_user(query: UserQuery, user_service: IUserService = Provide[Services.use
 @user_bp.post("", responses={"201": None, "400": BadRequestSerializer})
 @inject
 def create_user(
-    body: PostUserSerializer, user_service: IUserService = Provide[Services.user]
+    body: CreateUserSerializer, user_service: IUserService = Provide[Services.user]
 ):
     try:
         user_service.create_user(body.to_domain())
@@ -45,4 +48,18 @@ def create_user(
     return Response(), HTTPStatus.CREATED
 
 
-# TODO add login view and refresh token
+@user_bp.post(
+    "login", responses={"200": AccessGrantedSerializer, "400": BadRequestSerializer}
+)
+@inject
+def login(
+    body: LoginUserSerializer, user_service: IUserService = Provide[Services.user]
+):
+    try:
+        token = user_service.login(body.to_domain())
+    except:
+        return (
+            BadRequestSerializer(message="Invalid email or password").dict(),
+            HTTPStatus.BAD_REQUEST,
+        )
+    return AccessGrantedSerializer(access_token=token).dict()
