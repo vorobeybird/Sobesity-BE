@@ -10,10 +10,10 @@ def register_views(app):
     app.register_api(user.user_bp)
 
 
-def init_dependency(app):
+def init_dependency():
     container = Application()
     container.services.wire([skill, user])
-    app.container = container
+    return container
 
 
 def enable_jwt_check(app):
@@ -28,9 +28,10 @@ def prepare_swagger() -> Flask:
 
 
 def create_app():
+    container = init_dependency()
     app = prepare_swagger()
+    app.container = container
 
-    init_dependency(app)
     register_views(app)
     enable_jwt_check(app)
 

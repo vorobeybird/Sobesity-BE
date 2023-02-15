@@ -18,6 +18,3 @@ class IUserService(ABC):
     def get_user(self, user_filter: UserFilter) -> UserEntity:
         pass
 
-    @abstractclassmethod
-    def login(self, login_user: LoginUserEntity) -> JWTToken:
-        pass

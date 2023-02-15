@@ -9,6 +9,10 @@ class IJWTResource(ABC):
         pass
 
     @abstractclassmethod
+    def get_user_id_from_request(self) -> UserId:
+        pass
+
+    @abstractclassmethod
     def get_user_id_from_jwt(self, token) -> UserId:
         pass
 

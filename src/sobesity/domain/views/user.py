@@ -1,11 +1,12 @@
 from http import HTTPStatus
 
 from dependency_injector.wiring import Provide, inject
-from flask import Response
+from flask import Response, current_app
 from flask_openapi3 import APIBlueprint, Tag
 
-from sobesity.containers import Services
+from sobesity.containers import Application, Services, AccessManagers
 from sobesity.domain.exceptions import InvalidEmail, UserNotFound
+from sobesity.domain.interfaces.access_managers import IUserAccessManager
 from sobesity.domain.interfaces.services import IUserService
 from sobesity.domain.serializers import (
     AccessGrantedSerializer,
@@ -51,15 +52,27 @@ def create_user(
 @user_bp.post(
     "login", responses={"200": AccessGrantedSerializer, "400": BadRequestSerializer}
 )
-@inject
 def login(
-    body: LoginUserSerializer, user_service: IUserService = Provide[Services.user]
+    body: LoginUserSerializer,
 ):
+    #TODO must be implemented with Provide
+    user_access_manager: IUserAccessManager = current_app.container.access_managers.user()
     try:
-        token = user_service.login(body.to_domain())
-    except:
+        token = user_access_manager.login(body.to_domain())
+    except ValueError:
         return (
             BadRequestSerializer(message="Invalid email or password").dict(),
             HTTPStatus.BAD_REQUEST,
         )
     return AccessGrantedSerializer(access_token=token).dict()
+
+
+@user_bp.get(
+    "current_user", responses={"200": GetUserSerializer}, security=[{"jwt": []}]
+)
+def current_user(
+):
+    #TODO must be implemented with Provide
+    user_access_manager: IUserAccessManager = current_app.container.access_managers.user()
+    user = user_access_manager.get_current_user()
+    return GetUserSerializer.from_domain(user).dict()

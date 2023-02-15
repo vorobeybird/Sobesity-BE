@@ -13,6 +13,7 @@ from sobesity.domain.interfaces.resources import IJWTResource
 from sobesity.domain.serializers.base import BadRequestSerializer
 
 UNPROTECTED_ENDPOINTS = ("openapi\..*", "user\..*")
+PROTECTED_ENDPOINTS = ("user\.current_user", )
 
 
 class JWTResource(IJWTResource):
@@ -22,7 +23,13 @@ class JWTResource(IJWTResource):
         self.refresh_token_duration_days = refresh_token_duration_days
         self.algorithm = "HS256"
 
-    def is_endpoint_protected(self, endpoint) -> bool:
+    def is_endpoint_protected(self, endpoint: str) -> bool:
+        if endpoint is None:
+            raise ValueError(f"Endpoint can't be None. {request}")
+        for endpoint_pattern in PROTECTED_ENDPOINTS:
+            if re.match(endpoint_pattern, endpoint) is not None:
+                return True
+
         for endpoint_pattern in UNPROTECTED_ENDPOINTS:
             if re.match(endpoint_pattern, endpoint) is not None:
                 return False
@@ -33,15 +40,23 @@ class JWTResource(IJWTResource):
         response.status_code = HTTPStatus.UNAUTHORIZED
         abort(response)
 
-    def verify_jwt(self):
-        if not self.is_endpoint_protected(request.endpoint):
-            return
-
+    def get_token(self):
         auth_header = request.headers.get(HttpHeaders.AUTHORIZATION)
         if auth_header is None:
             self.unauthorized_abort("No token provided")
 
         token = auth_header.split(" ")[1]
+        return token
+
+    def get_user_id_from_request(self) -> UserId:
+        token = self.get_token()
+        return self.get_user_id_from_jwt(token)
+
+    def verify_jwt(self):
+        if not self.is_endpoint_protected(request.endpoint):
+            return
+
+        token = self.get_token()
         try:
             self.get_user_id_from_jwt(token)
         except CorruptedToken as exc:

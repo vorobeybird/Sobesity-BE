@@ -1,16 +1,17 @@
 from dependency_injector import containers, providers
 
 from sobesity.config import Settings
+from sobesity.domain.access_managers import UserAccessManager
 from sobesity.domain.services import SkillService, UserService
 from sobesity.infrastructure.datasource import datasource
 from sobesity.infrastructure.repositories import SkillRepository, UserRepository
 from sobesity.infrastructure.resources import JWTResource
 
 
-class Resource(containers.DeclarativeContainer):
+class Resources(containers.DeclarativeContainer):
     config = providers.Configuration(pydantic_settings=[Settings()])
     datasource = providers.Callable(datasource)
-    jwt = providers.Factory(
+    jwt = providers.Singleton(
         JWTResource,
         config.jwt.secret,
         config.jwt.access_token_duration_days,
@@ -20,20 +21,30 @@ class Resource(containers.DeclarativeContainer):
 
 class Repositories(containers.DeclarativeContainer):
     resources = providers.DependenciesContainer()
-    skill = providers.Factory(SkillRepository, resources.datasource)
-    user = providers.Factory(UserRepository, resources.datasource)
+    skill = providers.Singleton(SkillRepository, resources.datasource)
+    user = providers.Singleton(UserRepository, resources.datasource)
 
 
 class Services(containers.DeclarativeContainer):
-    resources = providers.DependenciesContainer()
     repositories = providers.DependenciesContainer()
-    skill = providers.Factory(SkillService, repositories.skill)
-    user = providers.Factory(UserService, repositories.user, resources.jwt)
+    skill = providers.Singleton(SkillService, repositories.skill)
+    user = providers.Singleton(UserService, repositories.user)
+
+
+class AccessManagers(containers.DeclarativeContainer):
+    resources = providers.DependenciesContainer()
+    services = providers.DependenciesContainer()
+    user = providers.Singleton(
+        UserAccessManager,
+        user_service=services.user,
+        jwt_resource=resources.jwt,
+    )
 
 
 class Application(containers.DeclarativeContainer):
-    resources = providers.Container(Resource)
+    resources = providers.Container(Resources)
     repositories = providers.Container(Repositories, resources=resources)
-    services = providers.Container(
-        Services, repositories=repositories, resources=resources
+    services = providers.Container(Services, repositories=repositories)
+    access_managers = providers.Container(
+        AccessManagers, resources=resources, services=services
     )
