@@ -11,12 +11,18 @@ from sobesity.domain.entities import (
     UserId,
 )
 
+user_id_field = Field(..., alias="userId")
+first_name_field = Field(..., alias="firstName")
+last_name_field = Field(..., alias="lastName")
+
 
 class GetUserSerializer(BaseModel):
-    user_id: UserId = Field(..., alias="userId")
+    user_id: UserId = user_id_field
     nickname: str
     email: EmailStr
     registered_at: datetime = Field(..., alias="registeredAt")
+    fist_name: str = first_name_field
+    last_name: str = last_name_field
 
     @classmethod
     def from_domain(cls, user: UserEntity):
@@ -25,6 +31,8 @@ class GetUserSerializer(BaseModel):
             nickname=user.nickname,
             email=user.email,
             registeredAt=user.registered_at,
+            firstName=user.first_name,
+            lastName=user.last_name,
         )
 
 
@@ -45,12 +53,16 @@ class CreateUserSerializer(BaseModel):
     nickname: str
     email: EmailStr
     password: str = Field(..., min_length=6)
+    first_name: str = first_name_field
+    last_name: str = last_name_field
 
     def to_domain(self) -> CreateUserEntity:
         return CreateUserEntity(
             nickname=self.nickname,
             email=self.email,
             password=self.password,
+            first_name=self.first_name,
+            last_name=self.last_name,
         )
 
 

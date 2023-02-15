@@ -40,6 +40,8 @@ def client(app):
 @pytest.fixture
 def user_for_create():
     return CreateUserEntity(
+        first_name="Some",
+        last_name="Userov",
         nickname="someuser1",
         email="valid@test.com",
         password="Foo#boo2",

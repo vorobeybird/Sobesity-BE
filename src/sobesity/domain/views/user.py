@@ -4,7 +4,7 @@ from dependency_injector.wiring import Provide, inject
 from flask import Response, current_app
 from flask_openapi3 import APIBlueprint, Tag
 
-from sobesity.containers import Application, Services, AccessManagers
+from sobesity.containers import Services
 from sobesity.domain.exceptions import InvalidEmail, UserNotFound
 from sobesity.domain.interfaces.access_managers import IUserAccessManager
 from sobesity.domain.interfaces.services import IUserService
@@ -55,8 +55,10 @@ def create_user(
 def login(
     body: LoginUserSerializer,
 ):
-    #TODO must be implemented with Provide
-    user_access_manager: IUserAccessManager = current_app.container.access_managers.user()
+    # TODO must be implemented with Provide
+    user_access_manager: IUserAccessManager = (
+        current_app.container.access_managers.user()
+    )
     try:
         token = user_access_manager.login(body.to_domain())
     except ValueError:
@@ -70,9 +72,10 @@ def login(
 @user_bp.get(
     "current_user", responses={"200": GetUserSerializer}, security=[{"jwt": []}]
 )
-def current_user(
-):
-    #TODO must be implemented with Provide
-    user_access_manager: IUserAccessManager = current_app.container.access_managers.user()
+def current_user():
+    # TODO must be implemented with Provide
+    user_access_manager: IUserAccessManager = (
+        current_app.container.access_managers.user()
+    )
     user = user_access_manager.get_current_user()
     return GetUserSerializer.from_domain(user).dict()

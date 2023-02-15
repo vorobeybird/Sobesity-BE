@@ -12,4 +12,6 @@ user_table = Table(
     Column("salt", String(32)),
     Column("email", String),
     Column("registered_at", DateTime),
+    Column("first_name", String(32)),
+    Column("last_name", String(32)),
 )

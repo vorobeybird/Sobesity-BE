@@ -13,6 +13,8 @@ class UserEntity:
     registered_at: Optional[datetime] = None
     hashed_password: Optional[str] = None
     salt: Optional[str] = None
+    first_name: str
+    last_name: str
 
 
 @dataclass(kw_only=True)

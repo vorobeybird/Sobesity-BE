@@ -5,7 +5,7 @@ from dependency_injector.wiring import Provide, inject
 from flask import Response
 from flask_openapi3 import APIBlueprint, Tag
 
-from sobesity.containers import Services, Application
+from sobesity.containers import Services
 from sobesity.domain.entities import SkillFilterEnitity
 from sobesity.domain.interfaces.services import ISkillService
 from sobesity.domain.serializers import (
