@@ -1,6 +1,6 @@
 from sobesity.domain.entities import JWTToken, LoginUserEntity, UserEntity, UserFilter
 from sobesity.domain.entities.user import UserEntity, UserFilter
-from sobesity.domain.exceptions import UserNotFound
+from sobesity.domain.exceptions import EmailNotExists, PasswordNotMatch, UserNotFound
 from sobesity.domain.interfaces.access_managers import IUserAccessManager
 from sobesity.domain.interfaces.resources import IJWTResource
 from sobesity.domain.interfaces.services import IUserService
@@ -18,15 +18,13 @@ class UserAccessManager(IUserAccessManager):
 
     def check_password(self, password: str, hashed_password: str):
         if not check_password(password, hashed_password):
-            # TODO replace with domain error
-            raise ValueError("Invalid password")
+            raise PasswordNotMatch()
 
     def login(self, login_user: LoginUserEntity) -> JWTToken:
         try:
             user = self._user_service.get_user(UserFilter(email=login_user.email))
         except UserNotFound:
-            # TODO replace with domain error
-            raise ValueError("Incorrect email")
+            raise EmailNotExists(login_user.email)
 
         self.check_password(login_user.password, user.hashed_password)
         return self._jwt_resource.encode_jwt(user.user_id)

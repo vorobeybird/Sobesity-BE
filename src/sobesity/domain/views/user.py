@@ -5,7 +5,12 @@ from flask import Response, current_app
 from flask_openapi3 import APIBlueprint, Tag
 
 from sobesity.containers import Services
-from sobesity.domain.exceptions import InvalidEmail, UserNotFound
+from sobesity.domain.exceptions import (
+    EmailNotExists,
+    InvalidEmail,
+    PasswordNotMatch,
+    UserNotFound,
+)
 from sobesity.domain.interfaces.access_managers import IUserAccessManager
 from sobesity.domain.interfaces.services import IUserService
 from sobesity.domain.serializers import (
@@ -61,7 +66,7 @@ def login(
     )
     try:
         token = user_access_manager.login(body.to_domain())
-    except ValueError:
+    except (EmailNotExists, PasswordNotMatch):
         return (
             BadRequestSerializer(message="Invalid email or password").dict(),
             HTTPStatus.BAD_REQUEST,
