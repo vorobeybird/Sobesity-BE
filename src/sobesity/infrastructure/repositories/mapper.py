@@ -16,4 +16,6 @@ def build_user_entity(cursor) -> UserEntity:
         registered_at=cursor.registered_at,
         hashed_password=cursor.hashed_password,
         salt=cursor.salt,
+        first_name=cursor.first_name,
+        last_name=cursor.last_name,
     )

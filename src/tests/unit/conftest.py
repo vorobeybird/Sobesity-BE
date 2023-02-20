@@ -15,10 +15,16 @@ def mock_skill_repository(di):
 
 
 @pytest.fixture
-def mock_user_service(di):
+def mock_user_repository(di):
     yield from mock_with_di(di.repositories.user)
 
 
 @pytest.fixture
 def valid_user_create_body():
-    return {"password": "FooBoo132", "nickname": "FooBoo", "email": "fooboo@google.com"}
+    return {
+        "password": "FooBoo132",
+        "nickname": "FooBoo",
+        "email": "fooboo@google.com",
+        "firstName": "Foo",
+        "lastName": "Boo",
+    }

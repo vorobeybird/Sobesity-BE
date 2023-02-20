@@ -1,9 +1,13 @@
 from pydantic import BaseModel
 
 
-class NotFoundSerializer(BaseModel):
+class BaseBadRequest(BaseModel):
     message: str
 
 
-class BadRequestSerializer(BaseModel):
-    message: str
+class NotFoundSerializer(BaseBadRequest):
+    pass
+
+
+class BadRequestSerializer(BaseBadRequest):
+    pass

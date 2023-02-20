@@ -1,15 +1,25 @@
+from http import HTTPStatus
+
 from dependency_injector.wiring import Provide, inject
-from flask import Response
+from flask import Response, current_app
 from flask_openapi3 import APIBlueprint, Tag
 
 from sobesity.containers import Services
-from sobesity.domain.exceptions import InvalidEmail, UserNotFound
+from sobesity.domain.exceptions import (
+    EmailNotExists,
+    InvalidEmail,
+    PasswordNotMatch,
+    UserNotFound,
+)
+from sobesity.domain.interfaces.access_managers import IUserAccessManager
 from sobesity.domain.interfaces.services import IUserService
 from sobesity.domain.serializers import (
+    AccessGrantedSerializer,
     BadRequestSerializer,
+    CreateUserSerializer,
     GetUserSerializer,
+    LoginUserSerializer,
     NotFoundSerializer,
-    PostUserSerializer,
     UserQuery,
 )
 
@@ -28,17 +38,49 @@ def get_user(query: UserQuery, user_service: IUserService = Provide[Services.use
     try:
         user = user_service.get_user(query.to_domain())
     except UserNotFound as exc:
-        return NotFoundSerializer(message=exc.message).dict(), 404
+        return NotFoundSerializer(message=exc.message).dict(), HTTPStatus.NOT_FOUND
     return GetUserSerializer.from_domain(user).dict()
 
 
 @user_bp.post("", responses={"201": None, "400": BadRequestSerializer})
 @inject
 def create_user(
-    body: PostUserSerializer, user_service: IUserService = Provide[Services.user]
+    body: CreateUserSerializer, user_service: IUserService = Provide[Services.user]
 ):
     try:
         user_service.create_user(body.to_domain())
     except InvalidEmail as exc:
-        return BadRequestSerializer(message=exc.message).dict(), 400
-    return Response(), 201
+        return BadRequestSerializer(message=exc.message).dict(), HTTPStatus.BAD_REQUEST
+    return Response(), HTTPStatus.CREATED
+
+
+@user_bp.post(
+    "login", responses={"200": AccessGrantedSerializer, "400": BadRequestSerializer}
+)
+def login(
+    body: LoginUserSerializer,
+):
+    # TODO must be implemented with Provide
+    user_access_manager: IUserAccessManager = (
+        current_app.container.access_managers.user()
+    )
+    try:
+        token = user_access_manager.login(body.to_domain())
+    except (EmailNotExists, PasswordNotMatch):
+        return (
+            BadRequestSerializer(message="Invalid email or password").dict(),
+            HTTPStatus.BAD_REQUEST,
+        )
+    return AccessGrantedSerializer(access_token=token).dict()
+
+
+@user_bp.get(
+    "current_user", responses={"200": GetUserSerializer}, security=[{"jwt": []}]
+)
+def current_user():
+    # TODO must be implemented with Provide
+    user_access_manager: IUserAccessManager = (
+        current_app.container.access_managers.user()
+    )
+    user = user_access_manager.get_current_user()
+    return GetUserSerializer.from_domain(user).dict()

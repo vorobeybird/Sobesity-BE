@@ -1,4 +1,5 @@
-from flask_openapi3 import Info, OpenAPI
+from flask import Flask
+from flask_openapi3 import HTTPBearer, Info, OpenAPI
 
 from sobesity.containers import Application
 from sobesity.domain.views import skill, user
@@ -9,17 +10,29 @@ def register_views(app):
     app.register_api(user.user_bp)
 
 
-def init_dependency(app):
+def init_dependency():
     container = Application()
     container.services.wire([skill, user])
-    app.container = container
+    return container
+
+
+def enable_jwt_check(app):
+    app.before_request(app.container.resources.jwt().verify_jwt)
+
+
+def prepare_swagger() -> Flask:
+    info = Info(title="Sobesity API", version="0.0.1")
+    security_schemes = {"jwt": HTTPBearer(bearerFormat="JWT")}
+
+    return OpenAPI(__name__, info=info, security_schemes=security_schemes)
 
 
 def create_app():
-    info = Info(title="Sobesity API", version="0.0.1")
-    app = OpenAPI(__name__, info=info)
+    container = init_dependency()
+    app = prepare_swagger()
+    app.container = container
 
-    init_dependency(app)
     register_views(app)
+    enable_jwt_check(app)
 
     return app
