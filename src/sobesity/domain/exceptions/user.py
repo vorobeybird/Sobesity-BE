@@ -16,3 +16,15 @@ class UserNotFound(EntityNotFound):
         self.message = f"User not found with params ({search_params})"
         self.search_params = search_params
         super().__init__(self.message)
+
+
+class PasswordNotMatch(DomainException):
+    def __init__(self) -> None:
+        self.message = "Password doesn't match"
+        super().__init__(self.message)
+
+
+class EmailNotExists(DomainException):
+    def __init__(self, email: str) -> None:
+        self.message = f"Email ({email}) doesn't exists"
+        super().__init__(self.message)

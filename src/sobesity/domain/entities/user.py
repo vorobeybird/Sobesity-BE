@@ -13,6 +13,8 @@ class UserEntity:
     registered_at: Optional[datetime] = None
     hashed_password: Optional[str] = None
     salt: Optional[str] = None
+    first_name: str
+    last_name: str
 
 
 @dataclass(kw_only=True)
@@ -29,3 +31,9 @@ class UserFilter:
     def __post_init__(self):
         if not any((self.user_id, self.email, self.nickname)):
             raise ValueError("One of parameters must be specified")
+
+
+@dataclass
+class LoginUserEntity:
+    email: str
+    password: str

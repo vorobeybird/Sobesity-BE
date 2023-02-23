@@ -1,4 +1,5 @@
 from dataclasses import asdict
+from http import HTTPStatus
 
 from dependency_injector.wiring import Provide, inject
 from flask import Response
@@ -26,6 +27,7 @@ skill_bp = APIBlueprint(
     url_prefix="/api/skill",
     abp_tags=[Tag(name="skill", description="User's skills")],
     doc_ui=True,
+    abp_security=[{"jwt": []}],
 )
 
 
@@ -53,7 +55,7 @@ def create_skills(
         skill_service.batch_create(body.to_domain())
     except SkillNameUniqueViolation as exc:
         return BadRequestSerializer(message=exc.message).dict(), 403
-    return Response(), 201
+    return Response(), HTTPStatus.CREATED
 
 
 @skill_bp.delete("", responses={"204": None})
@@ -62,7 +64,7 @@ def delete_skills(
     body: DeleteSkillBody, skill_service: ISkillService = Provide[Services.skill]
 ):
     skill_service.delete(body.to_domain())
-    return Response(), 204
+    return Response(), HTTPStatus.NO_CONTENT
 
 
 @skill_bp.patch("", responses={"200": SkillIdsSerializer})
