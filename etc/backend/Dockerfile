@@ -1,4 +1,4 @@
-FROM python:3.11-buster as dev
+FROM python:3.11-slim as dev
 
 ARG APP_USER=sobesity\
     APP_GROUP=sobesity\
@@ -14,18 +14,19 @@ ENV PYTHONFAULTHANDLER=1 \
     POETRY_VERSION=1.3.1
 
 RUN apt-get update && \
-    apt-get install -y \
+    apt-get install -y --no-install-recommends\
     netcat \
-    libpq-dev python-dev
-
-RUN groupadd $APP_GROUP && useradd -m -s /bin/bash -g $APP_GROUP $APP_USER
+    libpq-dev python-dev gcc && \
+    rm -rf /var/lib/apt/lists/*
 
 ENV APP_HOME=/home/$APP_USER
 
 WORKDIR $CODE_FOLDER
 
-RUN chown -R $APP_USER:$APP_GROUP $APP_HOME
-RUN chown -R $APP_USER:$APP_GROUP $CODE_FOLDER
+RUN groupadd $APP_GROUP && \
+    useradd -m -s /bin/bash -g $APP_GROUP $APP_USER && \
+    chown -R $APP_USER:$APP_GROUP $APP_HOME && \
+    chown -R $APP_USER:$APP_GROUP $CODE_FOLDER
 
 USER $APP_USER
 ENV PATH="$PATH:$APP_HOME/.local/bin"
@@ -33,12 +34,10 @@ ENV PATH="$PATH:$APP_HOME/.local/bin"
 RUN pip install -U pip && pip install "poetry==$POETRY_VERSION"
 
 
-COPY --chown=$APP_USER ./poetry.lock ./pyproject.toml ./
+COPY --chown=$APP_USER ./poetry.lock ./pyproject.toml ./tox.ini ./
 RUN poetry config virtualenvs.in-project true && poetry install
 
 COPY ./etc/backend/wait-for-it.sh ./etc/backend/entrypoint.sh  /entr/
-
-COPY tox.ini .
 
 COPY --chown=$APP_USER ./src ./
 
