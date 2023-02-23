@@ -46,7 +46,7 @@ def get_skill(
     return SkillSerializer(**asdict(skill)).dict()
 
 
-@skill_bp.post("", responses={"201": None, "403": BadRequestSerializer})
+@skill_bp.post("", responses={"201": None, "400": BadRequestSerializer})
 @inject
 def create_skills(
     body: PostSkillBody, skill_service: ISkillService = Provide[Services.skill]
@@ -54,7 +54,7 @@ def create_skills(
     try:
         skill_service.batch_create(body.to_domain())
     except SkillNameUniqueViolation as exc:
-        return BadRequestSerializer(message=exc.message).dict(), 403
+        return BadRequestSerializer(message=exc.message).dict(), HTTPStatus.BAD_REQUEST
     return Response(), HTTPStatus.CREATED
 
 
