@@ -1,8 +1,9 @@
-FROM python:3.11-slim as dev
+FROM python:3.11-slim as builder
 
 ARG APP_USER=sobesity\
     APP_GROUP=sobesity\
     CODE_FOLDER=/code
+
 
 ENV PYTHONFAULTHANDLER=1 \
     PYTHONUNBUFFERED=1 \
@@ -11,13 +12,12 @@ ENV PYTHONFAULTHANDLER=1 \
     PIP_NO_CACHE_DIR=off \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
     PIP_DEFAULT_TIMEOUT=100 \
-    POETRY_VERSION=1.3.1
+    POETRY_VERSION=1.3.1 \
+    VENV_FOLDER=$CODE_FOLDER/.venv
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends\
-    netcat \
-    libpq-dev python-dev gcc && \
-    rm -rf /var/lib/apt/lists/*
+    libpq-dev python-dev gcc
 
 ENV APP_HOME=/home/$APP_USER
 
@@ -34,12 +34,20 @@ ENV PATH="$PATH:$APP_HOME/.local/bin"
 RUN pip install -U pip && pip install "poetry==$POETRY_VERSION"
 
 
-COPY --chown=$APP_USER ./poetry.lock ./pyproject.toml ./tox.ini ./
+COPY --chown=$APP_USER ./poetry.lock ./pyproject.toml  ./
 RUN poetry config virtualenvs.in-project true && poetry install
 
+FROM python:3.11-slim as dev
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends\
+    netcat libpq-dev &&\
+    rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder $VENV_FOLDER $VENV_FOLDER
 COPY ./etc/backend/wait-for-it.sh ./etc/backend/entrypoint.sh  /entr/
 
-COPY --chown=$APP_USER ./src ./
+COPY --chown=$APP_USER ./src ./tox.ini ./
 
 ENTRYPOINT ["/entr/entrypoint.sh"]
 
