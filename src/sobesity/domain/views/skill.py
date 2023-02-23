@@ -4,13 +4,13 @@ from http import HTTPStatus
 from dependency_injector.wiring import Provide, inject
 from flask import Response
 from flask_openapi3 import APIBlueprint, Tag
-from sobesity.domain.exceptions.skill import SkillNameUniqueViolation
-
 
 from sobesity.containers import Services
 from sobesity.domain.entities import SkillFilterEnitity
+from sobesity.domain.exceptions.skill import SkillNameUniqueViolation
 from sobesity.domain.interfaces.services import ISkillService
 from sobesity.domain.serializers import (
+    BadRequestSerializer,
     DeleteSkillBody,
     GetSkills,
     PatchSkillBody,
@@ -18,7 +18,6 @@ from sobesity.domain.serializers import (
     PostSkillBody,
     SkillIdsSerializer,
     SkillSerializer,
-    BadRequestSerializer,
 )
 
 skill_bp = APIBlueprint(

@@ -1,6 +1,6 @@
 from sobesity.domain.entities import SkillEntity
-
 from sobesity.domain.exceptions.skill import SkillNameUniqueViolation
+
 
 def test_get__no_data__return_empty(client, mock_skill_repository, auth_header):
     mock_skill_repository.get_list.return_value = []
@@ -49,7 +49,10 @@ def test_update(client, mock_skill_repository, auth_header):
     assert mock_skill_repository.update.called
     assert response.json == expected_affected_ids
 
-def test_create__unique_constraint_return_400(client, mock_skill_repository, auth_header):
+
+def test_create__unique_constraint_return_400(
+    client, mock_skill_repository, auth_header
+):
     mock_skill_repository.batch_create.side_effect = SkillNameUniqueViolation()
     body = [{"name": "Ruby"}]
     response = client.post("/api/skill", json=body, headers=auth_header)
