@@ -10,6 +10,8 @@ from sobesity.domain.exceptions import (
     InvalidEmail,
     PasswordNotMatch,
     UserNotFound,
+    EmailUniqueViolation,
+    NicknameUniqueViolation
 )
 from sobesity.domain.interfaces.access_managers import IUserAccessManager
 from sobesity.domain.interfaces.services import IUserService
@@ -49,7 +51,7 @@ def create_user(
 ):
     try:
         user_service.create_user(body.to_domain())
-    except InvalidEmail as exc:
+    except (InvalidEmail, NicknameUniqueViolation, EmailUniqueViolation) as exc:
         return BadRequestSerializer(message=exc.message).dict(), HTTPStatus.BAD_REQUEST
     return Response(), HTTPStatus.CREATED
 

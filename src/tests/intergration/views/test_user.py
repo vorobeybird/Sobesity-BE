@@ -35,3 +35,14 @@ def test_login_user__get_current_user_data__return_200(
     assert response.json["email"] == created_user.email
     assert response.json["nickname"] == created_user.nickname
     assert response.json["user_id"] == created_user.user_id
+
+def test_create_user__valid_body__return_201(client, valid_user_create_body):
+    response = client.post("api/user", json=valid_user_create_body)
+    assert response.status_code == 201
+
+def test_create_user__same_email_nickname__return_400(client, valid_user_create_body):
+    response = client.post("api/user", json=valid_user_create_body)
+    assert response.status_code == 400
+
+    response = client.post("api/user", json=valid_user_create_body)
+    assert response.status_code == 400

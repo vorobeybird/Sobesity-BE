@@ -96,3 +96,13 @@ def jwt_token(jwt_resource):
 @pytest.fixture
 def auth_header(jwt_token):
     return {HttpHeaders.AUTHORIZATION: f"Bearer {jwt_token}"}
+
+@pytest.fixture
+def valid_user_create_body():
+    return {
+        "password": "FooBoo132",
+        "nickname": "FooBoo",
+        "email": "fooboo@google.com",
+        "firstName": "Foo",
+        "lastName": "Boo",
+    }

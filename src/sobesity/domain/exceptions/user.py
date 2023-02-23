@@ -28,3 +28,14 @@ class EmailNotExists(DomainException):
     def __init__(self, email: str) -> None:
         self.message = f"Email ({email}) doesn't exists"
         super().__init__(self.message)
+
+
+class EmailUniqueViolation(DomainException):
+    def __init__(self) -> None:
+        self.message = "Email is used"
+        super().__init__(self.message)
+
+class NicknameUniqueViolation(DomainException):
+    def __init__(self) -> None:
+        self.message = "Nickname is used"
+        super().__init__(self.message)
