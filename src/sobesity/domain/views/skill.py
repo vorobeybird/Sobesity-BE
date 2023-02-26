@@ -7,8 +7,10 @@ from flask_openapi3 import APIBlueprint, Tag
 
 from sobesity.containers import Services
 from sobesity.domain.entities import SkillFilterEnitity
+from sobesity.domain.exceptions.skill import SkillNameUniqueViolation
 from sobesity.domain.interfaces.services import ISkillService
 from sobesity.domain.serializers import (
+    BadRequestSerializer,
     DeleteSkillBody,
     GetSkills,
     PatchSkillBody,
@@ -43,12 +45,15 @@ def get_skill(
     return SkillSerializer(**asdict(skill)).dict()
 
 
-@skill_bp.post("", responses={"201": None})
+@skill_bp.post("", responses={"201": None, "400": BadRequestSerializer})
 @inject
 def create_skills(
     body: PostSkillBody, skill_service: ISkillService = Provide[Services.skill]
 ):
-    skill_service.batch_create(body.to_domain())
+    try:
+        skill_service.batch_create(body.to_domain())
+    except SkillNameUniqueViolation as exc:
+        return BadRequestSerializer(message=exc.message).dict(), HTTPStatus.BAD_REQUEST
     return Response(), HTTPStatus.CREATED
 
 
