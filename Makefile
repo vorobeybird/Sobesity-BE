@@ -1,7 +1,7 @@
 PROJECT_CODE_PATH=/code
 DOCKER_COMPOSE=COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose
 TEST_DOCKER_COMPOSE=${DOCKER_COMPOSE} -p test_sobesity -f docker-compose.test.yml
-
+BUILDER_DOCKER_COMPOSE=${DOCKER_COMPOSE} -p builder_sobesity -f docker-compose.builder.yml
 
 .PHONY: build
 build:
@@ -91,4 +91,4 @@ restart-app:
 
 .PHONY: add-lib
 add-lib:
-	${DOCKER_COMPOSE} run --rm app poetry add ${lib}
+	${BUILDER_DOCKER_COMPOSE} run --rm builder poetry add ${lib}
