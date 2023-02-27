@@ -15,7 +15,7 @@ def test_create_user_valid_data__create_sucessfully(user_service, user_for_creat
     assert user.hashed_password != user_for_create.password
 
 
-def test_create_user__invalid_email__raise_error(user_service, user_for_create):
+def test_create_user__invalid_email__raise_error(user_service, user_for_create, enable_email_validation):
     user_for_create.email = "totalinvalid_email"
     with pytest.raises(InvalidEmail):
         user_service.create_user(user_for_create)
