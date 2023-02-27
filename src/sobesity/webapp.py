@@ -1,20 +1,40 @@
-from flask_openapi3 import Info, OpenAPI
-
+from flask import Flask
+from flask_openapi3 import HTTPBearer, Info, OpenAPI
 from sobesity.containers import Application
-from sobesity.domain.views import skill, question, answer
+from sobesity.domain.views import skill, user, question, answer
+
+
+
+def register_views(app):
+    app.register_api(skill.skill_bp)
+    app.register_api(user.user_bp)
+    app.register_api(question.question_bp)
+    app.register_api(answer.answer_bp)
+
+
+def init_dependency():
+    container = Application()
+    container.services.wire([skill, user, question,answer])
+    return container
+
+
+def enable_jwt_check(app):
+    app.before_request(app.container.resources.jwt().verify_jwt)
+
+
+def prepare_swagger() -> Flask:
+    info = Info(title="Sobesity API", version="0.0.1")
+    security_schemes = {"jwt": HTTPBearer(bearerFormat="JWT")}
+
+    return OpenAPI(__name__, info=info, security_schemes=security_schemes)
 
 
 def create_app():
-    info = Info(title="Sobesity API", version="0.0.1")
-    app = OpenAPI(__name__, info=info)
-
-    container = Application()
-    container.services.wire([skill])
-    container.services.wire([question])
-    container.services.wire([answer])
+    container = init_dependency()
+    app = prepare_swagger()
     app.container = container
 
-    app.register_api(skill.skill_bp)
-    app.register_api(question.question_bp)
-    app.register_api(answer.answer_bp)
+    register_views(app)
+    enable_jwt_check(app)
+
     return app

@@ -2,9 +2,11 @@ from pydantic import BaseModel, Field
 
 from sobesity.domain.entities.skill import SkillEntity, SkillFilterEnitity, SkillId
 
+skill_id_field = Field(..., alias="skillId")
+
 
 class SkillSerializer(BaseModel):
-    skill_id: SkillId = Field(...)
+    skill_id: SkillId = skill_id_field
     name: str
 
     def to_domain(self) -> SkillEntity:
@@ -30,14 +32,14 @@ class GetSkills(BaseModel):
 
 
 class PathSkillId(BaseModel):
-    skill_id: SkillId
+    skill_id: SkillId = skill_id_field
 
     def to_domain(self) -> SkillId:
         return SkillId(self.skill_id)
 
 
 class SkillIdsSerializer(BaseModel):
-    skill_ids: list[SkillId]
+    skill_ids: list[SkillId] = Field(..., alias="skillIds")
 
     def to_domain(self) -> list[SkillId]:
         return [SkillId(skill_id) for skill_id in self.skill_ids]
@@ -48,7 +50,7 @@ class DeleteSkillBody(SkillIdsSerializer):
 
 
 class PatchSkillBody(BaseModel):
-    skill_id: SkillId
+    skill_id: SkillId = skill_id_field
     name: str
 
     def get_to_set(self):

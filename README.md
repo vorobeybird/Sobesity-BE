@@ -6,7 +6,7 @@ To run the app:
 make run
 ```
 
-API Documentation: http://localhost:5150/openapi/
+API Documentation: <a href="http://localhost:5150/openapi/" target="_blank">http://localhost:5150/openapi/</a>
 
 ## Useful dev commands
 To build the app:
@@ -38,3 +38,7 @@ Set `breakpoint()` in particular place then run the command. It will stop the ap
 make debug-app
 ```
 
+
+## How to generate JWT token
+Open [jwt.io](jwt.io). In `payload` set `iat`("Issue at") to your current time in unix style [(human time to unix)](https://www.epochconverter.com/).
+Then set `exp`("Expiration time") to time when you what to expire. For example after a week and set date in unix style.

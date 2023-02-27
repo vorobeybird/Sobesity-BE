@@ -1,4 +1,5 @@
 from dataclasses import asdict
+from http import HTTPStatus
 
 from dependency_injector.wiring import Provide, inject
 from flask import Response
@@ -6,9 +7,11 @@ from flask_openapi3 import APIBlueprint, Tag
 
 from sobesity.domain.exceptions import SkillExistViolation
 from sobesity.containers import Services
-from sobesity.domain.entities.skill import SkillFilterEnitity
-from sobesity.domain.interfaces.services.skill import ISkillService
+from sobesity.domain.entities import SkillFilterEnitity
+from sobesity.domain.exceptions.skill import SkillNameUniqueViolation
+from sobesity.domain.interfaces.services import ISkillService
 from sobesity.domain.serializers import (
+    BadRequestSerializer,
     DeleteSkillBody,
     GetSkills,
     PatchSkillBody,
@@ -24,6 +27,7 @@ skill_bp = APIBlueprint(
     url_prefix="/api/skill",
     abp_tags=[Tag(name="skill", description="User's skills")],
     doc_ui=True,
+    abp_security=[{"jwt": []}],
 )
 
 
@@ -49,13 +53,16 @@ def get_skill(
 
 
 
-@skill_bp.post("", responses={"201": None})
+@skill_bp.post("", responses={"201": None, "400": BadRequestSerializer})
 @inject
 def create_skills(
     body: PostSkillBody, skill_service: ISkillService = Provide[Services.skill]
 ):
-    skill_service.batch_create(body.to_domain())
-    return Response(), 201
+    try:
+        skill_service.batch_create(body.to_domain())
+    except SkillNameUniqueViolation as exc:
+        return BadRequestSerializer(message=exc.message).dict(), HTTPStatus.BAD_REQUEST
+    return Response(), HTTPStatus.CREATED
 
 
 @skill_bp.delete("", responses={"204": None})
@@ -64,7 +71,7 @@ def delete_skills(
     body: DeleteSkillBody, skill_service: ISkillService = Provide[Services.skill]
 ):
     skill_service.delete(body.to_domain())
-    return Response(), 204
+    return Response(), HTTPStatus.NO_CONTENT
 
 
 @skill_bp.patch("", responses={"200": SkillIdsSerializer})
