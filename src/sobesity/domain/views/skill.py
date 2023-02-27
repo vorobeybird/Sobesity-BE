@@ -4,6 +4,7 @@ from dependency_injector.wiring import Provide, inject
 from flask import Response
 from flask_openapi3 import APIBlueprint, Tag
 
+from sobesity.domain.exceptions import SkillExistViolation
 from sobesity.containers import Services
 from sobesity.domain.entities.skill import SkillFilterEnitity
 from sobesity.domain.interfaces.services.skill import ISkillService
@@ -37,8 +38,15 @@ def get_skills(skill_service: ISkillService = Provide[Services.skill]):
 def get_skill(
     path: PathSkillId, skill_service: ISkillService = Provide[Services.skill]
 ):
-    skill = skill_service.get_list(SkillFilterEnitity(skill_ids=[path.skill_id]))[0]
-    return SkillSerializer(**asdict(skill)).dict()
+    try:
+        skill = skill_service.get_list(SkillFilterEnitity(skill_ids=[path.skill_id]))[0]
+        return SkillSerializer(**asdict(skill)).dict()
+    except IndexError as exc:
+        raise SkillExistViolation()
+
+
+
+
 
 
 @skill_bp.post("", responses={"201": None})
