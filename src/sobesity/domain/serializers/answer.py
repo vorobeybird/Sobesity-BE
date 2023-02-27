@@ -1,0 +1,58 @@
+from pydantic import BaseModel, Field
+
+from sobesity.domain.entities.answer import AnswerEntity, AnswerFilterEnitity, AnswerId
+
+
+class AnswerSerializer(BaseModel):
+    answer_id: AnswerId = Field(...)
+    answer: str
+
+    def to_domain(self) -> AnswerEntity:
+        return AnswerEntity(answer_id=self.answer_id, answer=self.answer)
+
+
+class AnswerBodyElem(BaseModel):
+    answer: str
+
+    def to_domain(self) -> AnswerEntity:
+        return AnswerEntity(answer_id=None, answer=self.answer)
+
+
+class PostAnswerBody(BaseModel):
+    __root__: list[AnswerBodyElem]
+
+    def to_domain(self) -> list[AnswerEntity]:
+        return [answer.to_domain() for answer in self.__root__]
+
+
+class GetAnswers(BaseModel):
+    __root__: list[AnswerSerializer]
+
+
+class PathAnswerId(BaseModel):
+    answer_id: AnswerId
+
+    def to_domain(self) -> AnswerId:
+        return AnswerId(self.answer_id)
+
+
+class AnswerIdsSerializer(BaseModel):
+    answer_ids: list[AnswerId]
+
+    def to_domain(self) -> list[AnswerId]:
+        return [AnswerId(answer_id) for answer_id in self.answer_ids]
+
+
+class DeleteAnswerBody(AnswerIdsSerializer):
+    pass
+
+
+class PatchAnswerBody(BaseModel):
+    answer_id: AnswerId
+    answer: str
+
+    def get_to_set(self):
+        return AnswerEntity(answer_id=None, answer=self.answer)
+
+    def get_where(self) -> list[AnswerFilterEnitity]:
+        return AnswerFilterEnitity(answer_ids=[self.answer_id])

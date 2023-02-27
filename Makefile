@@ -92,3 +92,7 @@ restart-app:
 .PHONY: add-lib
 add-lib:
 	${DOCKER_COMPOSE} run --rm app poetry add ${lib}
+
+.PHONY: reset
+reset:
+	${DOCKER_COMPOSE} down -v
