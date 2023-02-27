@@ -31,7 +31,7 @@ def prepare_swagger() -> Flask:
 def create_app():
     container = init_dependency()
     app = prepare_swagger()
-    CORS(app)
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
     app.container = container
 
     register_views(app)
