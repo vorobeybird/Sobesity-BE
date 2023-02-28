@@ -1,4 +1,5 @@
-from sobesity.domain.exceptions.base import DomainException
+from sobesity.domain.entities import SkillId
+from sobesity.domain.exceptions.base import DomainException, EntityNotFound
 
 
 class SkillNameUniqueViolation(DomainException):
