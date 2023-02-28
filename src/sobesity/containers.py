@@ -4,7 +4,8 @@ from sobesity.config import Settings
 from sobesity.domain.access_managers import UserAccessManager
 from sobesity.domain.services import SkillService, UserService
 from sobesity.infrastructure.datasource import datasource
-from sobesity.infrastructure.repositories import SkillRepository, UserRepository
+from sobesity.infrastructure.repositories import (SkillRepository,
+                                                  UserRepository)
 from sobesity.infrastructure.resources import JWTResource
 
 

@@ -1,6 +1,7 @@
+from http import HTTPStatus
+
 from sobesity.domain.entities import SkillEntity
 from sobesity.domain.exceptions import SkillNameUniqueViolation
-from http import HTTPStatus
 
 
 def test_get__no_data__return_empty(client, mock_skill_repository, auth_header):
@@ -28,6 +29,7 @@ def test_get__not_found__return_404(client, mock_skill_repository, auth_header):
 
     response = client.get("/api/skill/123", headers=auth_header)
     assert response.status_code == HTTPStatus.NOT_FOUND
+
 
 def test_create(client, mock_skill_repository, auth_header):
     body = [{"name": "Ruby"}]

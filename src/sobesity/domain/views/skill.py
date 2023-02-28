@@ -6,21 +6,15 @@ from flask import Response
 from flask_openapi3 import APIBlueprint, Tag
 
 from sobesity.containers import Services
-from sobesity.domain.utils.response import bad_request_maker
 from sobesity.domain.entities import SkillFilterEnitity
 from sobesity.domain.exceptions.skill import SkillNameUniqueViolation
 from sobesity.domain.interfaces.services import ISkillService
-from sobesity.domain.serializers import (
-    NotFoundSerializer,
-    BadRequestSerializer,
-    DeleteSkillBody,
-    GetSkills,
-    PatchSkillBody,
-    PathSkillId,
-    PostSkillBody,
-    SkillIdsSerializer,
-    SkillSerializer,
-)
+from sobesity.domain.serializers import (BadRequestSerializer, DeleteSkillBody,
+                                         GetSkills, NotFoundSerializer,
+                                         PatchSkillBody, PathSkillId,
+                                         PostSkillBody, SkillIdsSerializer,
+                                         SkillSerializer)
+from sobesity.domain.utils.response import bad_request_maker
 
 skill_bp = APIBlueprint(
     "skill",
