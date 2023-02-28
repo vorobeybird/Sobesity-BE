@@ -35,6 +35,7 @@ class EmailUniqueViolation(DomainException):
         self.message = "Email is used"
         super().__init__(self.message)
 
+
 class NicknameUniqueViolation(DomainException):
     def __init__(self) -> None:
         self.message = "Nickname is used"

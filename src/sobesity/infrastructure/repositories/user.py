@@ -1,12 +1,16 @@
 from dataclasses import asdict
 from datetime import datetime
 
+from psycopg2.errors import UniqueViolation
 from sqlalchemy import insert, select
 from sqlalchemy.exc import IntegrityError
-from psycopg2.errors import UniqueViolation
 
 from sobesity.domain.entities import UserEntity, UserFilter
-from sobesity.domain.exceptions import UserNotFound, NicknameUniqueViolation, EmailUniqueViolation
+from sobesity.domain.exceptions import (
+    EmailUniqueViolation,
+    NicknameUniqueViolation,
+    UserNotFound,
+)
 from sobesity.domain.interfaces.repositories import IUserRepository
 from sobesity.infrastructure.constants import ModelFields
 from sobesity.infrastructure.models import user_table

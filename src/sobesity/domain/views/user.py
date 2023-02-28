@@ -7,11 +7,11 @@ from flask_openapi3 import APIBlueprint, Tag
 from sobesity.containers import Services
 from sobesity.domain.exceptions import (
     EmailNotExists,
+    EmailUniqueViolation,
     InvalidEmail,
+    NicknameUniqueViolation,
     PasswordNotMatch,
     UserNotFound,
-    EmailUniqueViolation,
-    NicknameUniqueViolation
 )
 from sobesity.domain.interfaces.access_managers import IUserAccessManager
 from sobesity.domain.interfaces.services import IUserService

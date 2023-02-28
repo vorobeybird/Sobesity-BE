@@ -1,11 +1,14 @@
 from contextlib import contextmanager
-from datetime import datetime
 
+import email_validator
 import pytest
 from http_constants.headers import HttpHeaders
 
-from sobesity.domain.entities import CreateUserEntity, UserEntity, UserFilter, UserId
+from sobesity.domain.entities import UserFilter, UserId
 from sobesity.webapp import create_app
+from tests.factories import CreateUserFactory, UserEntityFactory
+
+email_validator.TEST_ENVIRONMENT = True
 
 
 @pytest.fixture
@@ -39,30 +42,26 @@ def client(app):
 
 @pytest.fixture
 def user_for_create():
-    return CreateUserEntity(
-        first_name="Some",
-        last_name="Userov",
-        nickname="someuser1",
-        email="valid@test.com",
-        password="Foo#boo2",
-    )
+    return CreateUserFactory()
+
+
+@pytest.fixture
+def user_factory():
+    return UserEntityFactory
+
+
+@pytest.fixture
+def create_user_factory():
+    return CreateUserFactory
 
 
 @pytest.fixture
 def user_entity():
-    return UserEntity(
-        user_id=UserId(4),
-        nickname="someuser1",
-        email="valid@test.com",
-        registered_at=datetime(2023, 2, 2, 17, 47, 25),
-        hashed_password="$2b$12$yEadIhUHE2FrG9UPoacMQuNvH6CpEha4QjNEFaM2zzkRvVd1ly686",
-        salt="$2b$12$yEadIhUHE2FrG9UPoacMQu",
-    )
+    return UserEntityFactory()
 
 
 @pytest.fixture
 def created_user(user_service, user_for_create):
-    # TODO replace with factory
     user_service.create_user(user_for_create)
     return user_service.get_user(UserFilter(nickname=user_for_create.nickname))
 
@@ -97,12 +96,20 @@ def jwt_token(jwt_resource):
 def auth_header(jwt_token):
     return {HttpHeaders.AUTHORIZATION: f"Bearer {jwt_token}"}
 
+
 @pytest.fixture
-def valid_user_create_body():
+def valid_user_create_body(user_for_create):
     return {
-        "password": "FooBoo132",
-        "nickname": "FooBoo",
-        "email": "fooboo@google.com",
-        "firstName": "Foo",
-        "lastName": "Boo",
+        "password": user_for_create.password,
+        "nickname": user_for_create.nickname,
+        "email": user_for_create.email,
+        "firstName": user_for_create.first_name,
+        "lastName": user_for_create.last_name,
     }
+
+
+@pytest.fixture
+def enable_email_validation():
+    email_validator.TEST_ENVIRONMENT = False
+    yield
+    email_validator.TEST_ENVIRONMENT = True

@@ -17,7 +17,6 @@ def test_get_user_by_filter__not_found__return_404(client, mock_user_repository)
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
-
 def test_create_user__invalid_body__return_422(client, valid_user_create_body):
     invalid_body_incorrect_email = deepcopy(valid_user_create_body)
     invalid_body_incorrect_email["email"] = "no_domain"
@@ -30,4 +29,3 @@ def test_create_user__invalid_body__return_422(client, valid_user_create_body):
         invalid_body.pop(field_to_exclude)
         response = client.post("api/user", json=invalid_body)
         assert response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY
-
