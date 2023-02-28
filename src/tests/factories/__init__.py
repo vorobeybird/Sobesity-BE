@@ -1,1 +1,1 @@
-from .user import UserEntityFactory, CreateUserFactory
+from .user import CreateUserFactory, UserEntityFactory

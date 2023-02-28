@@ -1,15 +1,15 @@
 from contextlib import contextmanager
-from datetime import datetime
 
-import pytest
 import email_validator
+import pytest
 from http_constants.headers import HttpHeaders
 
-from sobesity.domain.entities import CreateUserEntity, UserEntity, UserFilter, UserId
+from sobesity.domain.entities import UserFilter, UserId
 from sobesity.webapp import create_app
 from tests.factories import CreateUserFactory, UserEntityFactory
 
 email_validator.TEST_ENVIRONMENT = True
+
 
 @pytest.fixture
 def di(app):
@@ -49,9 +49,11 @@ def user_for_create():
 def user_factory():
     return UserEntityFactory
 
+
 @pytest.fixture
 def create_user_factory():
     return CreateUserFactory
+
 
 @pytest.fixture
 def user_entity():
@@ -94,6 +96,7 @@ def jwt_token(jwt_resource):
 def auth_header(jwt_token):
     return {HttpHeaders.AUTHORIZATION: f"Bearer {jwt_token}"}
 
+
 @pytest.fixture
 def valid_user_create_body(user_for_create):
     return {
@@ -103,6 +106,7 @@ def valid_user_create_body(user_for_create):
         "firstName": user_for_create.first_name,
         "lastName": user_for_create.last_name,
     }
+
 
 @pytest.fixture
 def enable_email_validation():

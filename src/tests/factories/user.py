@@ -1,6 +1,7 @@
 import factory
 
-from sobesity.domain.entities import UserEntity, CreateUserEntity, UserId
+from sobesity.domain.entities import CreateUserEntity, UserEntity, UserId
+
 
 class UserEntityFactory(factory.Factory):
     class Meta:

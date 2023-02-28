@@ -17,5 +17,3 @@ def mock_skill_repository(di):
 @pytest.fixture
 def mock_user_repository(di):
     yield from mock_with_di(di.repositories.user)
-
-
