@@ -45,7 +45,7 @@ COPY ./etc/backend/wait-for-it.sh ./etc/backend/entrypoint.sh  /entr/
 
 COPY --from=builder $VENV_FOLDER $VENV_FOLDER
 
-COPY --chown=$APP_USER ./src ./tox.ini ./
+COPY --chown=$APP_USER ./src ./tox.ini ./pyproject.toml ./
 
 ENTRYPOINT ["/entr/entrypoint.sh"]
 
