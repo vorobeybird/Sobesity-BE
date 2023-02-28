@@ -32,10 +32,12 @@ def test_get_user__can_get_by_all_params__return_user(user_service, created_user
 
     assert user_by_id == user_by_nickname == user_by_email == created_user
 
-@pytest.mark.xfail
-def test_create_user__same_email__raise_error(user_service, created_user, user_for_create, new_user):
-    pass
+def test_create_user__same_email__raise_error(user_service, created_user, create_user_factory):
+    new_user = create_user_factory(email=created_user.email)
+    with pytest.raises(EmailUniqueViolation):
+        user_service.create_user(new_user)
 
-@pytest.mark.xfail
-def test_create_user__same_nickname__raise_error(user_service, created_user, user_for_create):
-    pass
+def test_create_user__same_nickname__raise_error(user_service, created_user, create_user_factory):
+    new_user = create_user_factory(nickname=created_user.nickname)
+    with pytest.raises(NicknameUniqueViolation):
+        user_service.create_user(new_user)

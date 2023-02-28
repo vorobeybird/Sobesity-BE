@@ -46,6 +46,14 @@ def user_for_create():
 
 
 @pytest.fixture
+def user_factory():
+    return UserEntityFactory
+
+@pytest.fixture
+def create_user_factory():
+    return CreateUserFactory
+
+@pytest.fixture
 def user_entity():
     return UserEntityFactory()
 
