@@ -5,17 +5,25 @@ from flask import Response, current_app
 from flask_openapi3 import APIBlueprint, Tag
 
 from sobesity.containers import Services
-from sobesity.domain.exceptions import (EmailNotExists, EmailUniqueViolation,
-                                        InvalidEmail, NicknameUniqueViolation,
-                                        PasswordNotMatch, UserNotFound)
+from sobesity.domain.exceptions import (
+    EmailNotExists,
+    EmailUniqueViolation,
+    InvalidEmail,
+    NicknameUniqueViolation,
+    PasswordNotMatch,
+    UserNotFound,
+)
 from sobesity.domain.interfaces.access_managers import IUserAccessManager
 from sobesity.domain.interfaces.services import IUserService
-from sobesity.domain.serializers import (AccessGrantedSerializer,
-                                         BadRequestSerializer,
-                                         CreateUserSerializer,
-                                         GetUserSerializer,
-                                         LoginUserSerializer,
-                                         NotFoundSerializer, UserQuery)
+from sobesity.domain.serializers import (
+    AccessGrantedSerializer,
+    BadRequestSerializer,
+    CreateUserSerializer,
+    GetUserSerializer,
+    LoginUserSerializer,
+    NotFoundSerializer,
+    UserQuery,
+)
 from sobesity.domain.utils.response import bad_request_maker
 
 user_bp = APIBlueprint(

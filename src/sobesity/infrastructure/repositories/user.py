@@ -6,8 +6,11 @@ from sqlalchemy import insert, select
 from sqlalchemy.exc import IntegrityError
 
 from sobesity.domain.entities import UserEntity, UserFilter
-from sobesity.domain.exceptions import (EmailUniqueViolation,
-                                        NicknameUniqueViolation, UserNotFound)
+from sobesity.domain.exceptions import (
+    EmailUniqueViolation,
+    NicknameUniqueViolation,
+    UserNotFound,
+)
 from sobesity.domain.interfaces.repositories import IUserRepository
 from sobesity.infrastructure.constants import ModelFields
 from sobesity.infrastructure.models import user_table

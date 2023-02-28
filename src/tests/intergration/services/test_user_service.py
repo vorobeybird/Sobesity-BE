@@ -1,8 +1,11 @@
 import pytest
 
 from sobesity.domain.entities import UserFilter
-from sobesity.domain.exceptions import (EmailUniqueViolation, InvalidEmail,
-                                        NicknameUniqueViolation)
+from sobesity.domain.exceptions import (
+    EmailUniqueViolation,
+    InvalidEmail,
+    NicknameUniqueViolation,
+)
 
 
 def test_create_user_valid_data__create_sucessfully(user_service, user_for_create):

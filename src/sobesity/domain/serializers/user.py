@@ -3,8 +3,13 @@ from typing import Optional
 
 from pydantic import BaseModel, EmailStr, Field
 
-from sobesity.domain.entities import (CreateUserEntity, LoginUserEntity,
-                                      UserEntity, UserFilter, UserId)
+from sobesity.domain.entities import (
+    CreateUserEntity,
+    LoginUserEntity,
+    UserEntity,
+    UserFilter,
+    UserId,
+)
 
 user_id_field = Field(..., alias="userId")
 first_name_field = Field(..., alias="firstName")

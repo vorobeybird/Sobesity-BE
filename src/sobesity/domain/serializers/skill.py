@@ -1,7 +1,6 @@
 from pydantic import BaseModel, Field
 
-from sobesity.domain.entities.skill import (SkillEntity, SkillFilterEnitity,
-                                            SkillId)
+from sobesity.domain.entities.skill import SkillEntity, SkillFilterEnitity, SkillId
 
 skill_id_field = Field(..., alias="skillId")
 

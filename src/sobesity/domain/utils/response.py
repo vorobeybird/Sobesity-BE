@@ -2,8 +2,7 @@ from http import HTTPStatus
 
 from pydantic import BaseModel
 
-from sobesity.domain.serializers import (BadRequestSerializer,
-                                         NotFoundSerializer)
+from sobesity.domain.serializers import BadRequestSerializer, NotFoundSerializer
 
 
 def bad_request_maker(serializer: BaseModel) -> tuple[dict, int]:
