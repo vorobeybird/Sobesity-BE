@@ -5,10 +5,10 @@ Revises: 23bed438f3a8
 Create Date: 2023-02-27 07:51:43.667405
 
 """
-from alembic import op
+
 import sqlalchemy as sa
-from sqlalchemy import Column, INTEGER, ForeignKey
-from sobesity.infrastructure.models.question import question_id_seq
+from alembic import op
+
 
 
 # revision identifiers, used by Alembic.
@@ -20,7 +20,7 @@ depends_on = None
 
 def upgrade() -> None:
     op.add_column('question',
-                  Column('skill_id', INTEGER, ForeignKey('skill.skill_id') )
+                  sa.Column('skill_id', sa.integer(), sa.ForeignKey('skill.skill_id'))
                   )
 
 

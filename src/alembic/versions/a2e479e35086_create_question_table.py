@@ -12,7 +12,7 @@ from sobesity.infrastructure.models.question import question_id_seq
 
 # revision identifiers, used by Alembic.
 revision = 'a2e479e35086'
-down_revision = 'f84c64349c87'
+down_revision = 'd4122e36b6dc'
 branch_labels = None
 depends_on = None
 
