@@ -20,7 +20,7 @@ depends_on = None
 
 def upgrade() -> None:
     op.add_column('question',
-                  sa.Column('skill_id', sa.integer(), sa.ForeignKey('skill.skill_id'))
+                  sa.Column('skill_id', sa.Integer(), sa.ForeignKey('skill.skill_id'))
                   )
 
 

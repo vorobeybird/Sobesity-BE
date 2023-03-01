@@ -23,6 +23,7 @@ answer_bp = APIBlueprint(
     url_prefix="/api/answer",
     abp_tags=[Tag(name="answer", description="Answers")],
     doc_ui=True,
+    abp_security=[{"jwt": []}],
 )
 
 
