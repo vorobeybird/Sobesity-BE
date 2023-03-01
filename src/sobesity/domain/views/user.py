@@ -7,7 +7,9 @@ from flask_openapi3 import APIBlueprint, Tag
 from sobesity.containers import Services
 from sobesity.domain.exceptions import (
     EmailNotExists,
+    EmailUniqueViolation,
     InvalidEmail,
+    NicknameUniqueViolation,
     PasswordNotMatch,
     UserNotFound,
 )
@@ -49,7 +51,7 @@ def create_user(
 ):
     try:
         user_service.create_user(body.to_domain())
-    except InvalidEmail as exc:
+    except (InvalidEmail, NicknameUniqueViolation, EmailUniqueViolation) as exc:
         return BadRequestSerializer(message=exc.message).dict(), HTTPStatus.BAD_REQUEST
     return Response(), HTTPStatus.CREATED
 

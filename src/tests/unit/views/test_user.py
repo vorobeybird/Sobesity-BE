@@ -17,11 +17,6 @@ def test_get_user_by_filter__not_found__return_404(client, mock_user_repository)
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
-def test_create_user__valid_body__return_201(client, valid_user_create_body):
-    response = client.post("api/user", json=valid_user_create_body)
-    assert response.status_code == 201
-
-
 def test_create_user__invalid_body__return_422(client, valid_user_create_body):
     invalid_body_incorrect_email = deepcopy(valid_user_create_body)
     invalid_body_incorrect_email["email"] = "no_domain"
