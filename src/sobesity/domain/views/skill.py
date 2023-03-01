@@ -13,12 +13,14 @@ from sobesity.domain.serializers import (
     BadRequestSerializer,
     DeleteSkillBody,
     GetSkills,
+    NotFoundSerializer,
     PatchSkillBody,
     PathSkillId,
     PostSkillBody,
     SkillIdsSerializer,
     SkillSerializer,
 )
+from sobesity.domain.utils.response import bad_request_maker
 
 skill_bp = APIBlueprint(
     "skill",
@@ -36,12 +38,14 @@ def get_skills(skill_service: ISkillService = Provide[Services.skill]):
     return skill_service.get_list()
 
 
-@skill_bp.get("/<int:skill_id>", responses={"200": SkillSerializer})
+@skill_bp.get("/<int:skillId>", responses={"200": SkillSerializer})
 @inject
 def get_skill(
     path: PathSkillId, skill_service: ISkillService = Provide[Services.skill]
 ):
-    skill = skill_service.get_list(SkillFilterEnitity(skill_ids=[path.skill_id]))[0]
+    skill = skill_service.get_list(SkillFilterEnitity(skill_ids=[path.skill_id]))
+    if not skill:
+        return bad_request_maker(NotFoundSerializer(message="Skill not exists"))
     return SkillSerializer(**asdict(skill)).dict()
 
 
@@ -53,7 +57,7 @@ def create_skills(
     try:
         skill_service.batch_create(body.to_domain())
     except SkillNameUniqueViolation as exc:
-        return BadRequestSerializer(message=exc.message).dict(), HTTPStatus.BAD_REQUEST
+        return bad_request_maker(BadRequestSerializer(message=exc.message))
     return Response(), HTTPStatus.CREATED
 
 

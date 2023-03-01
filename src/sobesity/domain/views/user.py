@@ -24,6 +24,7 @@ from sobesity.domain.serializers import (
     NotFoundSerializer,
     UserQuery,
 )
+from sobesity.domain.utils.response import bad_request_maker
 
 user_bp = APIBlueprint(
     "user",
@@ -40,7 +41,7 @@ def get_user(query: UserQuery, user_service: IUserService = Provide[Services.use
     try:
         user = user_service.get_user(query.to_domain())
     except UserNotFound as exc:
-        return NotFoundSerializer(message=exc.message).dict(), HTTPStatus.NOT_FOUND
+        return bad_request_maker(NotFoundSerializer(message=exc.message))
     return GetUserSerializer.from_domain(user).dict()
 
 
@@ -52,7 +53,7 @@ def create_user(
     try:
         user_service.create_user(body.to_domain())
     except (InvalidEmail, NicknameUniqueViolation, EmailUniqueViolation) as exc:
-        return BadRequestSerializer(message=exc.message).dict(), HTTPStatus.BAD_REQUEST
+        return bad_request_maker(BadRequestSerializer(message=exc.message))
     return Response(), HTTPStatus.CREATED
 
 
@@ -69,9 +70,8 @@ def login(
     try:
         token = user_access_manager.login(body.to_domain())
     except (EmailNotExists, PasswordNotMatch):
-        return (
-            BadRequestSerializer(message="Invalid email or password").dict(),
-            HTTPStatus.BAD_REQUEST,
+        return bad_request_maker(
+            BadRequestSerializer(message="Invalid email or password")
         )
     return AccessGrantedSerializer(access_token=token).dict()
 
