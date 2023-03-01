@@ -8,9 +8,11 @@ AnswerId = NewType("AnswerId", int)
 class AnswerEntity:
     answer_id: AnswerId
     answer: str
+    right: str
 
 
 @dataclass
 class AnswerFilterEnitity:
     answers_ids: Optional[list[AnswerId]] = None
     answers: Optional[list[str]] = None
+    right: Optional[list[str]] = None
