@@ -12,6 +12,13 @@ class SkillSerializer(BaseModel):
     def to_domain(self) -> SkillEntity:
         return SkillEntity(skill_id=self.skill_id, name=self.name)
 
+    @classmethod
+    def from_domain(cls, skill: SkillEntity):
+        return cls(
+            skillId=skill.skill_id,
+            name=skill.name,
+        )
+
 
 class SkillBodyElem(BaseModel):
     name: str
