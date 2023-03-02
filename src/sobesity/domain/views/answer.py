@@ -10,12 +10,14 @@ from sobesity.domain.interfaces.services.answer import IAnswerService
 from sobesity.domain.serializers import (
     DeleteAnswerBody,
     GetAnswers,
+    NotFoundSerializer,
     PatchAnswerBody,
     PathAnswerId,
     PostAnswerBody,
     AnswerIdsSerializer,
     AnswerSerializer,
 )
+from sobesity.domain.utils.response import bad_request_maker
 
 answer_bp = APIBlueprint(
     "answer",
@@ -38,8 +40,10 @@ def get_answers(answer_service: IAnswerService = Provide[Services.answer]):
 def get_answer(
     path: PathAnswerId, answer_service: IAnswerService = Provide[Services.answer]
 ):
-    answer = answer_service.get_list(AnswerFilterEnitity(answer_ids=[path.answer_id]))[0]
-    return AnswerSerializer(**asdict(answer)).dict()
+    answer = answer_service.get_list(AnswerFilterEnitity(answer_ids=[path.answer_id]))
+    if not answer:
+        return bad_request_maker(NotFoundSerializer(message="Answer not exists"))
+    return AnswerSerializer(**asdict(answer[0])).dict()
 
 
 @answer_bp.post("", responses={"201": None})

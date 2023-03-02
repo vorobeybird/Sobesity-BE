@@ -22,9 +22,9 @@ class AnswerRepository(IAnswerRepository):
 
     def _patch_query(self, query, answer_filter: AnswerFilterEnitity):
         if answer_filter.answer_ids is not None:
-            query = query.where(answer_table.c.question_id.in_(answer_filter.question_ids))
-        if answer_filter.names is not None:
-            query = query.where(answer_table.c.name.in_(answer_filter.names))
+            query = query.where(answer_table.c.answer_id.in_(answer_filter.answer_ids))
+        if answer_filter.answers is not None:
+            query = query.where(answer_table.c.name.in_(answer_filter.answers))
         return query
 
     def get_list(
