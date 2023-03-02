@@ -23,8 +23,8 @@ class QuestionRepository(IQuestionRepository):
     def _patch_query(self, query, question_filter: QuestionFilterEnitity):
         if question_filter.question_ids is not None:
             query = query.where(question_table.c.question_id.in_(question_filter.question_ids))
-        if question_filter.names is not None:
-            query = query.where(question_table.c.name.in_(question_filter.names))
+        if question_filter.questions is not None:
+            query = query.where(question_table.c.name.in_(question_filter.questions))
         return query
 
     def get_list(

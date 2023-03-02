@@ -22,6 +22,7 @@ def build_answer_entity(cursor) -> AnswerEntity:
     return AnswerEntity(
         answer_id=cursor.answer_id,
         answer=cursor.answer,
+        right=cursor.right,
     )
 
 

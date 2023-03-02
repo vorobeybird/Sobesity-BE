@@ -6,7 +6,7 @@ from sobesity.domain.entities.answer import AnswerEntity, AnswerFilterEnitity, A
 class AnswerSerializer(BaseModel):
     answer_id: AnswerId = Field(...)
     answer: str
-    right: str
+    right: bool
 
     def to_domain(self) -> AnswerEntity:
         return AnswerEntity(answer_id=self.answer_id, answer=self.answer, right=self.right)
@@ -14,7 +14,7 @@ class AnswerSerializer(BaseModel):
 
 class AnswerBodyElem(BaseModel):
     answer: str
-    right: str
+    right: bool
 
     def to_domain(self) -> AnswerEntity:
         return AnswerEntity(answer_id=None, answer=self.answer, right=self.right)
