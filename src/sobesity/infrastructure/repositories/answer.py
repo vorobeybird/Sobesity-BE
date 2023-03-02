@@ -31,7 +31,7 @@ class AnswerRepository(IAnswerRepository):
         self, answer_filter: Optional[AnswerFilterEnitity] = None
     ) -> list[AnswerEntity]:
         query = select(answer_table)
-        breakpoint()
+
 
         if answer_filter is not None:
             query = self._patch_query(query, answer_filter)

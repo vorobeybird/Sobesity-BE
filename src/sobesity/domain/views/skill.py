@@ -47,7 +47,7 @@ def get_skill(
     skill = skill_service.get_list(SkillFilterEnitity(skill_ids=[path.skill_id]))
     if not skill:
         return bad_request_maker(NotFoundSerializer(message="Skill not exists"))
-    return SkillSerializer(**asdict(skill)).dict()
+    return SkillSerializer(**asdict(skill[0])).dict()
 
 
 @skill_bp.post("", responses={"201": None, "400": BadRequestSerializer})

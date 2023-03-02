@@ -23,6 +23,7 @@ def build_answer_entity(cursor) -> AnswerEntity:
         answer_id=cursor.answer_id,
         answer=cursor.answer,
         right=cursor.right,
+        question_id=cursor.question_id,
     )
 
 

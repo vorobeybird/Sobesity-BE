@@ -8,8 +8,6 @@ services:
       target: dev
     env_file:
       - ./etc/backend/env/dev.env
-    restart:
-      unless-stopped
     depends_on:
       - db
     volumes:
