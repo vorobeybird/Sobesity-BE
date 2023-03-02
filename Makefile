@@ -1,7 +1,8 @@
 PROJECT_CODE_PATH=/code
 DOCKER_COMPOSE=COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose
 TEST_DOCKER_COMPOSE=${DOCKER_COMPOSE} -p test_sobesity -f docker-compose.test.yml
-
+BUILDER_DOCKER_COMPOSE=${DOCKER_COMPOSE} -p builder_sobesity -f docker-compose.builder.yml
+POETRY=${BUILDER_DOCKER_COMPOSE} run --rm builder poetry
 
 .PHONY: build
 build:
@@ -9,8 +10,13 @@ build:
 
 .PHONY: debug-app
 debug-app:
+	make stop-app
+	make in-app
+
+
+.PHONY: stop-app
+stop-app:
 	${DOCKER_COMPOSE} stop app
-	${DOCKER_COMPOSE} run --rm --service-ports app
 
 .PHONY: db-bash
 db-bash:
@@ -20,9 +26,13 @@ db-bash:
 db-shell:
 	${DOCKER_COMPOSE} exec db psql -U sobesity -d sobesity_db
 
+.PHONY: in-app
+in-app:
+	${DOCKER_COMPOSE} run --rm --service-ports app ${CMD}
+
 .PHONY: app-bash
 app-bash:
-	${DOCKER_COMPOSE} run --rm app bash
+	make in-app CMD=bash
 
 .PHONY: format
 format:
@@ -91,8 +101,12 @@ restart-app:
 
 .PHONY: add-lib
 add-lib:
-	${DOCKER_COMPOSE} run --rm app poetry add ${lib}
+	${POETRY} add ${lib}
 
 .PHONY: reset
 reset:
 	${DOCKER_COMPOSE} down -v
+
+.PHONY: refresh-lock
+refresh-lock:
+	${POETRY} lock --no-update

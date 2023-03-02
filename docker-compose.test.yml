@@ -34,4 +34,5 @@ services:
       - db
     volumes:
       - ./src/alembic/:/code/alembic/
+      - ./src/sobesity:/code/sobesity
 

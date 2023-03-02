@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from flask_openapi3 import HTTPBearer, Info, OpenAPI
 from sobesity.containers import Application
 from sobesity.domain.views import skill, user, question, answer
@@ -32,6 +33,7 @@ def prepare_swagger() -> Flask:
 def create_app():
     container = init_dependency()
     app = prepare_swagger()
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
     app.container = container
 
     register_views(app)

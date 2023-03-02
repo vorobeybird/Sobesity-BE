@@ -15,9 +15,6 @@ services:
     volumes:
       - ./src/sobesity:/code/sobesity
       - ./src/tests:/code/tests
-      - ./src/alembic:/code/alembic
-      - ./pyproject.toml:/code/pyproject.toml
-      - ./poetry.lock:/code/poetry.lock
     ports:
       - 5150:5150
 

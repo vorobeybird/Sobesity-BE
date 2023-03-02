@@ -1,10 +1,16 @@
 from dataclasses import asdict
 from datetime import datetime
 
+from psycopg2.errors import UniqueViolation
 from sqlalchemy import insert, select
+from sqlalchemy.exc import IntegrityError
 
 from sobesity.domain.entities import UserEntity, UserFilter
-from sobesity.domain.exceptions import UserNotFound
+from sobesity.domain.exceptions import (
+    EmailUniqueViolation,
+    NicknameUniqueViolation,
+    UserNotFound,
+)
 from sobesity.domain.interfaces.repositories import IUserRepository
 from sobesity.infrastructure.constants import ModelFields
 from sobesity.infrastructure.models import user_table
@@ -31,7 +37,16 @@ class UserRepository(IUserRepository):
 
         query = insert(user_table).values(**values)
         with self._datasource() as conn:
-            conn.execute(query)
+            try:
+                conn.execute(query)
+            except IntegrityError as exc:
+                if isinstance(exc.orig, UniqueViolation):
+                    exc_message = exc.orig.args[0]
+                    if "user_email_key" in exc_message:
+                        raise EmailUniqueViolation()
+                    if "nickname" in exc_message:
+                        raise NicknameUniqueViolation()
+                    raise
 
     def get_user(self, user_filter: UserFilter) -> UserEntity:
         query = self._patch_query(select(user_table), user_filter)
