@@ -10,8 +10,13 @@ build:
 
 .PHONY: debug-app
 debug-app:
+	make stop-app
+	make in-app
+
+
+.PHONY: stop-app
+stop-app:
 	${DOCKER_COMPOSE} stop app
-	${DOCKER_COMPOSE} run --rm --service-ports app
 
 .PHONY: db-bash
 db-bash:
@@ -21,9 +26,13 @@ db-bash:
 db-shell:
 	${DOCKER_COMPOSE} exec db psql -U sobesity -d sobesity_db
 
+.PHONY: in-app
+in-app:
+	${DOCKER_COMPOSE} run --rm --service-ports app ${CMD}
+
 .PHONY: app-bash
 app-bash:
-	${DOCKER_COMPOSE} run --rm app bash
+	make in-app CMD=bash
 
 .PHONY: format
 format:
