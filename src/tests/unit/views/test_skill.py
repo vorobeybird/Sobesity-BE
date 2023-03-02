@@ -1,7 +1,10 @@
 from http import HTTPStatus
 
-from sobesity.domain.entities import SkillEntity
 from sobesity.domain.exceptions import SkillNameUniqueViolation
+
+
+def skill_to_json(skill):
+    return {"name": skill.name, "skill_id": skill.skill_id}
 
 
 def test_get__no_data__return_empty(client, mock_skill_repository, auth_header):
@@ -12,23 +15,27 @@ def test_get__no_data__return_empty(client, mock_skill_repository, auth_header):
     assert response.json == []
 
 
-def test_get__has_data__return_data(client, mock_skill_repository, auth_header):
-    expected_json = [
-        {"name": "Python", "skill_id": 10},
-        {"name": "JavaScript", "skill_id": 15},
-    ]
-    skills = [SkillEntity(**data) for data in expected_json]
+def test_get__has_data__return_data(client, mock_skill_repository, auth_header, skills):
+    expected_json = [skill_to_json(skill) for skill in skills]
     mock_skill_repository.get_list.return_value = skills
     response = client.get("/api/skill", headers=auth_header)
     assert response.status_code == HTTPStatus.OK
     assert response.json == expected_json
 
 
-def test_get__not_found__return_404(client, mock_skill_repository, auth_header):
+def test_get_by_id__not_found__return_404(client, mock_skill_repository, auth_header):
     mock_skill_repository.get_list.return_value = []
 
     response = client.get("/api/skill/123", headers=auth_header)
     assert response.status_code == HTTPStatus.NOT_FOUND
+
+
+def test_get__by_id__return_skill(client, mock_skill_repository, auth_header, skill):
+    mock_skill_repository.get_list.return_value = [skill]
+
+    response = client.get("/api/skill/123", headers=auth_header)
+    assert response.status_code == HTTPStatus.OK
+    assert response.json == skill_to_json(skill)
 
 
 def test_create(client, mock_skill_repository, auth_header):
