@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Sequence, String, Boolean,Table
+from sqlalchemy import Column, Integer, Sequence, String, Boolean, Table, ForeignKey
 
 from sobesity.infrastructure.datasource import metadata
 
@@ -8,5 +8,6 @@ answer_table = Table(
     metadata,
     Column("answer_id", Integer, answer_id_seq, primary_key=True),
     Column("answer", String),
-    Column("right", Boolean)
+    Column("right", Boolean),
+    Column("question_id", Integer, ForeignKey("question.question_id"))
 )

@@ -7,17 +7,21 @@ class AnswerSerializer(BaseModel):
     answer_id: AnswerId = Field(...)
     answer: str
     right: bool
+    question_id: int
 
     def to_domain(self) -> AnswerEntity:
-        return AnswerEntity(answer_id=self.answer_id, answer=self.answer, right=self.right)
+        return AnswerEntity(answer_id=self.answer_id, answer=self.answer,
+                            right=self.right, question_id=self.question_id)
 
 
 class AnswerBodyElem(BaseModel):
     answer: str
     right: bool
+    question_id: int
 
     def to_domain(self) -> AnswerEntity:
-        return AnswerEntity(answer_id=None, answer=self.answer, right=self.right)
+        return AnswerEntity(answer_id=None, answer=self.answer,
+                            right=self.right, question_id=self.question_id)
 
 
 class PostAnswerBody(BaseModel):
