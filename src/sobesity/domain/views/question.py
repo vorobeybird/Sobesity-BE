@@ -10,12 +10,14 @@ from sobesity.domain.interfaces.services.question import IQuestionService
 from sobesity.domain.serializers import (
     DeleteQuestionBody,
     GetQuestions,
+    NotFoundSerializer,
     PatchQuestionBody,
     PathQuestionId,
     PostQuestionBody,
     QuestionIdsSerializer,
     QuestionSerializer,
 )
+from sobesity.domain.utils.response import bad_request_maker
 
 question_bp = APIBlueprint(
     "question",
@@ -38,8 +40,10 @@ def get_questions(question_service: IQuestionService = Provide[Services.question
 def get_question(
     path: PathQuestionId, question_service: IQuestionService = Provide[Services.question]
 ):
-    question = question_service.get_list(QuestionFilterEnitity(question_ids=[path.question_id]))[0]
-    return QuestionSerializer(**asdict(question)).dict()
+    question = question_service.get_list(QuestionFilterEnitity(question_ids=[path.question_id]))
+    if not question:
+        return bad_request_maker(NotFoundSerializer(message="Question not exists"))
+    return QuestionSerializer(**asdict(question[0])).dict()
 
 
 @question_bp.post("", responses={"201": None})
