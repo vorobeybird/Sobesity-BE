@@ -13,6 +13,7 @@ from sobesity.domain.serializers import (
     NotFoundSerializer,
     PatchAnswerBody,
     PathAnswerId,
+    PathQuestionId,
     PostAnswerBody,
     AnswerIdsSerializer,
     AnswerSerializer,
@@ -70,3 +71,14 @@ def update_answer(
     body: PatchAnswerBody, answer_service: IAnswerService = Provide[Services.answer]
 ):
     return answer_service.update(body.get_to_set(), body.get_where())
+
+
+@answer_bp.get("find_answers/<int:question_id>", responses={"200": AnswerSerializer})
+@inject
+def get_answers_to_question(
+    path: PathQuestionId, answer_service: IAnswerService = Provide[Services.answer]
+):
+    answers = answer_service.get_list(AnswerFilterEnitity(question_ids=[path.question_id]))
+    if not answers:
+        return bad_request_maker(NotFoundSerializer(message="Answers not exists"))
+    return answers

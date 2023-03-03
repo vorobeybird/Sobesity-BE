@@ -24,3 +24,4 @@ class AnswerService(IAnswerService):
 
     def delete(self, answers_ids: list[AnswerId]) -> None:
         return self._answer_repository.delete(answers_ids)
+

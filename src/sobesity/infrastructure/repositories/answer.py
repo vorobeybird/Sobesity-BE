@@ -2,12 +2,9 @@ import logging
 from dataclasses import asdict
 from typing import Optional
 
-from psycopg2.errors import UniqueViolation
 from sqlalchemy import delete, insert, select, update
-from sqlalchemy.exc import IntegrityError
 
 from sobesity.domain.entities import AnswerEntity, AnswerFilterEnitity, AnswerId
-from sobesity.domain.exceptions import AnswerNameUniqueViolation
 from sobesity.domain.interfaces import IAnswerRepository
 from sobesity.infrastructure.constants import ModelFields
 from sobesity.infrastructure.models import answer_table
@@ -24,14 +21,15 @@ class AnswerRepository(IAnswerRepository):
         if answer_filter.answer_ids is not None:
             query = query.where(answer_table.c.answer_id.in_(answer_filter.answer_ids))
         if answer_filter.answers is not None:
-            query = query.where(answer_table.c.name.in_(answer_filter.answers))
+            query = query.where(answer_table.c.answer.in_(answer_filter.answers))
+        if answer_filter.question_ids is not None:
+            query = query.where(answer_table.c.question_id.in_(answer_filter.question_ids))
         return query
 
     def get_list(
         self, answer_filter: Optional[AnswerFilterEnitity] = None
     ) -> list[AnswerEntity]:
         query = select(answer_table)
-
 
         if answer_filter is not None:
             query = self._patch_query(query, answer_filter)

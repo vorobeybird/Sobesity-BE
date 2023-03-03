@@ -13,6 +13,15 @@ class AnswerSerializer(BaseModel):
         return AnswerEntity(answer_id=self.answer_id, answer=self.answer,
                             right=self.right, question_id=self.question_id)
 
+    @classmethod
+    def from_domain(cls, answer: AnswerEntity):
+        return cls(
+            answerId=answer.answer_id,
+            answer=answer.answer,
+            right=answer.right,
+            question_id=answer.question_id,
+        )
+
 
 class AnswerBodyElem(BaseModel):
     answer: str
