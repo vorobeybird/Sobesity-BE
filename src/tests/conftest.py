@@ -1,3 +1,4 @@
+import random
 from contextlib import contextmanager
 
 import email_validator
@@ -6,7 +7,7 @@ from http_constants.headers import HttpHeaders
 
 from sobesity.domain.entities import UserFilter, UserId
 from sobesity.webapp import create_app
-from tests.factories import CreateUserFactory, UserEntityFactory
+from tests.factories import CreateUserFactory, SkillEntityFactory, UserEntityFactory
 
 email_validator.TEST_ENVIRONMENT = True
 
@@ -58,6 +59,16 @@ def create_user_factory():
 @pytest.fixture
 def user_entity():
     return UserEntityFactory()
+
+
+@pytest.fixture
+def skills():
+    return [SkillEntityFactory() for _ in range(random.randint(3, 5))]
+
+
+@pytest.fixture
+def skill(skills):
+    return skills[0]
 
 
 @pytest.fixture

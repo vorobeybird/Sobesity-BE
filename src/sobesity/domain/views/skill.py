@@ -1,4 +1,3 @@
-from dataclasses import asdict
 from http import HTTPStatus
 
 from dependency_injector.wiring import Provide, inject
@@ -44,10 +43,10 @@ def get_skills(skill_service: ISkillService = Provide[Services.skill]):
 def get_skill(
     path: PathSkillId, skill_service: ISkillService = Provide[Services.skill]
 ):
-    skill = skill_service.get_list(SkillFilterEnitity(skill_ids=[path.skill_id]))
-    if not skill:
+    skills = skill_service.get_list(SkillFilterEnitity(skill_ids=[path.skill_id]))
+    if not skills:
         return bad_request_maker(NotFoundSerializer(message="Skill not exists"))
-    return SkillSerializer(**asdict(skill[0])).dict()
+    return SkillSerializer.from_domain(skills[0]).dict()
 
 
 @skill_bp.post("", responses={"201": None, "400": BadRequestSerializer})
