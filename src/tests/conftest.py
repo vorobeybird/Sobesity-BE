@@ -124,3 +124,10 @@ def enable_email_validation():
     email_validator.TEST_ENVIRONMENT = False
     yield
     email_validator.TEST_ENVIRONMENT = True
+
+
+@pytest.fixture
+def question_repository(di):
+    return di.repositories.question()
+
+
