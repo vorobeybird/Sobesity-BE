@@ -10,8 +10,12 @@ class AnswerSerializer(BaseModel):
     question_id: int
 
     def to_domain(self) -> AnswerEntity:
-        return AnswerEntity(answer_id=self.answer_id, answer=self.answer,
-                            right=self.right, question_id=self.question_id)
+        return AnswerEntity(
+            answer_id=self.answer_id,
+            answer=self.answer,
+            right=self.right,
+            question_id=self.question_id,
+        )
 
     @classmethod
     def from_domain(cls, answer: AnswerEntity):
@@ -29,8 +33,12 @@ class AnswerBodyElem(BaseModel):
     question_id: int
 
     def to_domain(self) -> AnswerEntity:
-        return AnswerEntity(answer_id=None, answer=self.answer,
-                            right=self.right, question_id=self.question_id)
+        return AnswerEntity(
+            answer_id=None,
+            answer=self.answer,
+            right=self.right,
+            question_id=self.question_id,
+        )
 
 
 class PostAnswerBody(BaseModel):
@@ -69,7 +77,12 @@ class PatchAnswerBody(BaseModel):
     question_id: int
 
     def get_to_set(self):
-        return AnswerEntity(answer_id=None, answer=self.answer, right=self.right, question_id=self.question_id)
+        return AnswerEntity(
+            answer_id=None,
+            answer=self.answer,
+            right=self.right,
+            question_id=self.question_id,
+        )
 
     def get_where(self) -> list[AnswerFilterEnitity]:
         return AnswerFilterEnitity(answer_ids=[self.answer_id])

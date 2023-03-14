@@ -5,7 +5,6 @@ from sobesity.containers import Application
 from sobesity.domain.views import skill, user, question, answer
 
 
-
 def register_views(app):
     app.register_api(skill.skill_bp)
     app.register_api(user.user_bp)
@@ -15,7 +14,7 @@ def register_views(app):
 
 def init_dependency():
     container = Application()
-    container.services.wire([skill, user, question,answer])
+    container.services.wire([skill, user, question, answer])
     return container
 
 

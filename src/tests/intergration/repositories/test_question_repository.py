@@ -15,7 +15,9 @@ def test_batch_create__get_all_rows(question_repository):
     ]
     question_repository.batch_create(questions_to_create)
     created_questions = question_repository.get_list()
-    created_questions_map = {question.question: question for question in created_questions}
+    created_questions_map = {
+        question.question: question for question in created_questions
+    }
 
     assert len(created_questions) == len(questions_to_create)
     for question in questions_to_create:
@@ -53,7 +55,9 @@ def test_delete__particular_rows_deleted(question_repository):
 
     created_questions_after = question_repository.get_list()
 
-    assert (len(created_questions_before) - len(created_questions_after)) == len(to_delete)
+    assert (len(created_questions_before) - len(created_questions_after)) == len(
+        to_delete
+    )
 
     for question in created_questions_after:
         assert question.question_id not in to_delete

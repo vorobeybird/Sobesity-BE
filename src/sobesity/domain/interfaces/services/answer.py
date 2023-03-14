@@ -11,7 +11,6 @@ class IAnswerService(ABC):
     ) -> list[AnswerEntity]:
         pass
 
-
     @abstractclassmethod
     def batch_create(self, answers: list[AnswerEntity]) -> None:
         pass

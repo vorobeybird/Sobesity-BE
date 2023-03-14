@@ -38,4 +38,3 @@ def build_user_entity(cursor) -> UserEntity:
         first_name=cursor.first_name,
         last_name=cursor.last_name,
     )
-

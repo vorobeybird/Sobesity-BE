@@ -1,6 +1,10 @@
 from pydantic import BaseModel, Field
 
-from sobesity.domain.entities.question import QuestionEntity, QuestionFilterEnitity, QuestionId
+from sobesity.domain.entities.question import (
+    QuestionEntity,
+    QuestionFilterEnitity,
+    QuestionId,
+)
 
 
 class QuestionSerializer(BaseModel):
@@ -9,7 +13,9 @@ class QuestionSerializer(BaseModel):
     skill_id: int
 
     def to_domain(self) -> QuestionEntity:
-        return QuestionEntity(question_id=self.question_id, question=self.question, skill_id=self.skill_id)
+        return QuestionEntity(
+            question_id=self.question_id, question=self.question, skill_id=self.skill_id
+        )
 
 
 class QuestionBodyElem(BaseModel):
@@ -17,7 +23,10 @@ class QuestionBodyElem(BaseModel):
     skill_id: int
 
     def to_domain(self) -> QuestionEntity:
-        return QuestionEntity(question_id=None, question=self.question, skill_id=self.skill_id)
+        return QuestionEntity(
+            question_id=None, question=self.question, skill_id=self.skill_id
+        )
+
 
 class PostQuestionBody(BaseModel):
     __root__: list[QuestionBodyElem]
@@ -54,7 +63,9 @@ class PatchQuestionBody(BaseModel):
     skill_id: int
 
     def get_to_set(self):
-        return QuestionEntity(question_id=None, question=self.question, skill_id=self.skill_id)
+        return QuestionEntity(
+            question_id=None, question=self.question, skill_id=self.skill_id
+        )
 
     def get_where(self) -> list[QuestionFilterEnitity]:
         return QuestionFilterEnitity(question_ids=[self.question_id])

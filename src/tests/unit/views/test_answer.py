@@ -2,8 +2,12 @@ from http import HTTPStatus
 
 
 def answer_to_json(answer):
-    return {"answer": answer.answer, "answer_id": answer.answer_id,
-            "question_id": answer.question_id, "right": answer.right}
+    return {
+        "answer": answer.answer,
+        "answer_id": answer.answer_id,
+        "question_id": answer.question_id,
+        "right": answer.right,
+    }
 
 
 def test_get__no_data__return_empty(client, mock_answer_repository, auth_header):
@@ -14,7 +18,9 @@ def test_get__no_data__return_empty(client, mock_answer_repository, auth_header)
     assert response.json == []
 
 
-def test_get__has_data__return_data(client, mock_answer_repository, auth_header, answers):
+def test_get__has_data__return_data(
+    client, mock_answer_repository, auth_header, answers
+):
     expected_json = [answer_to_json(answer) for answer in answers]
     mock_answer_repository.get_list.return_value = answers
     response = client.get("/api/answer", headers=auth_header)

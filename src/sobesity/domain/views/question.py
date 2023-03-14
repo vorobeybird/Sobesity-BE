@@ -39,9 +39,12 @@ def get_questions(question_service: IQuestionService = Provide[Services.question
 @question_bp.get("/<int:question_id>", responses={"200": QuestionSerializer})
 @inject
 def get_question(
-    path: PathQuestionId, question_service: IQuestionService = Provide[Services.question]
+    path: PathQuestionId,
+    question_service: IQuestionService = Provide[Services.question],
 ):
-    question = question_service.get_list(QuestionFilterEnitity(question_ids=[path.question_id]))
+    question = question_service.get_list(
+        QuestionFilterEnitity(question_ids=[path.question_id])
+    )
     if not question:
         return bad_request_maker(NotFoundSerializer(message="Question not exists"))
     return QuestionSerializer(**asdict(question[0])).dict()
@@ -50,7 +53,8 @@ def get_question(
 @question_bp.post("", responses={"201": None})
 @inject
 def create_questions(
-    body: PostQuestionBody, question_service: IQuestionService = Provide[Services.question]
+    body: PostQuestionBody,
+    question_service: IQuestionService = Provide[Services.question],
 ):
     question_service.batch_create(body.to_domain())
     return Response(), 201
@@ -59,7 +63,8 @@ def create_questions(
 @question_bp.delete("", responses={"204": None})
 @inject
 def delete_questions(
-    body: DeleteQuestionBody, question_service: IQuestionService = Provide[Services.question]
+    body: DeleteQuestionBody,
+    question_service: IQuestionService = Provide[Services.question],
 ):
     question_service.delete(body.to_domain())
     return Response(), 204
@@ -68,7 +73,8 @@ def delete_questions(
 @question_bp.patch("", responses={"200": QuestionIdsSerializer})
 @inject
 def update_question(
-    body: PatchQuestionBody, question_service: IQuestionService = Provide[Services.question]
+    body: PatchQuestionBody,
+    question_service: IQuestionService = Provide[Services.question],
 ):
     return question_service.update(body.get_to_set(), body.get_where())
 
@@ -78,7 +84,9 @@ def update_question(
 def find_question_to_skill(
     path: PathSkillId, question_service: IQuestionService = Provide[Services.question]
 ):
-    questions = question_service.get_list(QuestionFilterEnitity(skill_ids=[path.skill_id]))
+    questions = question_service.get_list(
+        QuestionFilterEnitity(skill_ids=[path.skill_id])
+    )
     if not questions:
         return bad_request_maker(NotFoundSerializer(message="Questions not exists"))
     return questions

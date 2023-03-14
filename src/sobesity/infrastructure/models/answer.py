@@ -9,5 +9,5 @@ answer_table = Table(
     Column("answer_id", Integer, answer_id_seq, primary_key=True),
     Column("answer", String),
     Column("right", Boolean),
-    Column("question_id", Integer, ForeignKey("question.question_id"))
+    Column("question_id", Integer, ForeignKey("question.question_id")),
 )

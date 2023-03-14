@@ -22,11 +22,17 @@ class QuestionRepository(IQuestionRepository):
 
     def _patch_query(self, query, question_filter: QuestionFilterEnitity):
         if question_filter.question_ids is not None:
-            query = query.where(question_table.c.question_id.in_(question_filter.question_ids))
+            query = query.where(
+                question_table.c.question_id.in_(question_filter.question_ids)
+            )
         if question_filter.questions is not None:
-            query = query.where(question_table.c.question.in_(question_filter.questions))
+            query = query.where(
+                question_table.c.question.in_(question_filter.questions)
+            )
         if question_filter.skill_ids is not None:
-            query = query.where(question_table.c.skill_id.in_(question_filter.skill_ids))
+            query = query.where(
+                question_table.c.skill_id.in_(question_filter.skill_ids)
+            )
         return query
 
     def get_list(
@@ -66,14 +72,18 @@ class QuestionRepository(IQuestionRepository):
         query = update(question_table)
 
         query = self._patch_query(query, where)
-        query = query.values({"question": to_set.question}).returning(question_table.c.question_id)
+        query = query.values({"question": to_set.question}).returning(
+            question_table.c.question_id
+        )
 
         with self.datasource() as conn:
             result = conn.execute(query)
         return [QuestionId(res.question_id) for res in result]
 
     def delete(self, question_ids: list[QuestionId]) -> None:
-        query = delete(question_table).where(question_table.c.question_id.in_(question_ids))
+        query = delete(question_table).where(
+            question_table.c.question_id.in_(question_ids)
+        )
 
         with self.datasource() as conn:
             conn.execute(query)

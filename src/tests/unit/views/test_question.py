@@ -2,7 +2,11 @@ from http import HTTPStatus
 
 
 def question_to_json(question):
-    return {"question": question.question, "skill_id": question.skill_id, "question_id": question.question_id}
+    return {
+        "question": question.question,
+        "skill_id": question.skill_id,
+        "question_id": question.question_id,
+    }
 
 
 def test_get__no_data__return_empty(client, mock_question_repository, auth_header):
@@ -13,7 +17,9 @@ def test_get__no_data__return_empty(client, mock_question_repository, auth_heade
     assert response.json == []
 
 
-def test_get__has_data__return_data(client, mock_question_repository, auth_header, questions):
+def test_get__has_data__return_data(
+    client, mock_question_repository, auth_header, questions
+):
     expected_json = [question_to_json(question) for question in questions]
     mock_question_repository.get_list.return_value = questions
     response = client.get("/api/question", headers=auth_header)
@@ -21,14 +27,18 @@ def test_get__has_data__return_data(client, mock_question_repository, auth_heade
     assert response.json == expected_json
 
 
-def test_get_by_id__not_found__return_404(client, mock_question_repository, auth_header):
+def test_get_by_id__not_found__return_404(
+    client, mock_question_repository, auth_header
+):
     mock_question_repository.get_list.return_value = []
 
     response = client.get("/api/question/123", headers=auth_header)
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
-def test_get__by_id__return_question(client, mock_question_repository, auth_header, question):
+def test_get__by_id__return_question(
+    client, mock_question_repository, auth_header, question
+):
     mock_question_repository.get_list.return_value = [question]
 
     response = client.get("/api/question/123", headers=auth_header)

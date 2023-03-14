@@ -78,7 +78,9 @@ def update_answer(
 def get_answers_to_question(
     path: PathQuestionId, answer_service: IAnswerService = Provide[Services.answer]
 ):
-    answers = answer_service.get_list(AnswerFilterEnitity(question_ids=[path.question_id]))
+    answers = answer_service.get_list(
+        AnswerFilterEnitity(question_ids=[path.question_id])
+    )
     if not answers:
         return bad_request_maker(NotFoundSerializer(message="Answers not exists"))
     return answers

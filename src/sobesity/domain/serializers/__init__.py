@@ -35,4 +35,3 @@ from .user import (
     LoginUserSerializer,
     UserQuery,
 )
-

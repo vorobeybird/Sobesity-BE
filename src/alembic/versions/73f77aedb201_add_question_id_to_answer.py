@@ -17,7 +17,7 @@ depends_on = None
 
 
 def upgrade() -> None:
-    op.add_column('answer',sa.Column('question_id', sa.Integer(), sa.ForeignKey('question.question_id')))
+    op.add_column('answer', sa.Column('question_id', sa.Integer(), sa.ForeignKey('question.question_id')))
 
 
 def downgrade() -> None:

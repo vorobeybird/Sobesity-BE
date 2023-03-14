@@ -19,6 +19,7 @@ class SkillSerializer(BaseModel):
             name=skill.name,
         )
 
+
 class SkillBodyElem(BaseModel):
     name: str
 

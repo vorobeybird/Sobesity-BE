@@ -3,9 +3,19 @@ from dependency_injector import containers, providers
 
 from sobesity.config import Settings
 from sobesity.domain.access_managers import UserAccessManager
-from sobesity.domain.services import SkillService, UserService, QuestionService, AnswerService
+from sobesity.domain.services import (
+    SkillService,
+    UserService,
+    QuestionService,
+    AnswerService,
+)
 from sobesity.infrastructure.datasource import datasource
-from sobesity.infrastructure.repositories import SkillRepository, UserRepository, QuestionRepository, AnswerRepository
+from sobesity.infrastructure.repositories import (
+    SkillRepository,
+    UserRepository,
+    QuestionRepository,
+    AnswerRepository,
+)
 from sobesity.infrastructure.resources import JWTResource
 
 
@@ -44,6 +54,7 @@ class AccessManagers(containers.DeclarativeContainer):
         user_service=services.user,
         jwt_resource=resources.jwt,
     )
+
 
 class Application(containers.DeclarativeContainer):
     resources = providers.Container(Resources)

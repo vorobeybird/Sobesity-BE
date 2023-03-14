@@ -23,7 +23,9 @@ class AnswerRepository(IAnswerRepository):
         if answer_filter.answers is not None:
             query = query.where(answer_table.c.answer.in_(answer_filter.answers))
         if answer_filter.question_ids is not None:
-            query = query.where(answer_table.c.question_id.in_(answer_filter.question_ids))
+            query = query.where(
+                answer_table.c.question_id.in_(answer_filter.question_ids)
+            )
         return query
 
     def get_list(
@@ -61,7 +63,9 @@ class AnswerRepository(IAnswerRepository):
         query = update(answer_table)
 
         query = self._patch_query(query, where)
-        query = query.values({"answer": to_set.answer}).returning(answer_table.c.answer_id)
+        query = query.values({"answer": to_set.answer}).returning(
+            answer_table.c.answer_id
+        )
 
         with self.datasource() as conn:
             result = conn.execute(query)

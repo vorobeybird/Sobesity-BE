@@ -15,6 +15,7 @@ down_revision = 'a2e479e35086'
 branch_labels = None
 depends_on = None
 
+
 def upgrade() -> None:
     op.execute(sa.schema.CreateSequence(answer_id_seq))
     op.create_table(

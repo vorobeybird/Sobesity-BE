@@ -1,4 +1,3 @@
-
 from .question import QuestionNameUniqueViolation
 from .answer import AnswerNameUniqueViolation
 from .jwt import CorruptedToken, ExpiredToken

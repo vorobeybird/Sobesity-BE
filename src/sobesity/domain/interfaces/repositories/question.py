@@ -11,7 +11,6 @@ class IQuestionRepository(ABC):
     ) -> list[QuestionEntity]:
         pass
 
-
     @abstractclassmethod
     def batch_create(self, questions: list[QuestionEntity]) -> None:
         pass

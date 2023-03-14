@@ -9,9 +9,24 @@ def test_get_list__empty_db__return_nothing(answer_repository):
 
 def test_batch_create__get_all_rows(answer_repository):
     answers_to_create = [
-        AnswerEntity(answer_id=None, answer="Nothing", right=True,  question_id=None,),
-        AnswerEntity(answer_id=None, answer="Nobody", right=True,  question_id=None,),
-        AnswerEntity(answer_id=None, answer="SMT", right=True,  question_id=None,),
+        AnswerEntity(
+            answer_id=None,
+            answer="Nothing",
+            right=True,
+            question_id=None,
+        ),
+        AnswerEntity(
+            answer_id=None,
+            answer="Nobody",
+            right=True,
+            question_id=None,
+        ),
+        AnswerEntity(
+            answer_id=None,
+            answer="SMT",
+            right=True,
+            question_id=None,
+        ),
     ]
     answer_repository.batch_create(answers_to_create)
     created_answers = answer_repository.get_list()
@@ -24,12 +39,22 @@ def test_batch_create__get_all_rows(answer_repository):
 
 def test_update__particular_rows_updated(answer_repository):
     answers_to_create = [
-        AnswerEntity(answer_id=None, answer="Nothing", right=True,  question_id=None,),
+        AnswerEntity(
+            answer_id=None,
+            answer="Nothing",
+            right=True,
+            question_id=None,
+        ),
     ]
     answer_repository.batch_create(answers_to_create)
     answer_before = answer_repository.get_list()[0]
 
-    to_set = AnswerEntity(answer_id=None, answer="Nobody", right=True,  question_id=None,)
+    to_set = AnswerEntity(
+        answer_id=None,
+        answer="Nobody",
+        right=True,
+        question_id=None,
+    )
     where = AnswerFilterEnitity(answer_ids=[answer_before.answer_id])
     updated_ids = answer_repository.update(to_set, where)
 
@@ -41,9 +66,24 @@ def test_update__particular_rows_updated(answer_repository):
 
 def test_delete__particular_rows_deleted(answer_repository):
     answers_to_create = [
-        AnswerEntity(answer_id=None, answer="Nothing", right=True, question_id=None, ),
-        AnswerEntity(answer_id=None, answer="Nobody", right=True, question_id=None, ),
-        AnswerEntity(answer_id=None, answer="SMT", right=True, question_id=None, ),
+        AnswerEntity(
+            answer_id=None,
+            answer="Nothing",
+            right=True,
+            question_id=None,
+        ),
+        AnswerEntity(
+            answer_id=None,
+            answer="Nobody",
+            right=True,
+            question_id=None,
+        ),
+        AnswerEntity(
+            answer_id=None,
+            answer="SMT",
+            right=True,
+            question_id=None,
+        ),
     ]
     answer_repository.batch_create(answers_to_create)
     created_answers_before = answer_repository.get_list()
