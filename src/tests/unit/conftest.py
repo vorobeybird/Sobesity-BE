@@ -22,3 +22,8 @@ def mock_user_repository(di):
 @pytest.fixture
 def mock_question_repository(di):
     yield from mock_with_di(di.repositories.question)
+
+
+@pytest.fixture
+def mock_answer_repository(di):
+    yield from mock_with_di(di.repositories.answer)

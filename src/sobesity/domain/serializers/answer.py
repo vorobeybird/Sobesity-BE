@@ -65,9 +65,11 @@ class DeleteAnswerBody(AnswerIdsSerializer):
 class PatchAnswerBody(BaseModel):
     answer_id: AnswerId
     answer: str
+    right: bool
+    question_id: int
 
     def get_to_set(self):
-        return AnswerEntity(answer_id=None, answer=self.answer)
+        return AnswerEntity(answer_id=None, answer=self.answer, right=self.right, question_id=self.question_id)
 
     def get_where(self) -> list[AnswerFilterEnitity]:
         return AnswerFilterEnitity(answer_ids=[self.answer_id])
