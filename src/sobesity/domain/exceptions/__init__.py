@@ -6,5 +6,6 @@ from .user import (
     InvalidEmail,
     NicknameUniqueViolation,
     PasswordNotMatch,
+    UserFilterParamError,
     UserNotFound,
 )

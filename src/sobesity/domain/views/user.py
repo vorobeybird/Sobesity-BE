@@ -11,6 +11,7 @@ from sobesity.domain.exceptions import (
     InvalidEmail,
     NicknameUniqueViolation,
     PasswordNotMatch,
+    UserFilterParamError,
     UserNotFound,
 )
 from sobesity.domain.interfaces.access_managers import IUserAccessManager
@@ -42,6 +43,8 @@ def get_user(query: UserQuery, user_service: IUserService = Provide[Services.use
         user = user_service.get_user(query.to_domain())
     except UserNotFound as exc:
         return bad_request_maker(NotFoundSerializer(message=exc.message))
+    except  UserFilterParamError as exc:
+        return bad_request_maker(BadRequestSerializer(message=exc.message))
     return GetUserSerializer.from_domain(user).dict()
 
 

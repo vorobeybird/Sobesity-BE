@@ -2,6 +2,8 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import NewType, Optional
 
+from sobesity.domain.exceptions import UserFilterParamError
+
 UserId = NewType("UserId", int)
 
 
@@ -30,7 +32,7 @@ class UserFilter:
 
     def __post_init__(self):
         if not any((self.user_id, self.email, self.nickname)):
-            raise ValueError("One of parameters must be specified")
+            raise UserFilterParamError()
 
 
 @dataclass
