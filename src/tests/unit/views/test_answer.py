@@ -71,10 +71,11 @@ def test_update(client, mock_answer_repository, auth_header):
     assert response.json == expected_affected_ids
 
 
-def test_get__by_question_id_return_answers(client, mock_answer_repository, auth_header, answers):
+def test_get__by_question_id_return_answers(
+    client, mock_answer_repository, auth_header, answers
+):
     expected_json = [answer_to_json(answer) for answer in answers]
     mock_answer_repository.get_list.return_value = answers
     response = client.get("/api/answer/find_answers/123", headers=auth_header)
     assert response.status_code == HTTPStatus.OK
     assert response.json == expected_json
-
