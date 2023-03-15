@@ -72,3 +72,13 @@ def test_update(client, mock_question_repository, auth_header):
     assert response.status_code == HTTPStatus.OK
     assert mock_question_repository.update.called
     assert response.json == expected_affected_ids
+
+
+def test_get__by_skill_id_return_data(
+    client, mock_question_repository, auth_header, questions
+):
+    expected_json = [question_to_json(question) for question in questions]
+    mock_question_repository.get_list.return_value = questions
+    response = client.get("/api/question/find_questions/123", headers=auth_header)
+    assert response.status_code == HTTPStatus.OK
+    assert response.json == expected_json
