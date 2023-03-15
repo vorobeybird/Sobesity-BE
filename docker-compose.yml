@@ -13,6 +13,7 @@ services:
     volumes:
       - ./src/sobesity:/code/sobesity
       - ./src/tests:/code/tests
+      - ./src/alembic/:/code/alembic/
     ports:
       - 5150:5150
 

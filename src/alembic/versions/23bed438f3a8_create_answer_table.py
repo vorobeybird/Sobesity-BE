@@ -10,8 +10,8 @@ import sqlalchemy as sa
 from sobesity.infrastructure.models.answer import answer_id_seq
 
 # revision identifiers, used by Alembic.
-revision = '23bed438f3a8'
-down_revision = 'a2e479e35086'
+revision = "23bed438f3a8"
+down_revision = "a2e479e35086"
 branch_labels = None
 depends_on = None
 

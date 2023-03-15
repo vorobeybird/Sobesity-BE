@@ -10,15 +10,18 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '73f77aedb201'
-down_revision = '20242755f6c1'
+revision = "73f77aedb201"
+down_revision = "20242755f6c1"
 branch_labels = None
 depends_on = None
 
 
 def upgrade() -> None:
-    op.add_column('answer', sa.Column('question_id', sa.Integer(), sa.ForeignKey('question.question_id')))
+    op.add_column(
+        "answer",
+        sa.Column("question_id", sa.Integer(), sa.ForeignKey("question.question_id")),
+    )
 
 
 def downgrade() -> None:
-    op.drop_column('answer', 'question_id')
+    op.drop_column("answer", "question_id")
