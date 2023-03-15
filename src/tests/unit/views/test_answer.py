@@ -1,6 +1,7 @@
 from http import HTTPStatus
 import pytest
 
+
 def answer_to_json(answer):
     return {
         "answer": answer.answer,
