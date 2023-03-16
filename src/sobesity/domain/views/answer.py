@@ -1,4 +1,4 @@
-from dataclasses import asdict
+from http import HTTPStatus
 
 from dependency_injector.wiring import Provide, inject
 from flask import Response
@@ -41,10 +41,10 @@ def get_answers(answer_service: IAnswerService = Provide[Services.answer]):
 def get_answer(
     path: PathAnswerId, answer_service: IAnswerService = Provide[Services.answer]
 ):
-    answer = answer_service.get_list(AnswerFilterEnitity(answer_ids=[path.answer_id]))
-    if not answer:
-        return bad_request_maker(NotFoundSerializer(message="Answer not exists"))
-    return AnswerSerializer(**asdict(answer[0])).dict()
+    answers = answer_service.get_list(AnswerFilterEnitity(answer_ids=[path.answer_id]))
+    if not answers:
+        return bad_request_maker(NotFoundSerializer(message="Answer not exist"))
+    return AnswerSerializer.from_domain(answers[0]).dict()
 
 
 @answer_bp.post("", responses={"201": None})
@@ -53,7 +53,7 @@ def create_answers(
     body: PostAnswerBody, answer_service: IAnswerService = Provide[Services.answer]
 ):
     answer_service.batch_create(body.to_domain())
-    return Response(), 201
+    return Response(), HTTPStatus.CREATED
 
 
 @answer_bp.delete("", responses={"204": None})
@@ -62,7 +62,7 @@ def delete_answers(
     body: DeleteAnswerBody, answer_service: IAnswerService = Provide[Services.answer]
 ):
     answer_service.delete(body.to_domain())
-    return Response(), 204
+    return Response(), HTTPStatus.NO_CONTENT
 
 
 @answer_bp.patch("", responses={"200": AnswerIdsSerializer})

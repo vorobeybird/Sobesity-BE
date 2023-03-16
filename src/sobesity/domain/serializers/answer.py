@@ -20,7 +20,7 @@ class AnswerSerializer(BaseModel):
     @classmethod
     def from_domain(cls, answer: AnswerEntity):
         return cls(
-            answerId=answer.answer_id,
+            answer_id=answer.answer_id,
             answer=answer.answer,
             right=answer.right,
             question_id=answer.question_id,

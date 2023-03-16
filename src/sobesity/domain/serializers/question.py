@@ -17,6 +17,14 @@ class QuestionSerializer(BaseModel):
             question_id=self.question_id, question=self.question, skill_id=self.skill_id
         )
 
+    @classmethod
+    def from_domain(cls, question: QuestionEntity):
+        return cls(
+            question_id=question.question_id,
+            question=question.question,
+            skill_id=question.skill_id,
+        )
+
 
 class QuestionBodyElem(BaseModel):
     question: str

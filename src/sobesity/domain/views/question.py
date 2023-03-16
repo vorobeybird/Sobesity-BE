@@ -1,4 +1,4 @@
-from dataclasses import asdict
+from http import HTTPStatus
 
 from dependency_injector.wiring import Provide, inject
 from flask import Response
@@ -42,12 +42,12 @@ def get_question(
     path: PathQuestionId,
     question_service: IQuestionService = Provide[Services.question],
 ):
-    question = question_service.get_list(
+    questions = question_service.get_list(
         QuestionFilterEnitity(question_ids=[path.question_id])
     )
-    if not question:
-        return bad_request_maker(NotFoundSerializer(message="Question not exists"))
-    return QuestionSerializer(**asdict(question[0])).dict()
+    if not questions:
+        return bad_request_maker(NotFoundSerializer(message="Question not exist"))
+    return QuestionSerializer.from_domain(questions[0]).dict()
 
 
 @question_bp.post("", responses={"201": None})
@@ -57,7 +57,7 @@ def create_questions(
     question_service: IQuestionService = Provide[Services.question],
 ):
     question_service.batch_create(body.to_domain())
-    return Response(), 201
+    return Response(), HTTPStatus.CREATED
 
 
 @question_bp.delete("", responses={"204": None})
@@ -67,7 +67,7 @@ def delete_questions(
     question_service: IQuestionService = Provide[Services.question],
 ):
     question_service.delete(body.to_domain())
-    return Response(), 204
+    return Response(), HTTPStatus.NO_CONTENT
 
 
 @question_bp.patch("", responses={"200": QuestionIdsSerializer})
