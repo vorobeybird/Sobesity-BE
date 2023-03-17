@@ -2,9 +2,12 @@ import logging
 from dataclasses import asdict
 from typing import Optional
 
+from psycopg2.errors import ForeignKeyViolation
 from sqlalchemy import delete, insert, select, update
+from sqlalchemy.exc import IntegrityError
 
 from sobesity.domain.entities import AnswerEntity, AnswerFilterEnitity, AnswerId
+from sobesity.domain.exceptions import QuestionExistViolation
 from sobesity.domain.interfaces import IAnswerRepository
 from sobesity.infrastructure.constants import ModelFields
 from sobesity.infrastructure.models import answer_table
@@ -52,8 +55,10 @@ class AnswerRepository(IAnswerRepository):
         with self.datasource() as conn:
             try:
                 conn.execute(query)
-            except Exception:
-                pass
+            except IntegrityError as exc:
+                if isinstance(exc.orig, ForeignKeyViolation):
+                    logger.exception(exc)
+                    raise QuestionExistViolation()
 
     def update(
         self,

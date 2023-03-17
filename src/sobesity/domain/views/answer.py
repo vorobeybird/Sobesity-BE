@@ -4,10 +4,12 @@ from dependency_injector.wiring import Provide, inject
 from flask import Response
 from flask_openapi3 import APIBlueprint, Tag
 
+from sobesity.domain.exceptions import QuestionExistViolation
 from sobesity.containers import Services
 from sobesity.domain.entities.answer import AnswerFilterEnitity
 from sobesity.domain.interfaces.services.answer import IAnswerService
 from sobesity.domain.serializers import (
+    BadRequestSerializer,
     DeleteAnswerBody,
     GetAnswers,
     NotFoundSerializer,
@@ -52,7 +54,10 @@ def get_answer(
 def create_answers(
     body: PostAnswerBody, answer_service: IAnswerService = Provide[Services.answer]
 ):
-    answer_service.batch_create(body.to_domain())
+    try:
+        answer_service.batch_create(body.to_domain())
+    except QuestionExistViolation as exc:
+        return bad_request_maker(BadRequestSerializer(message=exc.message))
     return Response(), HTTPStatus.CREATED
 
 

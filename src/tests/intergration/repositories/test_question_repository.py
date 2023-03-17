@@ -7,20 +7,17 @@ def test_get_list__empty_db__return_nothing(question_repository):
     assert question_repository.get_list() == []
 
 
-def test_batch_create__get_all_rows(question_repository):
-    questions_to_create = [
-        QuestionEntity(question_id=None, question="What", skill_id=None),
-        QuestionEntity(question_id=None, question="Where", skill_id=None),
-        QuestionEntity(question_id=None, question="Who", skill_id=None),
-    ]
-    question_repository.batch_create(questions_to_create)
+def test_batch_create__get_all_rows(skill_repository, skills, question_repository, questions):
+    breakpoint()
+    skill_repository.batch_create(skills)
+    question_repository.batch_create(questions)
     created_questions = question_repository.get_list()
     created_questions_map = {
         question.question: question for question in created_questions
     }
 
-    assert len(created_questions) == len(questions_to_create)
-    for question in questions_to_create:
+    assert len(created_questions) == len(questions)
+    for question in questions:
         assert question.question in created_questions_map
 
 

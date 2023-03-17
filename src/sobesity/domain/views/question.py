@@ -4,10 +4,12 @@ from dependency_injector.wiring import Provide, inject
 from flask import Response
 from flask_openapi3 import APIBlueprint, Tag
 
+from sobesity.domain.exceptions import SkillExistViolation
 from sobesity.containers import Services
 from sobesity.domain.entities.question import QuestionFilterEnitity
 from sobesity.domain.interfaces.services.question import IQuestionService
 from sobesity.domain.serializers import (
+    BadRequestSerializer,
     DeleteQuestionBody,
     GetQuestions,
     NotFoundSerializer,
@@ -56,7 +58,10 @@ def create_questions(
     body: PostQuestionBody,
     question_service: IQuestionService = Provide[Services.question],
 ):
-    question_service.batch_create(body.to_domain())
+    try:
+        question_service.batch_create(body.to_domain())
+    except SkillExistViolation as exc:
+        return bad_request_maker(BadRequestSerializer(message=exc.message))
     return Response(), HTTPStatus.CREATED
 
 

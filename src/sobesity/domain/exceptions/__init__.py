@@ -1,4 +1,4 @@
-from .question import QuestionNameUniqueViolation
+from .question import QuestionNameUniqueViolation, QuestionExistViolation
 from .answer import AnswerNameUniqueViolation
 from .jwt import CorruptedToken, ExpiredToken
 from .skill import SkillNameUniqueViolation, SkillExistViolation

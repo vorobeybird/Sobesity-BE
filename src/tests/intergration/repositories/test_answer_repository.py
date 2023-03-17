@@ -7,33 +7,13 @@ def test_get_list__empty_db__return_nothing(answer_repository):
     assert answer_repository.get_list() == []
 
 
-def test_batch_create__get_all_rows(answer_repository):
-    answers_to_create = [
-        AnswerEntity(
-            answer_id=None,
-            answer="Nothing",
-            right=True,
-            question_id=None,
-        ),
-        AnswerEntity(
-            answer_id=None,
-            answer="Nobody",
-            right=True,
-            question_id=None,
-        ),
-        AnswerEntity(
-            answer_id=None,
-            answer="SMT",
-            right=True,
-            question_id=None,
-        ),
-    ]
-    answer_repository.batch_create(answers_to_create)
+def test_batch_create__get_all_rows(answer_repository, answers):
+    answer_repository.batch_create(answers)
     created_answers = answer_repository.get_list()
     created_answers_map = {answer.answer: answer for answer in created_answers}
 
-    assert len(created_answers) == len(answers_to_create)
-    for answer in answers_to_create:
+    assert len(created_answers) == len(answers)
+    for answer in answers:
         assert answer.answer in created_answers_map
 
 
