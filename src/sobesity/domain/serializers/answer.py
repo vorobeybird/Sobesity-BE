@@ -4,6 +4,7 @@ from sobesity.domain.entities.answer import AnswerEntity, AnswerFilterEnitity, A
 
 answer_id_field = Field(..., alias="AnswerId")
 
+
 class AnswerSerializer(BaseModel):
     answer_id: AnswerId = answer_id_field
     answer: str
