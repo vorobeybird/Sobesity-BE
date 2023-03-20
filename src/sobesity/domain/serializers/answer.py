@@ -2,9 +2,10 @@ from pydantic import BaseModel, Field
 
 from sobesity.domain.entities.answer import AnswerEntity, AnswerFilterEnitity, AnswerId
 
+answer_id_field = Field(..., alias="AnswerId")
 
 class AnswerSerializer(BaseModel):
-    answer_id: AnswerId = Field(...)
+    answer_id: AnswerId = answer_id_field
     answer: str
     right: bool
     question_id: int
@@ -53,7 +54,7 @@ class GetAnswers(BaseModel):
 
 
 class PathAnswerId(BaseModel):
-    answer_id: AnswerId
+    answer_id: AnswerId = answer_id_field
 
     def to_domain(self) -> AnswerId:
         return AnswerId(self.answer_id)
@@ -71,7 +72,7 @@ class DeleteAnswerBody(AnswerIdsSerializer):
 
 
 class PatchAnswerBody(BaseModel):
-    answer_id: AnswerId
+    answer_id: AnswerId = answer_id_field
     answer: str
     right: bool
     question_id: int

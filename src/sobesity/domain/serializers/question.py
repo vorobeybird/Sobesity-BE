@@ -6,9 +6,11 @@ from sobesity.domain.entities.question import (
     QuestionId,
 )
 
+question_id_field = Field(..., alias="QuestionId")
+
 
 class QuestionSerializer(BaseModel):
-    question_id: QuestionId = Field(...)
+    question_id: QuestionId = question_id_field
     question: str
     skill_id: int
 
@@ -48,7 +50,7 @@ class GetQuestions(BaseModel):
 
 
 class PathQuestionId(BaseModel):
-    question_id: QuestionId
+    question_id: QuestionId = question_id_field
 
     def to_domain(self) -> QuestionId:
         return QuestionId(self.question_id)
@@ -66,7 +68,7 @@ class DeleteQuestionBody(QuestionIdsSerializer):
 
 
 class PatchQuestionBody(BaseModel):
-    question_id: QuestionId
+    question_id: QuestionId = question_id_field
     question: str
     skill_id: int
 
