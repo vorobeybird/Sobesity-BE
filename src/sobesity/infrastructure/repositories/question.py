@@ -78,8 +78,13 @@ class QuestionRepository(IQuestionRepository):
         )
 
         with self.datasource() as conn:
-            result = conn.execute(query)
-        return [QuestionId(res.question_id) for res in result]
+            try:
+                result = conn.execute(query)
+            except IntegrityError as exc:
+                if isinstance(exc.orig, ForeignKeyViolation):
+                    logger.exception(exc)
+                    raise SkillExistViolation()
+            return [QuestionId(res.question_id) for res in result]
 
     def delete(self, question_ids: list[QuestionId]) -> None:
         query = delete(question_table).where(
