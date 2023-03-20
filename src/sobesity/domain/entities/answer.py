@@ -16,5 +16,4 @@ class AnswerEntity:
 class AnswerFilterEnitity:
     answer_ids: Optional[list[AnswerId]] = None
     answers: Optional[list[str]] = None
-    right: Optional[list[bool]] = None
     question_ids: Optional[list[int]] = None
