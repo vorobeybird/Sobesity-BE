@@ -75,7 +75,11 @@ def delete_answers(
 def update_answer(
     body: PatchAnswerBody, answer_service: IAnswerService = Provide[Services.answer]
 ):
-    return answer_service.update(body.get_to_set(), body.get_where())
+    try:
+        answer_service.update(body.get_to_set(), body.get_where())
+    except QuestionExistViolation as exc:
+        return bad_request_maker(BadRequestSerializer(message=exc.message))
+    return Response(), HTTPStatus.NO_CONTENT
 
 
 @answer_bp.get("find_answers/<int:questionId>", responses={"200": AnswerSerializer})

@@ -77,8 +77,13 @@ class AnswerRepository(IAnswerRepository):
         )
 
         with self.datasource() as conn:
-            result = conn.execute(query)
-        return [AnswerId(res.answer_id) for res in result]
+            try:
+                result = conn.execute(query)
+            except IntegrityError as exc:
+                if isinstance(exc.orig, ForeignKeyViolation):
+                    logger.exception(exc)
+                    raise QuestionExistViolation()
+            return [AnswerId(res.answer_id) for res in result]
 
     def delete(self, answer_ids: list[AnswerId]) -> None:
         query = delete(answer_table).where(answer_table.c.answer_id.in_(answer_ids))
