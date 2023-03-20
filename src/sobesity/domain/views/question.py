@@ -82,10 +82,9 @@ def update_question(
     question_service: IQuestionService = Provide[Services.question],
 ):
     try:
-        question_service.update(body.get_to_set(), body.get_where())
+        return question_service.update(body.get_to_set(), body.get_where())
     except SkillExistViolation as exc:
         return bad_request_maker(BadRequestSerializer(message=exc.message))
-    return Response(), HTTPStatus.NO_CONTENT
 
 
 @question_bp.get("find_questions/<int:skillId>", responses={"200": QuestionSerializer})
