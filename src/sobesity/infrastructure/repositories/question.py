@@ -73,8 +73,8 @@ class QuestionRepository(IQuestionRepository):
         query = update(question_table)
 
         query = self._patch_query(query, where)
-        query = query.values({"question": to_set.question}).returning(
-            question_table.c.question_id
+        query = query.values({"question": to_set.question, "skill_id": to_set.skill_id}).returning(
+            question_table.c.question_id, question_table.c.skill_id
         )
 
         with self.datasource() as conn:

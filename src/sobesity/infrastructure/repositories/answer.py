@@ -68,8 +68,12 @@ class AnswerRepository(IAnswerRepository):
         query = update(answer_table)
 
         query = self._patch_query(query, where)
-        query = query.values({"answer": to_set.answer}).returning(
-            answer_table.c.answer_id
+        query = query.values({"answer": to_set.answer,
+                              "question_id": to_set.question_id,
+                              "right": to_set.right}).returning(
+            answer_table.c.answer_id,
+            answer_table.c.question_id,
+            answer_table.c.right
         )
 
         with self.datasource() as conn:
