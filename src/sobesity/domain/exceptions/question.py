@@ -11,6 +11,6 @@ class QuestionSkillIdExistViolation(Exception):
 
 
 class QuestionExistViolation(Exception):
-    def __int__(self) -> None:
+    def __init__(self) -> None:
         self.message = "Question not exist"
         super().__init__(self.message)
