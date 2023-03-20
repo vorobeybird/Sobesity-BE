@@ -1,3 +1,4 @@
+import logging
 import re
 from dataclasses import asdict
 from datetime import datetime, timedelta
@@ -15,6 +16,8 @@ from sobesity.domain.serializers.base import BadRequestSerializer
 UNPROTECTED_ENDPOINTS = ("openapi\..*", "user\..*")
 PROTECTED_ENDPOINTS = ("user\.current_user",)
 
+logger = logging.getLogger(__name__)
+
 
 class JWTResource(IJWTResource):
     def __init__(self, secret, access_token_duration_days, refresh_token_duration_days):
@@ -25,7 +28,9 @@ class JWTResource(IJWTResource):
 
     def is_endpoint_protected(self, endpoint: str) -> bool:
         if endpoint is None:
-            raise ValueError(f"Endpoint can't be None. {request}")
+            logger.debug(f"Endpoint can't be None. {request}")
+            return False
+
         for endpoint_pattern in PROTECTED_ENDPOINTS:
             if re.match(endpoint_pattern, endpoint) is not None:
                 return True
