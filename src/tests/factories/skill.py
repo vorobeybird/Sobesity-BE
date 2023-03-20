@@ -7,5 +7,5 @@ class SkillEntityFactory(factory.Factory):
     class Meta:
         model = SkillEntity
 
-    skill_id = factory.Sequence(lambda n: SkillId(n)+1)
+    skill_id = factory.Sequence(lambda n: SkillId(n))
     name = factory.Faker("word")
