@@ -6,6 +6,9 @@ from sobesity.domain.exceptions import UserNotFound
 
 
 def test_get_user_by_filter__not_found__return_404(client, mock_user_repository):
+    response = client.get("api/user")
+    assert response.status_code == HTTPStatus.BAD_REQUEST
+
     mock_user_repository.get_user.side_effect = UserNotFound(UserFilter(user_id=11))
     response = client.get("api/user?userId=11")
     assert response.status_code == HTTPStatus.NOT_FOUND
