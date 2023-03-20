@@ -7,7 +7,9 @@ def test_get_list__empty_db__return_nothing(question_repository):
     assert question_repository.get_list() == []
 
 
-def test_batch_create__get_all_rows(skill_repository, skill, question_repository, questions):
+def test_batch_create__get_all_rows(
+    skill_repository, skill, question_repository, questions
+):
     skill_to_create = []
     skill_to_create.append(skill)
     skill_repository.batch_create(skill_to_create)
@@ -27,7 +29,9 @@ def test_batch_create__get_all_rows(skill_repository, skill, question_repository
         assert question.question in created_questions_map
 
 
-def test_update__particular_rows_updated(question_repository, questions, skill_repository, skills):
+def test_update__particular_rows_updated(
+    question_repository, questions, skill_repository, skills
+):
     skill_repository.batch_create(skills)
     created_skill = skill_repository.get_list()
 
@@ -49,7 +53,9 @@ def test_update__particular_rows_updated(question_repository, questions, skill_r
     assert question_after.question == to_set.question
 
 
-def test_delete__particular_rows_deleted(question_repository, questions, skill_repository, skills):
+def test_delete__particular_rows_deleted(
+    question_repository, questions, skill_repository, skills
+):
     skill_repository.batch_create(skills)
     created_skill = skill_repository.get_list()
 
