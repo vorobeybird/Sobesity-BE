@@ -6,7 +6,7 @@ from sobesity.domain.entities.question import (
     QuestionId,
 )
 
-question_id_field = Field(..., alias="QuestionId")
+question_id_field = Field(..., alias="questionId")
 
 
 class QuestionSerializer(BaseModel):
@@ -22,7 +22,7 @@ class QuestionSerializer(BaseModel):
     @classmethod
     def from_domain(cls, question: QuestionEntity):
         return cls(
-            question_id=question.question_id,
+            questionId=question.question_id,
             question=question.question,
             skill_id=question.skill_id,
         )
@@ -57,7 +57,7 @@ class PathQuestionId(BaseModel):
 
 
 class QuestionIdsSerializer(BaseModel):
-    question_ids: list[QuestionId]
+    question_ids: list[QuestionId] = Field(..., alias="questionIds")
 
     def to_domain(self) -> list[QuestionId]:
         return [QuestionId(question_id) for question_id in self.question_ids]

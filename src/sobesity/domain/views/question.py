@@ -38,7 +38,7 @@ def get_questions(question_service: IQuestionService = Provide[Services.question
     return question_service.get_list()
 
 
-@question_bp.get("/<int:question_id>", responses={"200": QuestionSerializer})
+@question_bp.get("/<int:questionId>", responses={"200": QuestionSerializer})
 @inject
 def get_question(
     path: PathQuestionId,

@@ -66,7 +66,7 @@ def test_delete(client, mock_question_repository, auth_header):
 
 def test_update(client, mock_question_repository, auth_header):
     question_id = 10
-    body = {"question": "string", "question_id": question_id, "skill_id": 1}
+    body = {"question": "string", "questionId": question_id, "skill_id": 1}
     expected_affected_ids = [question_id]
     mock_question_repository.update.return_value = expected_affected_ids
     response = client.patch("/api/question", json=body, headers=auth_header)

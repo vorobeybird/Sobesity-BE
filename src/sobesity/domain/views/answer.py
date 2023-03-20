@@ -38,7 +38,7 @@ def get_answers(answer_service: IAnswerService = Provide[Services.answer]):
     return answer_service.get_list()
 
 
-@answer_bp.get("/<int:answer_id>", responses={"200": AnswerSerializer})
+@answer_bp.get("/<int:answerId>", responses={"200": AnswerSerializer})
 @inject
 def get_answer(
     path: PathAnswerId, answer_service: IAnswerService = Provide[Services.answer]
@@ -78,7 +78,7 @@ def update_answer(
     return answer_service.update(body.get_to_set(), body.get_where())
 
 
-@answer_bp.get("find_answers/<int:question_id>", responses={"200": AnswerSerializer})
+@answer_bp.get("find_answers/<int:questionId>", responses={"200": AnswerSerializer})
 @inject
 def get_answers_to_question(
     path: PathQuestionId, answer_service: IAnswerService = Provide[Services.answer]

@@ -63,7 +63,7 @@ def test_delete(client, mock_answer_repository, auth_header):
 
 def test_update(client, mock_answer_repository, auth_header):
     answer_id = 10
-    body = {"answer": "string", "answer_id": answer_id, "question_id": 1, "right": True}
+    body = {"answer": "string", "answerId": answer_id, "question_id": 1, "right": True}
     expected_affected_ids = [answer_id]
     mock_answer_repository.update.return_value = expected_affected_ids
     response = client.patch("/api/answer", json=body, headers=auth_header)

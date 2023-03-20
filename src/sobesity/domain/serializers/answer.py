@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 
 from sobesity.domain.entities.answer import AnswerEntity, AnswerFilterEnitity, AnswerId
 
-answer_id_field = Field(..., alias="AnswerId")
+answer_id_field = Field(..., alias="answerId")
 
 
 class AnswerSerializer(BaseModel):
@@ -22,7 +22,7 @@ class AnswerSerializer(BaseModel):
     @classmethod
     def from_domain(cls, answer: AnswerEntity):
         return cls(
-            answer_id=answer.answer_id,
+            answerId=answer.answer_id,
             answer=answer.answer,
             right=answer.right,
             question_id=answer.question_id,
@@ -62,7 +62,7 @@ class PathAnswerId(BaseModel):
 
 
 class AnswerIdsSerializer(BaseModel):
-    answer_ids: list[AnswerId]
+    answer_ids: list[AnswerId] = Field(..., alias="answerIds")
 
     def to_domain(self) -> list[AnswerId]:
         return [AnswerId(answer_id) for answer_id in self.answer_ids]
