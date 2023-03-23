@@ -37,8 +37,7 @@ def test_update__particular_rows_updated(
     for question in questions:
         question.skill_id = created_skill[0].skill_id
 
-    questions_to_create = [questions[0]]
-    question_repository.batch_create(questions_to_create)
+    question_repository.batch_create(questions[:1])
     question_before = question_repository.get_list()[0]
 
     to_set = questions[1]
