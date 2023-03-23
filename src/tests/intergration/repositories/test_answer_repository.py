@@ -8,7 +8,7 @@ def test_get_list__empty_db__return_nothing(answer_repository):
 
 
 def test_batch_create__get_all_rows(
-    create_questions, answer_repository, answers, question_repository
+    created_questions, answer_repository, answers, question_repository
 ):
     created_questions = question_repository.get_list()
     for answer in answers:
@@ -23,7 +23,7 @@ def test_batch_create__get_all_rows(
 
 
 def test_update__particular_rows_updated(
-    create_questions, answer_repository, answers, question_repository
+    created_questions, answer_repository, answers, question_repository
 ):
     created_questions = question_repository.get_list()
     for answer in answers:
@@ -43,7 +43,7 @@ def test_update__particular_rows_updated(
 
 
 def test_delete__particular_rows_deleted(
-    create_questions, answer_repository, answers, question_repository
+    created_questions, answer_repository, answers, question_repository
 ):
     created_questions = question_repository.get_list()
     for answer in answers:
@@ -63,7 +63,7 @@ def test_delete__particular_rows_deleted(
         assert answer.answer_id not in to_delete
 
 
-@pytest.fixture()
+@pytest.fixture
 def created_questions(skill_repository, skill, question_repository, question):
     skill_to_create = [skill]
     skill_repository.batch_create(skill_to_create)
