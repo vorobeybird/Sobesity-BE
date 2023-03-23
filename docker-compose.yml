@@ -8,13 +8,12 @@ services:
       target: dev
     env_file:
       - ./etc/backend/env/dev.env
-    restart:
-      unless-stopped
     depends_on:
       - db
     volumes:
       - ./src/sobesity:/code/sobesity
       - ./src/tests:/code/tests
+      - ./src/alembic/:/code/alembic/
     ports:
       - 5150:5150
 
@@ -40,6 +39,7 @@ services:
     volumes:
       - ./src/alembic/:/code/alembic/
       - ./src/sobesity:/code/sobesity
+
 
 
 volumes:

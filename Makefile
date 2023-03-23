@@ -103,6 +103,10 @@ restart-app:
 add-lib:
 	${POETRY} add ${lib}
 
+.PHONY: reset
+reset:
+	${DOCKER_COMPOSE} down -v
+
 .PHONY: refresh-lock
 refresh-lock:
 	${POETRY} lock --no-update

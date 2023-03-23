@@ -7,7 +7,13 @@ from http_constants.headers import HttpHeaders
 
 from sobesity.domain.entities import UserFilter, UserId
 from sobesity.webapp import create_app
-from tests.factories import CreateUserFactory, SkillEntityFactory, UserEntityFactory
+from tests.factories import (
+    CreateUserFactory,
+    SkillEntityFactory,
+    UserEntityFactory,
+    QuestionEntityFactory,
+    AnswerEntityFactory,
+)
 
 email_validator.TEST_ENVIRONMENT = True
 
@@ -124,3 +130,33 @@ def enable_email_validation():
     email_validator.TEST_ENVIRONMENT = False
     yield
     email_validator.TEST_ENVIRONMENT = True
+
+
+@pytest.fixture
+def question_repository(di):
+    return di.repositories.question()
+
+
+@pytest.fixture
+def questions():
+    return [QuestionEntityFactory() for _ in range(random.randint(3, 5))]
+
+
+@pytest.fixture
+def question(questions):
+    return questions[0]
+
+
+@pytest.fixture
+def answer_repository(di):
+    return di.repositories.answer()
+
+
+@pytest.fixture
+def answers():
+    return [AnswerEntityFactory() for _ in range(random.randint(3, 5))]
+
+
+@pytest.fixture
+def answer(answers):
+    return answers[0]

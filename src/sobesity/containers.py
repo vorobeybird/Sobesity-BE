@@ -1,10 +1,21 @@
 from dependency_injector import containers, providers
 
+
 from sobesity.config import Settings
 from sobesity.domain.access_managers import UserAccessManager
-from sobesity.domain.services import SkillService, UserService
+from sobesity.domain.services import (
+    SkillService,
+    UserService,
+    QuestionService,
+    AnswerService,
+)
 from sobesity.infrastructure.datasource import datasource
-from sobesity.infrastructure.repositories import SkillRepository, UserRepository
+from sobesity.infrastructure.repositories import (
+    SkillRepository,
+    UserRepository,
+    QuestionRepository,
+    AnswerRepository,
+)
 from sobesity.infrastructure.resources import JWTResource
 
 
@@ -21,12 +32,16 @@ class Resources(containers.DeclarativeContainer):
 
 class Repositories(containers.DeclarativeContainer):
     resources = providers.DependenciesContainer()
+    question = providers.Singleton(QuestionRepository, resources.datasource)
+    answer = providers.Singleton(AnswerRepository, resources.datasource)
     skill = providers.Singleton(SkillRepository, resources.datasource)
     user = providers.Singleton(UserRepository, resources.datasource)
 
 
 class Services(containers.DeclarativeContainer):
     repositories = providers.DependenciesContainer()
+    question = providers.Singleton(QuestionService, repositories.question)
+    answer = providers.Singleton(AnswerService, repositories.answer)
     skill = providers.Singleton(SkillService, repositories.skill)
     user = providers.Singleton(UserService, repositories.user)
 

@@ -1,19 +1,20 @@
 from flask import Flask
 from flask_cors import CORS
 from flask_openapi3 import HTTPBearer, Info, OpenAPI
-
 from sobesity.containers import Application
-from sobesity.domain.views import skill, user
+from sobesity.domain.views import skill, user, question, answer
 
 
 def register_views(app):
     app.register_api(skill.skill_bp)
     app.register_api(user.user_bp)
+    app.register_api(question.question_bp)
+    app.register_api(answer.answer_bp)
 
 
 def init_dependency():
     container = Application()
-    container.services.wire([skill, user])
+    container.services.wire([skill, user, question, answer])
     return container
 
 
