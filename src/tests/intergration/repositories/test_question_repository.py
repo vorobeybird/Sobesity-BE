@@ -10,8 +10,7 @@ def test_get_list__empty_db__return_nothing(question_repository):
 def test_batch_create__get_all_rows(
     skill_repository, skill, question_repository, questions
 ):
-    skill_to_create = []
-    skill_to_create.append(skill)
+    skill_to_create = [skill]
     skill_repository.batch_create(skill_to_create)
     created_skill = skill_repository.get_list()
 
@@ -38,8 +37,7 @@ def test_update__particular_rows_updated(
     for question in questions:
         question.skill_id = created_skill[0].skill_id
 
-    questions_to_create = []
-    questions_to_create.append(questions[0])
+    questions_to_create = [questions[0]]
     question_repository.batch_create(questions_to_create)
     question_before = question_repository.get_list()[0]
 
@@ -54,9 +52,10 @@ def test_update__particular_rows_updated(
 
 
 def test_delete__particular_rows_deleted(
-    question_repository, questions, skill_repository, skills
+    question_repository, questions, skill_repository, skill
 ):
-    skill_repository.batch_create(skills)
+    skill_to_create = [skill]
+    skill_repository.batch_create(skill_to_create)
     created_skill = skill_repository.get_list()
 
     for question in questions:

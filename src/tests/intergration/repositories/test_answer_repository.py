@@ -8,42 +8,24 @@ def test_get_list__empty_db__return_nothing(answer_repository):
 
 
 def test_batch_create__get_all_rows(
-    answer_repository, answers, question_repository, questions, skill_repository, skills
+    create_questions, answer_repository, answers, question_repository
 ):
-    skill_repository.batch_create(skills)
-    created_skill = skill_repository.get_list()
-
-    for question in questions:
-        question.skill_id = created_skill[0].skill_id
-
-    question_repository.batch_create(questions)
     created_questions = question_repository.get_list()
-
     for answer in answers:
         answer.question_id = created_questions[0].question_id
 
     answer_repository.batch_create(answers)
     created_answers = answer_repository.get_list()
     created_answers_map = {answer.answer: answer for answer in created_answers}
-
     assert len(created_answers) == len(answers)
     for answer in answers:
         assert answer.answer in created_answers_map
 
 
 def test_update__particular_rows_updated(
-    answer_repository, answers, question_repository, questions, skill_repository, skills
+    create_questions, answer_repository, answers, question_repository
 ):
-
-    skill_repository.batch_create(skills)
-    created_skill = skill_repository.get_list()
-
-    for question in questions:
-        question.skill_id = created_skill[0].skill_id
-
-    question_repository.batch_create(questions)
     created_questions = question_repository.get_list()
-
     for answer in answers:
         answer.question_id = created_questions[0].question_id
 
@@ -61,17 +43,9 @@ def test_update__particular_rows_updated(
 
 
 def test_delete__particular_rows_deleted(
-    answer_repository, answers, question_repository, questions, skill_repository, skills
+    create_questions, answer_repository, answers, question_repository
 ):
-    skill_repository.batch_create(skills)
-    created_skill = skill_repository.get_list()
-
-    for question in questions:
-        question.skill_id = created_skill[0].skill_id
-
-    question_repository.batch_create(questions)
     created_questions = question_repository.get_list()
-
     for answer in answers:
         answer.question_id = created_questions[0].question_id
 
@@ -87,3 +61,15 @@ def test_delete__particular_rows_deleted(
 
     for answer in created_answers_after:
         assert answer.answer_id not in to_delete
+
+
+@pytest.fixture()
+def create_questions(skill_repository, skill, question_repository, question):
+    skill_to_create = [skill]
+    skill_repository.batch_create(skill_to_create)
+    created_skill = skill_repository.get_list()
+
+    question.skill_id = created_skill[0].skill_id
+
+    question_to_create = [question]
+    question_repository.batch_create(question_to_create)
