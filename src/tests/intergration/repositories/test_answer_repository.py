@@ -64,7 +64,7 @@ def test_delete__particular_rows_deleted(
 
 
 @pytest.fixture()
-def create_questions(skill_repository, skill, question_repository, question):
+def created_questions(skill_repository, skill, question_repository, question):
     skill_to_create = [skill]
     skill_repository.batch_create(skill_to_create)
     created_skill = skill_repository.get_list()
