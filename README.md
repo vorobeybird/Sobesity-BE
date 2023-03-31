@@ -32,6 +32,13 @@ the app. To do this run next command:
 make restart-app
 ```
 
+## Install library
+
+For example how to install `alembic` as library.
+```
+make add-lib lib="alembic"
+```
+
 ## How to debug the app
 Set `breakpoint()` in particular place then run the command. It will stop the app and rerun it with attached tty
 ```
