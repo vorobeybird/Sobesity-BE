@@ -45,6 +45,11 @@ Set `breakpoint()` in particular place then run the command. It will stop the ap
 make debug-app
 ```
 
+To get bash acccess to **running** container
+```
+make app-bash
+```
+
 
 ## How to generate JWT token
 Open [jwt.io](jwt.io). In `payload` set `iat`("Issue at") to your current time in unix style [(human time to unix)](https://www.epochconverter.com/).
