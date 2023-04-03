@@ -7,6 +7,8 @@ def question_to_json(question):
         "question": question.question,
         "skill_id": question.skill_id,
         "question_id": question.question_id,
+        "type": question.type,
+        "code": question.code,
     }
 
 
@@ -48,7 +50,14 @@ def test_get__by_id__return_question(
 
 
 def test_create(client, mock_question_repository, auth_header):
-    body = [{"question": "What", "skill_id": 1}]
+    body = [
+        {
+            "question": "What",
+            "skill_id": 1,
+            "type": "single",
+            "code": "smt='hello' print('smt')",
+        }
+    ]
     response = client.post("/api/question", json=body, headers=auth_header)
 
     assert response.status_code == HTTPStatus.CREATED
@@ -66,7 +75,13 @@ def test_delete(client, mock_question_repository, auth_header):
 
 def test_update(client, mock_question_repository, auth_header):
     question_id = 10
-    body = {"question": "string", "questionId": question_id, "skill_id": 1}
+    body = {
+        "question": "string",
+        "questionId": question_id,
+        "skill_id": 1,
+        "type": "single",
+        "code": "smt='hello' print('smt')",
+    }
     expected_affected_ids = [question_id]
     mock_question_repository.update.return_value = expected_affected_ids
     response = client.patch("/api/question", json=body, headers=auth_header)

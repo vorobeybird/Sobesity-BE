@@ -84,11 +84,17 @@ class DeleteQuestionBody(QuestionIdsSerializer):
 class PatchQuestionBody(BaseModel):
     question_id: QuestionId = question_id_field
     question: str
+    type: str
+    code: str
     skill_id: int
 
     def get_to_set(self):
         return QuestionEntity(
-            question_id=None, question=self.question, skill_id=self.skill_id
+            question_id=None,
+            question=self.question,
+            type=self.type,
+            code=self.code,
+            skill_id=self.skill_id,
         )
 
     def get_where(self) -> list[QuestionFilterEnitity]:
