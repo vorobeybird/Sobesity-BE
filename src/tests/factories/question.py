@@ -11,6 +11,6 @@ class QuestionEntityFactory(factory.Factory):
 
     question_id = factory.Sequence(lambda n: QuestionId(n))
     question = factory.Faker("word")
-    type = random.choice(['single', 'multiple'])
+    type = random.choice(["single", "multiple"])
     code = factory.Faker("sentence")
     skill_id = factory.Sequence(lambda n: SkillId(n))
