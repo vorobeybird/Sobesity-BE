@@ -1,11 +1,32 @@
 Python:
   questions:
-    - question: How to form dict
+    - question: "How to form dict"
       type: multiple
       answers:
         - answer: "{'a': 1, 'b': 2}"
-          right: True
+          right: true
         - answer: "dict(a=1, b=2)"
-          right: True
+          right: true
         - answer: "['a': 1, 'b': 2]"
         - answer: "dictionary{'a': 1, 'b': 2}"
+
+    - question: "Which menthod used to initiate class"
+      type: single
+      answers:
+        - answer: "init"
+        - answer: "new"
+        - answer: "__init__"
+          right: true
+        - answer: "__new__"
+
+    - question: "What are functions in Python"
+      code: 'def function():
+              print("Hi, Welcome to Intellipaat")
+              function(); # call to the function'
+      type: single
+      answers:
+        - answer: "A function is a block of code which is executed only when a call is made to the function. def keyword is used to define a particular function as shown below:"
+          right: true
+        - answer: "I don't know"
+        - answer: "Something"
+        - answer: "Yeap"

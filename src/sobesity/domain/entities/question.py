@@ -9,6 +9,7 @@ class QuestionEntity:
     question_id: QuestionId
     question: str
     type: str
+    code: str
     skill_id: int
 
 

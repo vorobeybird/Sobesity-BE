@@ -13,6 +13,7 @@ class QuestionSerializer(BaseModel):
     question_id: QuestionId = question_id_field
     question: str
     type: str
+    code: str
     skill_id: int
 
     def to_domain(self) -> QuestionEntity:
@@ -20,6 +21,7 @@ class QuestionSerializer(BaseModel):
             question_id=self.question_id,
             question=self.question,
             type=self.type,
+            code=self.code,
             skill_id=self.skill_id,
         )
 
@@ -28,7 +30,8 @@ class QuestionSerializer(BaseModel):
         return cls(
             questionId=question.question_id,
             question=question.question,
-            typer=self.type,
+            type=question.type,
+            code=question.code,
             skill_id=question.skill_id,
         )
 
@@ -36,6 +39,7 @@ class QuestionSerializer(BaseModel):
 class QuestionBodyElem(BaseModel):
     question: str
     type: str
+    code: str
     skill_id: int
 
     def to_domain(self) -> QuestionEntity:
@@ -43,6 +47,7 @@ class QuestionBodyElem(BaseModel):
             question_id=None,
             question=self.question,
             type=self.type,
+            code=self.code,
             skill_id=self.skill_id,
         )
 

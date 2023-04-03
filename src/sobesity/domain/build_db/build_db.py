@@ -31,11 +31,16 @@ for skill in templates:
     for question_with_answers in questions_with_answers:
         type_of_question = question_with_answers["type"]
         question = question_with_answers["question"]
+        try:
+            code = question_with_answers["code"]
+        except (KeyError):
+            code = None
         question_to_create = [
             QuestionEntity(
                 question_id=None,
                 question=question,
                 type=type_of_question,
+                code=code,
                 skill_id=created_skill[0].skill_id,
             )
         ]
