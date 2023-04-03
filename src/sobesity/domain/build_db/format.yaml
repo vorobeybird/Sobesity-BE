@@ -1,0 +1,11 @@
+Python:
+  questions:
+    - question: How to form dict
+      type: multiple
+      answers:
+        - answer: "{'a': 1, 'b': 2}"
+          right: True
+        - answer: "dict(a=1, b=2)"
+          right: True
+        - answer: "['a': 1, 'b': 2]"
+        - answer: "dictionary{'a': 1, 'b': 2}"
