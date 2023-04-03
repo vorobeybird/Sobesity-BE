@@ -8,6 +8,7 @@ QuestionId = NewType("QuestionId", int)
 class QuestionEntity:
     question_id: QuestionId
     question: str
+    type: str
     skill_id: int
 
 

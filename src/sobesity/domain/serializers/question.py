@@ -12,11 +12,15 @@ question_id_field = Field(..., alias="questionId")
 class QuestionSerializer(BaseModel):
     question_id: QuestionId = question_id_field
     question: str
+    type: str
     skill_id: int
 
     def to_domain(self) -> QuestionEntity:
         return QuestionEntity(
-            question_id=self.question_id, question=self.question, skill_id=self.skill_id
+            question_id=self.question_id,
+            question=self.question,
+            type=self.type,
+            skill_id=self.skill_id,
         )
 
     @classmethod
@@ -24,17 +28,22 @@ class QuestionSerializer(BaseModel):
         return cls(
             questionId=question.question_id,
             question=question.question,
+            typer=self.type,
             skill_id=question.skill_id,
         )
 
 
 class QuestionBodyElem(BaseModel):
     question: str
+    type: str
     skill_id: int
 
     def to_domain(self) -> QuestionEntity:
         return QuestionEntity(
-            question_id=None, question=self.question, skill_id=self.skill_id
+            question_id=None,
+            question=self.question,
+            type=self.type,
+            skill_id=self.skill_id,
         )
 
 
