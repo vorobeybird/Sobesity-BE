@@ -1,3 +1,5 @@
+import logging
+
 from flask import Flask
 from flask_cors import CORS
 from flask_openapi3 import HTTPBearer, Info, OpenAPI
@@ -5,11 +7,24 @@ from sobesity.containers import Application
 from sobesity.domain.views import skill, user, question, answer
 
 
-def register_views(app):
-    app.register_api(skill.skill_bp)
-    app.register_api(user.user_bp)
-    app.register_api(question.question_bp)
-    app.register_api(answer.answer_bp)
+def setup_logger(app):
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format="%(asctime)s [%(process)d] [%(levelname)s]\t%(message)s",
+        datefmt="[%Y-%m-%d %H:%M:%S %z]",
+    )
+
+
+def register_apis(app):
+    apis = (
+        skill.skill_bp,
+        user.user_bp,
+        question.question_bp,
+        answer.answer_bp,
+    )
+    for api in apis:
+        app.register_api(api)
+
 
 
 def init_dependency():
@@ -30,12 +45,16 @@ def prepare_swagger() -> Flask:
 
 
 def create_app():
-    container = init_dependency()
     app = prepare_swagger()
-    CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+    setup_logger(app)
+
+    container = init_dependency()
     app.container = container
 
-    register_views(app)
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+    register_apis(app)
     enable_jwt_check(app)
 
     return app
