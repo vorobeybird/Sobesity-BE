@@ -10,7 +10,8 @@ ENV PYTHONFAULTHANDLER=1 \
     POETRY_VERSION=1.3.1
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends\
+    apt-get upgrade -qqy && \
+    apt-get install -qqy --no-install-recommends\
     libpq-dev python-dev gcc
 
 WORKDIR $CODE_FOLDER
@@ -34,22 +35,22 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR $CODE_FOLDER
-
 RUN groupadd $APP_GROUP && \
     useradd -s /bin/bash -g $APP_GROUP $APP_USER -d $CODE_FOLDER && \
     chown -R $APP_USER:$APP_GROUP $CODE_FOLDER
 
 USER $APP_USER
 
-COPY ./etc/backend/wait-for-it.sh ./etc/backend/entrypoint.sh  /entr/
+COPY ./etc/backend/entrypoint.sh  /entr/
 
 COPY --from=builder $VENV_FOLDER $VENV_FOLDER
 
-COPY --chown=$APP_USER ./src ./tox.ini ./pyproject.toml ./
+COPY --chown=$APP_USER ./src ./tox.ini ./pyproject.toml ./etc/backend/run-server.sh ./
+RUN chmod +x ./run-server.sh
 
 ENTRYPOINT ["/entr/entrypoint.sh"]
 
-CMD ["gunicorn", "--reload", "-b", "0.0.0.0:5150", "--timeout", "120", "sobesity.webapp:create_app()"]
+CMD ["./run-server.sh"]
 
 FROM dev as migrator
 

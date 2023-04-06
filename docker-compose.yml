@@ -41,6 +41,5 @@ services:
       - ./src/sobesity:/code/sobesity
 
 
-
 volumes:
   pgdata:
