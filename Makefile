@@ -70,7 +70,7 @@ format-all: format fix-imports
 
 .PHONY: run
 run:
-	${DOCKER_COMPOSE} up -d
+	${DOCKER_COMPOSE} up -d --build
 
 .PHONY: build-test
 build-test:
