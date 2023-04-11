@@ -27,7 +27,7 @@ def upgrade() -> None:
             primary_key=True,
             server_default=sa.text(f"nextval('{answer_id_seq.name}'::regclass)"),
         ),
-        sa.Column("answer", sa.String(), nullable=False, unique=False),
+        sa.Column("answer", sa.String(50), nullable=False, unique=False),
     )
 
 

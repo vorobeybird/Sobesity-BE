@@ -14,13 +14,14 @@ from sobesity.domain.entities import (
 from sobesity.domain.services import SkillService, QuestionService, AnswerService
 from sobesity.webapp import init_dependency
 
-with open("sobesity/domain/build_db/format.yaml") as f:
+with open("sobesity/domain/data/fixture.yaml") as f:
     templates = yaml.safe_load(f)
+
+conteiner = init_dependency()
 
 for skill in templates:
     skill_to_create = [SkillEntity(skill_id=None, name=skill)]
 
-    conteiner = init_dependency()
     skill_service = conteiner.services.skill()
     skill_service.batch_create(skill_to_create)
 
