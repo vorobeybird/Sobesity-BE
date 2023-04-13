@@ -11,8 +11,7 @@ Python:
         - answer: "dictionary{'a': 1, 'b': 2}"
 
     - question: "Which menthod used to initiate class"
-      answer:
-        type: single
+      type: single
       answers:
         - answer: "init"
         - answer: "new"
@@ -24,8 +23,7 @@ Python:
       code: 'def function():
 print("Hi, Welcome to Intellipaat")
 function(); # call to the function'
-      answer:
-        type: single
+      type: single
       answers:
         - answer: "A function is a block of code which is executed only when a call is made to the function. def keyword is used to define a particular function as shown below:"
           right: true
