@@ -1,4 +1,7 @@
+import time
 from logging.config import fileConfig
+
+from sqlalchemy.exc import OperationalError
 
 from alembic import context
 from sobesity.config import Settings
@@ -50,6 +53,23 @@ def run_migrations_offline() -> None:
         context.run_migrations()
 
 
+def check_connection():
+    tries = 0
+    while tries < 5:
+        try:
+            with engine.connect():
+                return
+        except OperationalError as exc:
+            tries += 1
+            print(exc)
+            print("Can't connect to DB.")
+            secs = tries
+            print(f"sleeping {secs}...")
+            time.sleep(secs)
+    else:
+        raise
+
+
 def run_migrations_online() -> None:
     """Run migrations in 'online' mode.
 
@@ -57,6 +77,7 @@ def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
+    check_connection()
     connectable = engine
     with connectable.connect() as connection:
         context.configure(connection=connection, target_metadata=target_metadata)
