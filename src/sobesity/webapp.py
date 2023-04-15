@@ -7,10 +7,11 @@ from sobesity.containers import Application
 from sobesity.domain.views import skill, user, question, answer
 
 
-def setup_logger(app):
+def setup_logger(config):
+    level = logging.getLevelNamesMapping()[config.app.logger_level()]
     logging.basicConfig(
-        level=logging.DEBUG,
-        format="%(asctime)s [%(process)d] [%(levelname)s]\t%(message)s",
+        level=level,
+        format="%(asctime)s [%(process)d] [%(levelname)s] %(message)s",
         datefmt="[%Y-%m-%d %H:%M:%S %z]",
     )
 
@@ -47,10 +48,12 @@ def prepare_swagger() -> Flask:
 def create_app():
     app = prepare_swagger()
 
-    setup_logger(app)
-
     container = init_dependency()
     app.container = container
+    config = container.resources.config
+
+    setup_logger(config)
+
 
     CORS(app, resources={r"/api/*": {"origins": "*"}})
 
