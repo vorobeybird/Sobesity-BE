@@ -1,4 +1,4 @@
-from .skill import skill_bp
-from .question import question_bp
 from .answer import answer_bp
+from .question import question_bp
+from .skill import skill_bp
 from .user import user_bp

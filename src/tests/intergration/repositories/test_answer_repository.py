@@ -1,6 +1,6 @@
 import pytest
 
-from sobesity.domain.entities.answer import AnswerEntity, AnswerFilterEnitity
+from sobesity.domain.entities.answer import AnswerFilterEnitity
 
 
 def test_get_list__empty_db__return_nothing(answer_repository):

@@ -4,11 +4,13 @@ from dependency_injector.wiring import Provide, inject
 from flask import Response
 from flask_openapi3 import APIBlueprint, Tag
 
-from sobesity.domain.exceptions import QuestionExistViolation
 from sobesity.containers import Services
 from sobesity.domain.entities.answer import AnswerFilterEnitity
+from sobesity.domain.exceptions import QuestionExistViolation
 from sobesity.domain.interfaces.services.answer import IAnswerService
 from sobesity.domain.serializers import (
+    AnswerIdsSerializer,
+    AnswerSerializer,
     BadRequestSerializer,
     DeleteAnswerBody,
     GetAnswers,
@@ -17,8 +19,6 @@ from sobesity.domain.serializers import (
     PathAnswerId,
     PathQuestionId,
     PostAnswerBody,
-    AnswerIdsSerializer,
-    AnswerSerializer,
 )
 from sobesity.domain.utils.response import bad_request_maker
 

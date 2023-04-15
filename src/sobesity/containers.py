@@ -1,20 +1,19 @@
 from dependency_injector import containers, providers
 
-
 from sobesity.config import Settings
 from sobesity.domain.access_managers import UserAccessManager
 from sobesity.domain.services import (
+    AnswerService,
+    QuestionService,
     SkillService,
     UserService,
-    QuestionService,
-    AnswerService,
 )
 from sobesity.infrastructure.datasource import datasource
 from sobesity.infrastructure.repositories import (
+    AnswerRepository,
+    QuestionRepository,
     SkillRepository,
     UserRepository,
-    QuestionRepository,
-    AnswerRepository,
 )
 from sobesity.infrastructure.resources import JWTResource
 

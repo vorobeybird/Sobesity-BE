@@ -3,8 +3,9 @@ import logging
 from flask import Flask
 from flask_cors import CORS
 from flask_openapi3 import HTTPBearer, Info, OpenAPI
+
 from sobesity.containers import Application
-from sobesity.domain.views import skill, user, question, answer
+from sobesity.domain.views import answer, question, skill, user
 
 
 def setup_logger(config):
@@ -25,7 +26,6 @@ def register_apis(app):
     )
     for api in apis:
         app.register_api(api)
-
 
 
 def init_dependency():
@@ -53,7 +53,6 @@ def create_app():
     config = container.resources.config
 
     setup_logger(config)
-
 
     CORS(app, resources={r"/api/*": {"origins": "*"}})
 

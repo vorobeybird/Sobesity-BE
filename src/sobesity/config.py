@@ -8,6 +8,7 @@ DB_CONNECTION_TEMPLATE = (
 class AppSettings(BaseSettings):
     logger_level: str = "INFO"
 
+
 class DatabaseSettings(BaseSettings):
     host: str
     port: int

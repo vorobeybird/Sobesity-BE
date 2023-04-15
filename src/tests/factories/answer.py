@@ -1,6 +1,6 @@
 import factory
 
-from sobesity.domain.entities import AnswerEntity, QuestionId, AnswerId
+from sobesity.domain.entities import AnswerEntity, AnswerId, QuestionId
 
 
 class AnswerEntityFactory(factory.Factory):

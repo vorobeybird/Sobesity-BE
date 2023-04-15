@@ -5,10 +5,10 @@ Revises: f84c64349c87
 Create Date: 2023-02-17 11:22:39.831987
 
 """
-from alembic import op
 import sqlalchemy as sa
-from sobesity.infrastructure.models.question import question_id_seq
 
+from alembic import op
+from sobesity.infrastructure.models.question import question_id_seq
 
 # revision identifiers, used by Alembic.
 revision = "a2e479e35086"

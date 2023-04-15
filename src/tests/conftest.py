@@ -8,11 +8,11 @@ from http_constants.headers import HttpHeaders
 from sobesity.domain.entities import UserFilter, UserId
 from sobesity.webapp import create_app
 from tests.factories import (
+    AnswerEntityFactory,
     CreateUserFactory,
+    QuestionEntityFactory,
     SkillEntityFactory,
     UserEntityFactory,
-    QuestionEntityFactory,
-    AnswerEntityFactory,
 )
 
 email_validator.TEST_ENVIRONMENT = True

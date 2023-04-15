@@ -4,9 +4,9 @@ from dependency_injector.wiring import Provide, inject
 from flask import Response
 from flask_openapi3 import APIBlueprint, Tag
 
-from sobesity.domain.exceptions import SkillExistViolation
 from sobesity.containers import Services
 from sobesity.domain.entities.question import QuestionFilterEnitity
+from sobesity.domain.exceptions import SkillExistViolation
 from sobesity.domain.interfaces.services.question import IQuestionService
 from sobesity.domain.serializers import (
     BadRequestSerializer,
