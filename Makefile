@@ -110,3 +110,6 @@ reset:
 .PHONY: refresh-lock
 refresh-lock:
 	${POETRY} lock --no-update
+
+.PHONY: ci
+ci: format-check tests
