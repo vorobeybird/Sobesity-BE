@@ -32,7 +32,7 @@ in-app:
 
 .PHONY: app-bash
 app-bash:
-	make in-app CMD=bash
+	${DOCKER_COMPOSE} run --rm app bash
 
 .PHONY: format
 format:
