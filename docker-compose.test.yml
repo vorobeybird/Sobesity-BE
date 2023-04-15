@@ -7,6 +7,11 @@ services:
     extends:
       file: docker-compose.base.yml
       service: app
+    depends_on:
+      db:
+        condition: service_started
+      migrator:
+        condition: service_completed_successfully
 
   db:
     extends:
@@ -21,4 +26,6 @@ services:
       service: app
     build:
       target: migrator
+    depends_on:
+      - db
 
