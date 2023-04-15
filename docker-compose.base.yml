@@ -1,0 +1,35 @@
+version: "3.8"
+
+name: base
+
+services:
+  builder:
+    build:
+      context: ./
+      dockerfile: ./etc/backend/Dockerfile
+      target: builder
+    volumes:
+      - ./pyproject.toml:/code/pyproject.toml
+      - ./poetry.lock:/code/poetry.lock
+
+  app:
+    build:
+      context: ./
+      dockerfile: ./etc/backend/Dockerfile
+      target: dev
+    env_file:
+      - ./etc/backend/env/dev.env
+    depends_on:
+      - db
+    volumes:
+      - ./src/sobesity:/code/sobesity
+      - ./src/tests:/code/tests
+      - ./src/alembic/:/code/alembic/
+
+  db:
+    image: postgres:14.6
+    volumes:
+      - ./etc/db/entypoints:/docker-entrypoint-initdb.d
+    env_file:
+      - ./etc/db/env/dev.env
+

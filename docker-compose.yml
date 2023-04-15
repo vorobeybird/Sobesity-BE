@@ -1,44 +1,30 @@
 version: "3.8"
 
+name: sobesity-be
+
 services:
   app:
-    build:
-      context: ./
-      dockerfile: ./etc/backend/Dockerfile
-      target: dev
-    env_file:
-      - ./etc/backend/env/dev.env
-    depends_on:
-      - db
-    volumes:
-      - ./src/sobesity:/code/sobesity
-      - ./src/tests:/code/tests
-      - ./src/alembic/:/code/alembic/
+    extends:
+      file: docker-compose.base.yml
+      service: app
     ports:
       - 5150:5150
 
   db:
-    image: postgres:14.6
+    extends:
+      file: docker-compose.base.yml
+      service: db
     volumes:
-      - ./etc/db/entypoints:/docker-entrypoint-initdb.d
       - pgdata:/var/lib/postgresql/data
-    env_file:
-      - ./etc/db/env/dev.env
     ports:
       - 5454:5432
 
   migrator:
+    extends:
+      file: docker-compose.base.yml
+      service: app
     build:
-      context: ./
-      dockerfile: ./etc/backend/Dockerfile
       target: migrator
-    env_file:
-      - ./etc/backend/env/dev.env
-    depends_on:
-      - db
-    volumes:
-      - ./src/alembic/:/code/alembic/
-      - ./src/sobesity:/code/sobesity
 
 
 volumes:
