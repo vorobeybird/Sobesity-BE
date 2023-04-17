@@ -1,14 +1,13 @@
-from .base import BadRequestSerializer, NotFoundSerializer
-from .skill import (
-    DeleteSkillBody,
-    GetSkills,
-    PatchSkillBody,
-    PathSkillId,
-    PostSkillBody,
-    SkillIdsSerializer,
-    SkillSerializer,
+from .answer import (
+    AnswerIdsSerializer,
+    AnswerSerializer,
+    DeleteAnswerBody,
+    GetAnswers,
+    PatchAnswerBody,
+    PathAnswerId,
+    PostAnswerBody,
 )
-
+from .base import BadRequestSerializer, NotFoundSerializer
 from .question import (
     DeleteQuestionBody,
     GetQuestions,
@@ -18,16 +17,15 @@ from .question import (
     QuestionIdsSerializer,
     QuestionSerializer,
 )
-from .answer import (
-    DeleteAnswerBody,
-    GetAnswers,
-    PatchAnswerBody,
-    PathAnswerId,
-    PostAnswerBody,
-    AnswerIdsSerializer,
-    AnswerSerializer,
+from .skill import (
+    DeleteSkillBody,
+    GetSkills,
+    PatchSkillBody,
+    PathSkillId,
+    PostSkillBody,
+    SkillIdsSerializer,
+    SkillSerializer,
 )
-
 from .user import (
     AccessGrantedSerializer,
     CreateUserSerializer,

@@ -27,6 +27,7 @@ class JWTResource(IJWTResource):
         self.algorithm = "HS256"
 
     def is_endpoint_protected(self, endpoint: str) -> bool:
+        logger.debug(f"Checking protection of endpoint: {endpoint}")
         if endpoint is None:
             logger.debug(f"Endpoint can't be None. {request}")
             return False

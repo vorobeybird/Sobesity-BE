@@ -1,6 +1,6 @@
-from sobesity.domain.entities.question import QuestionEntity
-from sobesity.domain.entities.answer import AnswerEntity
 from sobesity.domain.entities import SkillEntity, UserEntity
+from sobesity.domain.entities.answer import AnswerEntity
+from sobesity.domain.entities.question import QuestionEntity
 
 
 def build_skill_entity(cursor) -> SkillEntity:

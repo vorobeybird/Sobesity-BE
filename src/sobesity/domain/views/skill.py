@@ -4,7 +4,6 @@ from dependency_injector.wiring import Provide, inject
 from flask import Response
 from flask_openapi3 import APIBlueprint, Tag
 
-from sobesity.domain.exceptions import SkillExistViolation
 from sobesity.containers import Services
 from sobesity.domain.entities import SkillFilterEnitity
 from sobesity.domain.exceptions.skill import SkillNameUniqueViolation
