@@ -11,8 +11,8 @@ from sobesity.infrastructure.models.type import type_id_seq
 
 
 # revision identifiers, used by Alembic.
-revision = '7d44a4a3adcd'
-down_revision = 'a990ffce9c9d'
+revision = "7d44a4a3adcd"
+down_revision = "a990ffce9c9d"
 branch_labels = None
 depends_on = None
 
@@ -34,4 +34,3 @@ def upgrade() -> None:
 
 def downgrade() -> None:
     op.drop_table("type")
-

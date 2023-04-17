@@ -1,6 +1,4 @@
-from sobesity.domain.entities.question import QuestionEntity
-from sobesity.domain.entities.answer import AnswerEntity
-from sobesity.domain.entities import SkillEntity, UserEntity
+from sobesity.domain.entities import SkillEntity, UserEntity, TypeEntity, AnswerEntity, QuestionEntity
 
 
 def build_skill_entity(cursor) -> SkillEntity:
@@ -26,6 +24,13 @@ def build_answer_entity(cursor) -> AnswerEntity:
         answer=cursor.answer,
         right=cursor.right,
         question_id=cursor.question_id,
+    )
+
+
+def build_type_entity(cursor) -> TypeEntity:
+    return TypeEntity(
+        type_id=cursor.type_id,
+        name=cursor.name,
     )
 
 

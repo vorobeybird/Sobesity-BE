@@ -27,6 +27,15 @@ from .answer import (
     AnswerIdsSerializer,
     AnswerSerializer,
 )
+from .type import (
+    DeleteTypeBody,
+    GetTypes,
+    PatchTypeBody,
+    PathTypeId,
+    PostTypeBody,
+    TypeIdsSerializer,
+    TypeSerializer,
+)
 
 from .user import (
     AccessGrantedSerializer,

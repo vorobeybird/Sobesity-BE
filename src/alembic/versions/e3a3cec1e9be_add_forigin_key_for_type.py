@@ -10,17 +10,17 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e3a3cec1e9be'
-down_revision = '735884864322'
+revision = "e3a3cec1e9be"
+down_revision = "735884864322"
 branch_labels = None
 depends_on = None
 
 
 def upgrade() -> None:
     op.create_foreign_key(
-        "fk_question_type", "question",
-        "type", ["type_id"], ["type_id"])
+        "fk_question_type", "question", "type", ["type_id"], ["type_id"]
+    )
 
 
 def downgrade() -> None:
-    op.drop_constraint('fk_question_type', 'question', type_='foreignkey')
+    op.drop_constraint("fk_question_type", "question", type_="foreignkey")

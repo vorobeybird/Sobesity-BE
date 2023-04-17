@@ -8,6 +8,7 @@ from sobesity.domain.services import (
     UserService,
     QuestionService,
     AnswerService,
+    TypeService
 )
 from sobesity.infrastructure.datasource import datasource
 from sobesity.infrastructure.repositories import (
@@ -15,6 +16,7 @@ from sobesity.infrastructure.repositories import (
     UserRepository,
     QuestionRepository,
     AnswerRepository,
+    TypeRepository
 )
 from sobesity.infrastructure.resources import JWTResource
 
@@ -34,6 +36,7 @@ class Repositories(containers.DeclarativeContainer):
     resources = providers.DependenciesContainer()
     question = providers.Singleton(QuestionRepository, resources.datasource)
     answer = providers.Singleton(AnswerRepository, resources.datasource)
+    type = providers.Singleton(TypeRepository, resources.datasource)
     skill = providers.Singleton(SkillRepository, resources.datasource)
     user = providers.Singleton(UserRepository, resources.datasource)
 
@@ -42,6 +45,7 @@ class Services(containers.DeclarativeContainer):
     repositories = providers.DependenciesContainer()
     question = providers.Singleton(QuestionService, repositories.question)
     answer = providers.Singleton(AnswerService, repositories.answer)
+    type = providers.Singleton(TypeService, repositories.type)
     skill = providers.Singleton(SkillService, repositories.skill)
     user = providers.Singleton(UserService, repositories.user)
 

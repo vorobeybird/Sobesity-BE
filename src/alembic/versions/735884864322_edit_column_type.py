@@ -10,16 +10,27 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '735884864322'
-down_revision = '7d44a4a3adcd'
+revision = "735884864322"
+down_revision = "7d44a4a3adcd"
 branch_labels = None
 depends_on = None
 
 
 def upgrade() -> None:
-    op.alter_column('question', 'type', type_=sa.Integer(), new_column_name='type_id', postgresql_using='type::integer')
+    op.alter_column(
+        "question",
+        "type",
+        type_=sa.Integer(),
+        new_column_name="type_id",
+        postgresql_using="type::integer",
+    )
 
 
 def downgrade() -> None:
-    op.alter_column('question', 'type_id', type_=sa.String(), new_column_name='type', postgresql_using='type::character varying')
-
+    op.alter_column(
+        "question",
+        "type_id",
+        type_=sa.String(),
+        new_column_name="type",
+        postgresql_using="type::character varying",
+    )
