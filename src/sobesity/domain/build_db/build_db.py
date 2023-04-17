@@ -14,7 +14,7 @@ from sobesity.domain.entities import (
 from sobesity.domain.services import SkillService, QuestionService, AnswerService
 from sobesity.webapp import init_dependency
 
-with open("data/fixture.yaml") as f:
+with open("sobesity/domain/build_db/data/fixture.yaml") as f:
     templates = yaml.safe_load(f)
 
 conteiner = init_dependency()
