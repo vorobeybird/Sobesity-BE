@@ -8,7 +8,7 @@ question_table = Table(
     metadata,
     Column("question_id", Integer, question_id_seq, primary_key=True),
     Column("question", String),
-    Column("type", String),
+    Column("type_id", Integer, ForeignKey("type.type_id")),
     Column("code", String),
     Column("skill_id", Integer, ForeignKey("skill.skill_id")),
 )

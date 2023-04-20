@@ -1,4 +1,5 @@
 import yaml
+import logging
 from pprint import pprint
 from sobesity.domain.entities import (
     SkillEntity,
@@ -30,11 +31,13 @@ question_service = conteiner.services.question()
 skill_service = conteiner.services.skill()
 answer_service = conteiner.services.answer()
 type_service = conteiner.services.type()
+logger = logging.getLogger(__name__)
 
 for skill in templates:
     exist_skill = skill_service.get_list(SkillFilterEnitity(names=[skill]))
     if not exist_skill:
         skill_service.batch_create([SkillEntity(skill_id=None, name=skill)])
+        logger.info("Create skill")
 
     created_skill = skill_service.get_list(SkillFilterEnitity(names=[skill]))
 
@@ -60,6 +63,7 @@ for skill in templates:
                 type_service.batch_create(
                     [TypeEntity(type_id=None, name=type_of_question)]
                 )
+                logger.info("Create type")
 
             created_type = type_service.get_list(
                 TypeFilterEnitity(names=[type_of_question])
@@ -70,12 +74,13 @@ for skill in templates:
                 QuestionEntity(
                     question_id=None,
                     question=question,
-                    type=created_type[0].type_id,
+                    type_id=created_type[0].type_id,
                     code=code,
                     skill_id=created_skill[0].skill_id,
                 )
             ]
             question_service.batch_create(question_to_create)
+            logger.info("Create question")
         answers_for_this_question = question_with_answers["answers"]
         created_question = question_service.get_list(
             QuestionFilterEnitity(

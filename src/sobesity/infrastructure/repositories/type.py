@@ -11,69 +11,69 @@ from sobesity.domain.exceptions import TypeNameUniqueViolation
 from sobesity.domain.interfaces.repositories import ITypeRepository
 from sobesity.infrastructure.constants import ModelFields
 from sobesity.infrastructure.models import type_table
-from sobesity.infrastructure.repositories.mapper import build_skill_entity
+from sobesity.infrastructure.repositories.mapper import build_type_entity
 
 logger = logging.getLogger(__name__)
 
 
-class SkillRepository(ISkillRepository):
+class TypeRepository(ITypeRepository):
     def __init__(self, datasource) -> None:
         self.datasource = datasource
 
-    def _patch_query(self, query, skill_filter: SkillFilterEnitity):
-        if skill_filter.skill_ids is not None:
-            query = query.where(skill_table.c.skill_id.in_(skill_filter.skill_ids))
-        if skill_filter.names is not None:
-            query = query.where(skill_table.c.name.in_(skill_filter.names))
+    def _patch_query(self, query, type_filter: TypeFilterEnitity):
+        if type_filter.type_ids is not None:
+            query = query.where(type_table.c.type_id.in_(type_filter.type_ids))
+        if type_filter.names is not None:
+            query = query.where(type_table.c.name.in_(type_filter.names))
         return query
 
     def get_list(
-        self, skill_filter: Optional[SkillFilterEnitity] = None
-    ) -> list[SkillEntity]:
-        query = select(skill_table)
+        self, type_filter: Optional[TypeFilterEnitity] = None
+    ) -> list[TypeEntity]:
+        query = select(type_table)
 
-        logger.info("Going to get skills")
-        if skill_filter is not None:
-            query = self._patch_query(query, skill_filter)
+        logger.info("Going to get types")
+        if type_filter is not None:
+            query = self._patch_query(query, type_filter)
 
         with self.datasource() as conn:
             result = conn.execute(query).fetchall()
 
-        logger.info("Got Skills")
-        return [build_skill_entity(cur) for cur in result]
+        logger.info("Got Types")
+        return [build_type_entity(cur) for cur in result]
 
-    def batch_create(self, skills: list[SkillEntity]) -> None:
+    def batch_create(self, types: list[TypeEntity]) -> None:
         values = []
-        for skill in skills:
-            skill_value = asdict(skill)
-            skill_value.pop(ModelFields.SKILL_ID)
-            values.append(skill_value)
+        for type in types:
+            type_value = asdict(type)
+            type_value.pop(ModelFields.TYPE_ID)
+            values.append(type_value)
 
-        query = insert(skill_table).values(values)
+        query = insert(type_table).values(values)
         with self.datasource() as conn:
             try:
                 conn.execute(query)
             except IntegrityError as exc:
                 if isinstance(exc.orig, UniqueViolation):
                     logger.exception(exc)
-                    raise SkillNameUniqueViolation()
+                    raise TypeNameUniqueViolation()
 
     def update(
         self,
-        to_set: SkillEntity,
-        where: SkillFilterEnitity,
-    ) -> list[SkillId]:
-        query = update(skill_table)
+        to_set: TypeEntity,
+        where: TypeFilterEnitity,
+    ) -> list[TypeId]:
+        query = update(type_table)
 
         query = self._patch_query(query, where)
-        query = query.values({"name": to_set.name}).returning(skill_table.c.skill_id)
+        query = query.values({"name": to_set.name}).returning(type_table.c.type_id)
 
         with self.datasource() as conn:
             result = conn.execute(query)
-        return [SkillId(res.skill_id) for res in result]
+        return [TypeId(res.type_id) for res in result]
 
-    def delete(self, skill_ids: list[SkillId]) -> None:
-        query = delete(skill_table).where(skill_table.c.skill_id.in_(skill_ids))
+    def delete(self, type_ids: list[TypeId]) -> None:
+        query = delete(type_table).where(type_table.c.type_id.in_(type_ids))
 
         with self.datasource() as conn:
             conn.execute(query)

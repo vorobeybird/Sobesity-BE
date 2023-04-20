@@ -12,7 +12,7 @@ question_id_field = Field(..., alias="questionId")
 class QuestionSerializer(BaseModel):
     question_id: QuestionId = question_id_field
     question: str
-    type: str
+    type: int
     code: str
     skill_id: int
 
@@ -38,7 +38,7 @@ class QuestionSerializer(BaseModel):
 
 class QuestionBodyElem(BaseModel):
     question: str
-    type: str
+    type_id: int
     code: str
     skill_id: int
 
@@ -46,7 +46,7 @@ class QuestionBodyElem(BaseModel):
         return QuestionEntity(
             question_id=None,
             question=self.question,
-            type=self.type,
+            type_id=self.type_id,
             code=self.code,
             skill_id=self.skill_id,
         )
@@ -84,7 +84,7 @@ class DeleteQuestionBody(QuestionIdsSerializer):
 class PatchQuestionBody(BaseModel):
     question_id: QuestionId = question_id_field
     question: str
-    type: str
+    type_id: int
     code: str
     skill_id: int
 
@@ -92,7 +92,7 @@ class PatchQuestionBody(BaseModel):
         return QuestionEntity(
             question_id=None,
             question=self.question,
-            type=self.type,
+            type_id=self.type_id,
             code=self.code,
             skill_id=self.skill_id,
         )
