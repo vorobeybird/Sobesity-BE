@@ -26,7 +26,7 @@ from .skill import (
     SkillIdsSerializer,
     SkillSerializer,
 )
-<<<<<<< HEAD
+
 from .type import (
     DeleteTypeBody,
     GetTypes,
@@ -37,8 +37,6 @@ from .type import (
     TypeSerializer,
 )
 
-=======
->>>>>>> 2547b4139d6a86ac46807a0b88e691a6f377f656
 from .user import (
     AccessGrantedSerializer,
     CreateUserSerializer,

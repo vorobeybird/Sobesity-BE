@@ -7,7 +7,7 @@ from sobesity.domain.services import (
     QuestionService,
     SkillService,
     UserService,
-    TypeService
+    TypeService,
 )
 from sobesity.infrastructure.datasource import datasource
 from sobesity.infrastructure.repositories import (
@@ -15,7 +15,7 @@ from sobesity.infrastructure.repositories import (
     QuestionRepository,
     SkillRepository,
     UserRepository,
-    TypeRepository
+    TypeRepository,
 )
 from sobesity.infrastructure.resources import JWTResource
 

@@ -1,4 +1,10 @@
-from sobesity.domain.entities import SkillEntity, UserEntity, TypeEntity, AnswerEntity, QuestionEntity
+from sobesity.domain.entities import (
+    SkillEntity,
+    UserEntity,
+    TypeEntity,
+    AnswerEntity,
+    QuestionEntity,
+)
 
 
 def build_skill_entity(cursor) -> SkillEntity:

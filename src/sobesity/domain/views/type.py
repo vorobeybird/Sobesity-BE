@@ -39,9 +39,7 @@ def get_types(type_service: ITypeService = Provide[Services.type]):
 
 @type_bp.get("/<int:typeId>", responses={"200": TypeSerializer})
 @inject
-def get_type(
-    path: PathTypeId, type_service: ITypeService = Provide[Services.type]
-):
+def get_type(path: PathTypeId, type_service: ITypeService = Provide[Services.type]):
     types = type_service.get_list(TypeFilterEnitity(type_ids=[path.type_id]))
     if not types:
         return bad_request_maker(NotFoundSerializer(message="Type not exists"))
