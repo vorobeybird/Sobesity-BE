@@ -1,14 +1,13 @@
-from .base import BadRequestSerializer, NotFoundSerializer
-from .skill import (
-    DeleteSkillBody,
-    GetSkills,
-    PatchSkillBody,
-    PathSkillId,
-    PostSkillBody,
-    SkillIdsSerializer,
-    SkillSerializer,
+from .answer import (
+    AnswerIdsSerializer,
+    AnswerSerializer,
+    DeleteAnswerBody,
+    GetAnswers,
+    PatchAnswerBody,
+    PathAnswerId,
+    PostAnswerBody,
 )
-
+from .base import BadRequestSerializer, NotFoundSerializer
 from .question import (
     DeleteQuestionBody,
     GetQuestions,
@@ -18,15 +17,16 @@ from .question import (
     QuestionIdsSerializer,
     QuestionSerializer,
 )
-from .answer import (
-    DeleteAnswerBody,
-    GetAnswers,
-    PatchAnswerBody,
-    PathAnswerId,
-    PostAnswerBody,
-    AnswerIdsSerializer,
-    AnswerSerializer,
+from .skill import (
+    DeleteSkillBody,
+    GetSkills,
+    PatchSkillBody,
+    PathSkillId,
+    PostSkillBody,
+    SkillIdsSerializer,
+    SkillSerializer,
 )
+<<<<<<< HEAD
 from .type import (
     DeleteTypeBody,
     GetTypes,
@@ -37,6 +37,8 @@ from .type import (
     TypeSerializer,
 )
 
+=======
+>>>>>>> 2547b4139d6a86ac46807a0b88e691a6f377f656
 from .user import (
     AccessGrantedSerializer,
     CreateUserSerializer,

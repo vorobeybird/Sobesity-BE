@@ -54,3 +54,23 @@ make app-bash
 ## How to generate JWT token
 Open [jwt.io](jwt.io). In `payload` set `iat`("Issue at") to your current time in unix style [(human time to unix)](https://www.epochconverter.com/).
 Then set `exp`("Expiration time") to time when you what to expire. For example after a week and set date in unix style.
+
+Find secret in `etc/backend/env/dev.env` in the variable `JWT_SECRET`. Leave "secret base64 encoded" blank.
+
+Algorithm leave as default:
+```json
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+```
+
+
+Example of `payload`:
+```json
+{
+  "sub": 1234567890,
+  "iat": 1681584625,
+  "exp": 1684176625
+}
+```

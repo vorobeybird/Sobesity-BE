@@ -1,7 +1,7 @@
 PROJECT_CODE_PATH=/code
 DOCKER_COMPOSE=COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker compose
-TEST_DOCKER_COMPOSE=${DOCKER_COMPOSE} -p test_sobesity -f docker-compose.test.yml
-BUILDER_DOCKER_COMPOSE=${DOCKER_COMPOSE} -p builder_sobesity -f docker-compose.builder.yml
+TEST_DOCKER_COMPOSE=${DOCKER_COMPOSE} -f docker-compose.test.yml
+BUILDER_DOCKER_COMPOSE=${DOCKER_COMPOSE} -f docker-compose.base.yml
 POETRY=${BUILDER_DOCKER_COMPOSE} run --rm builder poetry
 
 .PHONY: build
@@ -32,7 +32,7 @@ in-app:
 
 .PHONY: app-bash
 app-bash:
-	make in-app CMD=bash
+	${DOCKER_COMPOSE} run --rm app bash
 
 .PHONY: format
 format:
@@ -70,7 +70,7 @@ format-all: format fix-imports
 
 .PHONY: run
 run:
-	${DOCKER_COMPOSE} up -d
+	${DOCKER_COMPOSE} up -d --build
 
 .PHONY: build-test
 build-test:
@@ -114,3 +114,7 @@ refresh-lock:
 .PHONY: create-db
 create-db:
 	${DOCKER_COMPOSE} run --rm migrator python3 sobesity/domain/build_db/build_db.py
+
+.PHONY: ci
+ci: format-check tests
+

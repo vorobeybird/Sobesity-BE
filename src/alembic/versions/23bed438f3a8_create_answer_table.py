@@ -5,8 +5,9 @@ Revises: a2e479e35086
 Create Date: 2023-02-23 08:23:33.573279
 
 """
-from alembic import op
 import sqlalchemy as sa
+
+from alembic import op
 from sobesity.infrastructure.models.answer import answer_id_seq
 
 # revision identifiers, used by Alembic.

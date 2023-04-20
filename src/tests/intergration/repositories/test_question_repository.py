@@ -1,6 +1,4 @@
-import pytest
-
-from sobesity.domain.entities.question import QuestionEntity, QuestionFilterEnitity
+from sobesity.domain.entities.question import QuestionFilterEnitity
 
 
 def test_get_list__empty_db__return_nothing(question_repository):
