@@ -1,6 +1,6 @@
 import pytest
 
-from sobesity.domain.entities.skill import TypeEntity, TypeFilterEnitity
+from sobesity.domain.entities.type import TypeEntity, TypeFilterEnitity
 from sobesity.domain.exceptions import TypeNameUniqueViolation
 
 
@@ -19,6 +19,7 @@ def test_batch_create__get_all_rows(type_repository, types):
 
 
 def test_batch_create__only_unique__raise_error(type_repository, types):
+    types[0]=types[1]
     with pytest.raises(TypeNameUniqueViolation):
         type_repository.batch_create(types)
 
