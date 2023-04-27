@@ -6,7 +6,7 @@ from flask_openapi3 import APIBlueprint, Tag
 
 from sobesity.containers import Services
 from sobesity.domain.entities.question import QuestionFilterEnitity
-from sobesity.domain.exceptions import SkillExistViolation
+from sobesity.domain.exceptions import SkillExistViolation, TypeNotExist
 from sobesity.domain.interfaces.services.question import IQuestionService
 from sobesity.domain.serializers import (
     BadRequestSerializer,
@@ -60,8 +60,10 @@ def create_questions(
 ):
     try:
         question_service.batch_create(body.to_domain())
-    except SkillExistViolation as exc:
+
+    except (SkillExistViolation, TypeNotExist) as exc:
         return bad_request_maker(BadRequestSerializer(message=exc.message))
+
     return Response(), HTTPStatus.CREATED
 
 
