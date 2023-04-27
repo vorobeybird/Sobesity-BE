@@ -36,7 +36,6 @@ from .type import (
     TypeIdsSerializer,
     TypeSerializer,
 )
-
 from .user import (
     AccessGrantedSerializer,
     CreateUserSerializer,

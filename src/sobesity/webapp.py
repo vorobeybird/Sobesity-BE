@@ -8,7 +8,6 @@ from sobesity.containers import Application
 
 from sobesity.domain.views import skill, user, question, answer, type
 
-
 def setup_logger(config):
     level = logging.getLevelNamesMapping()[config.app.logger_level()]
     logging.basicConfig(
@@ -16,7 +15,6 @@ def setup_logger(config):
         format="%(asctime)s [%(process)d] [%(levelname)s] %(message)s",
         datefmt="[%Y-%m-%d %H:%M:%S %z]",
     )
-
 
 def register_apis(app):
     apis = (
