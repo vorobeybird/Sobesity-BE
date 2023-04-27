@@ -12,7 +12,7 @@ question_id_field = Field(..., alias="questionId")
 class QuestionSerializer(BaseModel):
     question_id: QuestionId = question_id_field
     question: str
-    type: int
+    type_id: int
     code: str
     skill_id: int
 
@@ -20,7 +20,7 @@ class QuestionSerializer(BaseModel):
         return QuestionEntity(
             question_id=self.question_id,
             question=self.question,
-            type=self.type,
+            type_id=self.type_id,
             code=self.code,
             skill_id=self.skill_id,
         )
@@ -30,7 +30,7 @@ class QuestionSerializer(BaseModel):
         return cls(
             questionId=question.question_id,
             question=question.question,
-            type=question.type,
+            type_id=question.type_id,
             code=question.code,
             skill_id=question.skill_id,
         )

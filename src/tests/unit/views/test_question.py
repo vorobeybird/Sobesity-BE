@@ -8,7 +8,7 @@ def question_to_json(question):
         "question": question.question,
         "skill_id": question.skill_id,
         "question_id": question.question_id,
-        "type": question.type,
+        "type_id": question.type_id,
         "code": question.code,
     }
 
@@ -55,7 +55,7 @@ def test_create(client, mock_question_repository, auth_header):
         {
             "question": "What",
             "skill_id": 1,
-            "type": "single",
+            "type_id": 1,
             "code": "smt='hello' print('smt')",
         }
     ]
@@ -80,7 +80,7 @@ def test_update(client, mock_question_repository, auth_header):
         "question": "string",
         "questionId": question_id,
         "skill_id": 1,
-        "type": "single",
+        "type_id": 1,
         "code": "smt='hello' print('smt')",
     }
     expected_affected_ids = [question_id]

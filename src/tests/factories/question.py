@@ -1,8 +1,6 @@
-import random
-
 import factory
 
-from sobesity.domain.entities import QuestionEntity, QuestionId, SkillId
+from sobesity.domain.entities import QuestionEntity, QuestionId, SkillId, TypeId
 
 
 class QuestionEntityFactory(factory.Factory):
@@ -11,6 +9,6 @@ class QuestionEntityFactory(factory.Factory):
 
     question_id = factory.Sequence(lambda n: QuestionId(n))
     question = factory.Faker("word")
-    type = random.choice(["single", "multiple"])
+    type_id = factory.Sequence(lambda n: TypeId(n))
     code = factory.Faker("sentence")
     skill_id = factory.Sequence(lambda n: SkillId(n))
