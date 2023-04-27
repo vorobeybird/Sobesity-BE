@@ -174,5 +174,5 @@ def types():
 
 
 @pytest.fixture
-def type(questions):
+def type(types):
     return types[0]
