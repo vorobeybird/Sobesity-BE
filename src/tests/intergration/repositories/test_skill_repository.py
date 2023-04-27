@@ -8,38 +8,27 @@ def test_get_list__empty_db__return_nothing(skill_repository):
     assert skill_repository.get_list() == []
 
 
-def test_batch_create__get_all_rows(skill_repository):
-    skills_to_create = [
-        SkillEntity(skill_id=None, name="JavaScript"),
-        SkillEntity(skill_id=None, name="Python"),
-        SkillEntity(skill_id=None, name="Ruby"),
-    ]
-    skill_repository.batch_create(skills_to_create)
+def test_batch_create__get_all_rows(skill_repository, skills):
+    skill_repository.batch_create(skills)
     created_skills = skill_repository.get_list()
     created_skills_map = {skill.name: skill for skill in created_skills}
 
-    assert len(created_skills) == len(skills_to_create)
-    for skill in skills_to_create:
+    assert len(created_skills) == len(skills)
+    for skill in skills:
         assert skill.name in created_skills_map
 
 
-def test_batch_create__only_unique__raise_error(skill_repository):
-    skills_to_create = [
-        SkillEntity(skill_id=None, name="JavaScript"),
-        SkillEntity(skill_id=None, name="JavaScript"),
-    ]
+def test_batch_create__only_unique__raise_error(skill_repository, skills):
+    skills[0] = skills[1]
     with pytest.raises(SkillNameUniqueViolation):
-        skill_repository.batch_create(skills_to_create)
+        skill_repository.batch_create(skills)
 
 
-def test_update__particular_rows_udated(skill_repository):
-    skills_to_create = [
-        SkillEntity(skill_id=None, name="JavaScript"),
-    ]
-    skill_repository.batch_create(skills_to_create)
+def test_update__particular_rows_udated(skill_repository, skills):
+    skill_repository.batch_create(skills[:1])
     skill_before = skill_repository.get_list()[0]
 
-    to_set = SkillEntity(skill_id=None, name="Python")
+    to_set = skills[1]
     where = SkillFilterEnitity(skill_ids=[skill_before.skill_id])
     updated_ids = skill_repository.update(to_set, where)
 
@@ -49,13 +38,8 @@ def test_update__particular_rows_udated(skill_repository):
     assert skill_after.name == to_set.name
 
 
-def test_delete__particular_rows_deleted(skill_repository):
-    skills_to_create = [
-        SkillEntity(skill_id=None, name="JavaScript"),
-        SkillEntity(skill_id=None, name="Python"),
-        SkillEntity(skill_id=None, name="Ruby"),
-    ]
-    skill_repository.batch_create(skills_to_create)
+def test_delete__particular_rows_deleted(skill_repository, skills):
+    skill_repository.batch_create(skills)
     created_skills_before = skill_repository.get_list()
     to_delete = [skill.skill_id for skill in created_skills_before[:2]]
 
