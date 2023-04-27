@@ -16,6 +16,9 @@ from sobesity.domain.entities import (
 )
 from sobesity.webapp import init_dependency
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 
 def main():
     with open("sobesity/domain/build_db/data/fixture.yaml") as f:
@@ -26,13 +29,14 @@ def main():
     skill_service = conteiner.services.skill()
     answer_service = conteiner.services.answer()
     type_service = conteiner.services.type()
-    logger = logging.getLogger(__name__)
 
     for skill in templates:
         exist_skill = skill_service.get_list(SkillFilterEnitity(names=[skill]))
         if not exist_skill:
             skill_service.batch_create([SkillEntity(skill_id=None, name=skill)])
-            logger.info("Create skill")
+            logger.info(f"Create skill: '{skill}'")
+        else:
+            logger.info(f"Skill '{skill}' already created")
 
         created_skill = skill_service.get_list(SkillFilterEnitity(names=[skill]))
 
@@ -58,7 +62,9 @@ def main():
                     type_service.batch_create(
                         [TypeEntity(type_id=None, name=type_of_question)]
                     )
-                    logger.info("Create type")
+                    logger.info(f"Create type: '{type_of_question}'")
+                else:
+                    logger.info(f"Type '{type_of_question}' already created:")
 
                 created_type = type_service.get_list(
                     TypeFilterEnitity(names=[type_of_question])
@@ -75,13 +81,15 @@ def main():
                     )
                 ]
                 question_service.batch_create(question_to_create)
-                logger.info("Create question")
+                logger.info(f"Create question '{question}'")
             answers_for_this_question = question_with_answers["answers"]
             created_question = question_service.get_list(
                 QuestionFilterEnitity(
                     questions=[question], skill_ids=[created_skill[0].skill_id]
                 )
             )
+
+            logger.info(f"Question '{question}' already created")
 
             answers_to_create = []
 
@@ -108,6 +116,9 @@ def main():
                         )
                     )
                     answer_service.batch_create(answers_to_create)
+                    logger.info(f"Create answer '{answer}'")
+                logger.info(f"Answer '{answer}' already created")
+    logger.info("Successfully finished")
 
 
 if __name__ == "__main__":
