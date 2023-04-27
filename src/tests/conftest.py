@@ -13,6 +13,7 @@ from tests.factories import (
     QuestionEntityFactory,
     SkillEntityFactory,
     UserEntityFactory,
+    TypeEntityFactory,
 )
 
 email_validator.TEST_ENVIRONMENT = True
@@ -160,3 +161,18 @@ def answers():
 @pytest.fixture
 def answer(answers):
     return answers[0]
+
+
+@pytest.fixture
+def type_repository(di):
+    return di.repositories.type()
+
+
+@pytest.fixture
+def types():
+    return [TypeEntityFactory() for _ in range(random.randint(3, 5))]
+
+
+@pytest.fixture
+def type(questions):
+    return types[0]
