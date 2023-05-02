@@ -7,7 +7,7 @@ from sqlalchemy import delete, insert, select, update
 from sqlalchemy.exc import IntegrityError
 
 from sobesity.domain.entities import QuestionEntity, QuestionFilterEnitity, QuestionId
-from sobesity.domain.exceptions import SkillExistViolation
+from sobesity.domain.exceptions import SkillExistViolation, TypeNotExist
 from sobesity.domain.interfaces import IQuestionRepository
 from sobesity.infrastructure.constants import ModelFields
 from sobesity.infrastructure.models import question_table
@@ -61,9 +61,13 @@ class QuestionRepository(IQuestionRepository):
             try:
                 conn.execute(query)
             except IntegrityError as exc:
-                if isinstance(exc.orig, ForeignKeyViolation):
+                if 'table "skill"' in str(exc.orig):
                     logger.exception(exc)
                     raise SkillExistViolation()
+                elif 'table "type"' in str(exc.orig):
+                    logger.exception(exc)
+                    raise TypeNotExist()
+                raise
 
     def update(
         self,

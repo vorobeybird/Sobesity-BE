@@ -64,12 +64,17 @@ def test_delete__particular_rows_deleted(
 
 
 @pytest.fixture
-def created_questions(skill_repository, skill, question_repository, question):
-    skill_to_create = [skill]
-    skill_repository.batch_create(skill_to_create)
+def created_questions(
+    skill_repository, skill, question_repository, questions, type_repository, type
+):
+    skill_repository.batch_create([skill])
     created_skill = skill_repository.get_list()
 
-    question.skill_id = created_skill[0].skill_id
+    type_repository.batch_create([type])
+    created_type = type_repository.get_list()
 
-    question_to_create = [question]
-    question_repository.batch_create(question_to_create)
+    for question in questions:
+        question.skill_id = created_skill[0].skill_id
+        question.type_id = created_type[0].type_id
+
+    question_repository.batch_create(questions)

@@ -12,11 +12,17 @@ question_id_field = Field(..., alias="questionId")
 class QuestionSerializer(BaseModel):
     question_id: QuestionId = question_id_field
     question: str
+    type_id: int
+    code: str
     skill_id: int
 
     def to_domain(self) -> QuestionEntity:
         return QuestionEntity(
-            question_id=self.question_id, question=self.question, skill_id=self.skill_id
+            question_id=self.question_id,
+            question=self.question,
+            type_id=self.type_id,
+            code=self.code,
+            skill_id=self.skill_id,
         )
 
     @classmethod
@@ -24,17 +30,25 @@ class QuestionSerializer(BaseModel):
         return cls(
             questionId=question.question_id,
             question=question.question,
+            type_id=question.type_id,
+            code=question.code,
             skill_id=question.skill_id,
         )
 
 
 class QuestionBodyElem(BaseModel):
     question: str
+    type_id: int
+    code: str
     skill_id: int
 
     def to_domain(self) -> QuestionEntity:
         return QuestionEntity(
-            question_id=None, question=self.question, skill_id=self.skill_id
+            question_id=None,
+            question=self.question,
+            type_id=self.type_id,
+            code=self.code,
+            skill_id=self.skill_id,
         )
 
 
@@ -70,11 +84,17 @@ class DeleteQuestionBody(QuestionIdsSerializer):
 class PatchQuestionBody(BaseModel):
     question_id: QuestionId = question_id_field
     question: str
+    type_id: int
+    code: str
     skill_id: int
 
     def get_to_set(self):
         return QuestionEntity(
-            question_id=None, question=self.question, skill_id=self.skill_id
+            question_id=None,
+            question=self.question,
+            type_id=self.type_id,
+            code=self.code,
+            skill_id=self.skill_id,
         )
 
     def get_where(self) -> list[QuestionFilterEnitity]:

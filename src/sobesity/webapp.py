@@ -5,7 +5,8 @@ from flask_cors import CORS
 from flask_openapi3 import HTTPBearer, Info, OpenAPI
 
 from sobesity.containers import Application
-from sobesity.domain.views import answer, question, skill, user
+
+from sobesity.domain.views import skill, user, question, answer, type
 
 
 def setup_logger(config):
@@ -23,6 +24,7 @@ def register_apis(app):
         user.user_bp,
         question.question_bp,
         answer.answer_bp,
+        type.type_bp,
     )
     for api in apis:
         app.register_api(api)
@@ -30,7 +32,7 @@ def register_apis(app):
 
 def init_dependency():
     container = Application()
-    container.services.wire([skill, user, question, answer])
+    container.services.wire([skill, user, question, answer, type])
     return container
 
 

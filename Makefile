@@ -111,5 +111,10 @@ reset:
 refresh-lock:
 	${POETRY} lock --no-update
 
+.PHONY: create-db
+create-db:
+	${DOCKER_COMPOSE} run --rm migrator python3 sobesity/domain/build_db/build_db.py
+
 .PHONY: ci
 ci: format-check tests
+

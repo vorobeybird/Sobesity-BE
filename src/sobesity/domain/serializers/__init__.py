@@ -26,6 +26,16 @@ from .skill import (
     SkillIdsSerializer,
     SkillSerializer,
 )
+
+from .type import (
+    DeleteTypeBody,
+    GetTypes,
+    PatchTypeBody,
+    PathTypeId,
+    PostTypeBody,
+    TypeIdsSerializer,
+    TypeSerializer,
+)
 from .user import (
     AccessGrantedSerializer,
     CreateUserSerializer,
