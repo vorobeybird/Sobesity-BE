@@ -82,6 +82,8 @@ def main():
                 ]
                 question_service.batch_create(question_to_create)
                 logger.info(f"Create question '{question}'")
+            else:
+                logger.info(f"Question '{question}' already created")
             answers_for_this_question = question_with_answers["answers"]
             created_question = question_service.get_list(
                 QuestionFilterEnitity(
@@ -89,7 +91,6 @@ def main():
                 )
             )
 
-            logger.info(f"Question '{question}' already created")
 
             answers_to_create = []
 
@@ -101,6 +102,7 @@ def main():
                         answers=[answer], question_ids=[created_question[0].question_id]
                     )
                 )
+                answers_to_create = []
                 if not exist_answer:
                     try:
                         right = answer_with_right["right"]
@@ -117,7 +119,9 @@ def main():
                     )
                     answer_service.batch_create(answers_to_create)
                     logger.info(f"Create answer '{answer}'")
-                logger.info(f"Answer '{answer}' already created")
+                else:
+                    logger.info(f"Answer '{answer}' already created")
+
     logger.info("Successfully finished")
 
 
