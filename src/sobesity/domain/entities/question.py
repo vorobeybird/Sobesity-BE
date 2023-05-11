@@ -19,3 +19,4 @@ class QuestionFilterEnitity:
     questions: Optional[list[str]] = None
     skill_ids: Optional[list[int]] = None
     type_ids: Optional[list[int]] = None
+    codes: Optional[list[str]] = None
