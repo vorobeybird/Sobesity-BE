@@ -98,9 +98,6 @@ def main():
                     )
                 )
 
-
-            answers_to_create = []
-
             for answer_with_right in answers_for_this_question:
 
                 answer = answer_with_right["answer"]

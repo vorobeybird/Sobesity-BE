@@ -32,7 +32,7 @@ type_service = conteiner.services.type()
 
 def take_question_for_theme(theme, level=None):
     if not level:
-        questions = generate_questions(theme, 2)
+        questions = generate_questions(theme, 5)
     else:
         questions = generate_questions(theme, 15)
     return questions
@@ -71,10 +71,7 @@ def generate_questions(theme, quantity):
         logger.info(f"Gathered the question: '{question_for_output}'")
         output_questions.append(question_for_output)
         logger.info("Append the question to list questions")
-
-        print(output_questions)
-
-    return questions
+    return output_questions
 
 
 if __name__ == "__main__":
