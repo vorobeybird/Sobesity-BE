@@ -373,15 +373,6 @@ CSS:
         - answer: "Both display: none and visibility: hidden remove an element from the page layout, but they do it in different ways."
         - answer: "Both display: none and visibility: hidden hide an element from the page layout, but they do it in different ways."
 
-    - question: "What is the difference between padding and margin in CSS?"
-      type: single
-      answers:
-        - answer: "Padding is the space between the content of an element and its border, while margin is the space between an element and other elements on the page."
-          right: true
-        - answer: "Margin is the space between the content of an element and its border, while padding is the space between an element and other elements on the page."
-        - answer: "Padding and margin are the same thing in CSS."
-        - answer: "Padding and margin are both used to add space between elements on the page."
-
     - question: "What is the difference between the position: relative and position: absolute properties in CSS?"
       type: single
       answers:
@@ -414,15 +405,6 @@ CSS:
         - answer: "Margin and padding are the same thing."
         - answer: "Margin is used to adjust the height of an element, whereas padding is used to adjust the width of an element."
         - answer: "Padding is used to add borders to an element, whereas margin is used to remove them."
-
-    - question: "What is the box model in CSS?"
-      type: single
-      answers:
-          - answer: "The box model is a layout concept in CSS that represents an HTML element as a rectangular box with content, padding, borders, and margins."
-            right: true
-          - answer: "The box model is a way to style links and buttons in CSS."
-          - answer: "The box model is a way to add rounded corners to HTML elements."
-          - answer: "The box model is a way to create responsive web designs in CSS."
 
     - question: "What is a CSS selector?"
       type: single

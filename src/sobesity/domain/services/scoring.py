@@ -29,23 +29,33 @@ question_service = conteiner.services.question()
 def scoring(dict_with_questions_and_answers):
     total_score_right = 0
     for question_id in dict_with_questions_and_answers:
-        question = question_service.get_list(QuestionFilterEnitity(question_ids=[question_id]))
-        type_of_question = type_service.get_list(TypeFilterEnitity(type_ids=[question[0].type_id]))
+        question = question_service.get_list(
+            QuestionFilterEnitity(question_ids=[question_id])
+        )
+        type_of_question = type_service.get_list(
+            TypeFilterEnitity(type_ids=[question[0].type_id])
+        )
 
-        if type_of_question[0].name == 'multiple':
+        if type_of_question[0].name == "multiple":
             logger.info(f"When type multiple:")
-            percent = get_percent_when_question_multiple(question, dict_with_questions_and_answers[question_id])
+            percent = get_percent_when_question_multiple(
+                question, dict_with_questions_and_answers[question_id]
+            )
             if percent > 0:
                 total_score_right += percent
         else:
             logger.info(f"When type single:")
-            answer = answer_service.get_list(AnswerFilterEnitity(answer_ids=[dict_with_questions_and_answers[question_id][0]]))
+            answer = answer_service.get_list(
+                AnswerFilterEnitity(
+                    answer_ids=[dict_with_questions_and_answers[question_id][0]]
+                )
+            )
             logger.info(f"Take  answer: {answer}")
             if answer[0].right:
                 total_score_right += 1
 
     total_score_percent = total_score_right / len(dict_with_questions_and_answers) * 100
-    print(f'TOTAL PRECENT:{total_score_percent}')
+    print(f"TOTAL PRECENT:{total_score_percent}")
     return total_score_percent
 
 
@@ -60,12 +70,17 @@ def get_percent_when_question_multiple(question, array_selected_answers):
         if answer.right:
             array_only_right_answers.append(answer.answer_id)
             logger.info(f"Add answer '{answer.answer}' in array with right answers:")
-    percent = len(set(array_selected_answers) & set(array_only_right_answers)) / len(array_only_right_answers)
+    percent = len(set(array_selected_answers) & set(array_only_right_answers)) / len(
+        array_only_right_answers
+    )
     return percent
 
+
 if __name__ == "__main__":
-    scoring(dict_with_questions_and_answers= {
-        1: [4,3],
-        3: [9],
-        5: [17],
-    })
+    scoring(
+        dict_with_questions_and_answers={
+            1: [4, 3],
+            3: [9],
+            5: [17],
+        }
+    )

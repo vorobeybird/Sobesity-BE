@@ -34,9 +34,7 @@ class QuestionRepository(IQuestionRepository):
                 question_table.c.skill_id.in_(question_filter.skill_ids)
             )
         if question_filter.codes is not None:
-            query = query.where(
-                question_table.c.code.in_(question_filter.codes)
-            )
+            query = query.where(question_table.c.code.in_(question_filter.codes))
         return query
 
     def get_list(

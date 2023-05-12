@@ -48,7 +48,9 @@ def main():
 
             exist_question = question_service.get_list(
                 QuestionFilterEnitity(
-                    questions=[question], skill_ids=[created_skill[0].skill_id], codes=[code]
+                    questions=[question],
+                    skill_ids=[created_skill[0].skill_id],
+                    codes=[code],
                 )
             )
 
@@ -94,7 +96,9 @@ def main():
             else:
                 created_question = question_service.get_list(
                     QuestionFilterEnitity(
-                        questions=[question], skill_ids=[created_skill[0].skill_id], codes=[code]
+                        questions=[question],
+                        skill_ids=[created_skill[0].skill_id],
+                        codes=[code],
                     )
                 )
 

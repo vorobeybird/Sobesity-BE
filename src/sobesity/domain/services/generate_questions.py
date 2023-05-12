@@ -51,23 +51,24 @@ def generate_questions(theme, quantity):
     output_questions = []
     for question in questions:
         output_answers = []
-        answers_for_this_question = answer_service.get_list(AnswerFilterEnitity(question_ids=[question.question_id]))
+        answers_for_this_question = answer_service.get_list(
+            AnswerFilterEnitity(question_ids=[question.question_id])
+        )
         logger.info(f"Fined the answers for question: '{question}'")
 
-        type = type_service.get_list(
-                    TypeFilterEnitity(type_ids=[question.type_id])
-                )
+        type = type_service.get_list(TypeFilterEnitity(type_ids=[question.type_id]))
         logger.info(f"Fined the type of this question: '{type}'")
 
         for answer in answers_for_this_question:
-            answer = {"answer": answer.answer,
-                      "right": answer.right}
+            answer = {"answer": answer.answer, "right": answer.right}
             logger.info(f"Gathered the answer: '{answer}'")
             output_answers.append(answer)
             logger.info("Append the answer to list answers")
-        question_for_output = {"question": question.question,
-                               "type": type[0].name,
-                               "answers": output_answers}
+        question_for_output = {
+            "question": question.question,
+            "type": type[0].name,
+            "answers": output_answers,
+        }
         logger.info(f"Gathered the question: '{question_for_output}'")
         output_questions.append(question_for_output)
         logger.info("Append the question to list questions")
@@ -75,4 +76,4 @@ def generate_questions(theme, quantity):
 
 
 if __name__ == "__main__":
-    take_question_for_theme(theme='Python')
+    take_question_for_theme(theme="Python")
