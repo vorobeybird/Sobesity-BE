@@ -2,7 +2,6 @@ import logging
 import random
 import json
 
-from sobesity.webapp import init_dependency
 from sobesity.domain.entities import (
     SkillEntity,
     SkillFilterEnitity,
@@ -23,22 +22,25 @@ from sobesity.domain.utils.response import bad_request_maker
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-conteiner = init_dependency()
-question_service = conteiner.services.question()
-skill_service = conteiner.services.skill()
-answer_service = conteiner.services.answer()
-type_service = conteiner.services.type()
 
 
 def take_question_for_theme(theme, level=None):
     if not level:
-        questions = generate_questions(theme, 5)
+        questions = generate_questions(theme, 3)
     else:
-        questions = generate_questions(theme, 15)
+        questions = generate_questions(theme, 5)
     return questions
 
 
 def generate_questions(theme, quantity):
+    from sobesity.webapp import init_dependency
+
+    conteiner = init_dependency()
+    question_service = conteiner.services.question()
+    skill_service = conteiner.services.skill()
+    answer_service = conteiner.services.answer()
+    type_service = conteiner.services.type()
+
     skill = skill_service.get_list(SkillFilterEnitity(names=[theme]))
     logger.info(f"Fined skill: '{skill}'")
     all_questions = question_service.get_list(

@@ -43,3 +43,10 @@ from .user import (
     LoginUserSerializer,
     UserQuery,
 )
+
+from .define_knowledge import (
+    ThemeQuery,
+    DefineKnowledgeSerializer,
+    ScoringQuery,
+    ScoringSerializer,
+)

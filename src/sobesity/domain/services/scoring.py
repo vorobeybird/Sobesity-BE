@@ -1,5 +1,5 @@
 import logging
-from sobesity.webapp import init_dependency
+
 from sobesity.domain.entities import (
     SkillEntity,
     SkillFilterEnitity,
@@ -20,13 +20,16 @@ from sobesity.domain.utils.response import bad_request_maker
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-conteiner = init_dependency()
-answer_service = conteiner.services.answer()
-type_service = conteiner.services.type()
-question_service = conteiner.services.question()
 
 
 def scoring(dict_with_questions_and_answers):
+    from sobesity.webapp import init_dependency
+
+    conteiner = init_dependency()
+    answer_service = conteiner.services.answer()
+    type_service = conteiner.services.type()
+    question_service = conteiner.services.question()
+
     total_score_right = 0
     for question_id in dict_with_questions_and_answers:
         question = question_service.get_list(
@@ -39,7 +42,7 @@ def scoring(dict_with_questions_and_answers):
         if type_of_question[0].name == "multiple":
             logger.info(f"When type multiple:")
             percent = get_percent_when_question_multiple(
-                question, dict_with_questions_and_answers[question_id]
+                question, dict_with_questions_and_answers[question_id], answer_service
             )
             if percent > 0:
                 total_score_right += percent
@@ -55,11 +58,13 @@ def scoring(dict_with_questions_and_answers):
                 total_score_right += 1
 
     total_score_percent = total_score_right / len(dict_with_questions_and_answers) * 100
-    print(f"TOTAL PRECENT:{total_score_percent}")
+    logger.info(f"TOTAL PRECENT:{total_score_percent}")
     return total_score_percent
 
 
-def get_percent_when_question_multiple(question, array_selected_answers):
+def get_percent_when_question_multiple(
+    question, array_selected_answers, answer_service
+):
     answers = answer_service.get_list(
         AnswerFilterEnitity(question_ids=[question[0].question_id])
     )
