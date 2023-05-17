@@ -59,7 +59,7 @@ def scoring(dict_with_questions_and_answers):
 
     total_score_percent = total_score_right / len(dict_with_questions_and_answers) * 100
     logger.info(f"TOTAL PRECENT:{total_score_percent}")
-    return total_score_percent
+    return str(total_score_percent)
 
 
 def get_percent_when_question_multiple(

@@ -7,7 +7,7 @@ from flask_openapi3 import APIBlueprint, Tag
 from sobesity.domain.serializers import (
     ThemeQuery,
     DefineKnowledgeSerializer,
-    ScoringQuery,
+    ScoringBody,
     ScoringSerializer,
 )
 
@@ -34,7 +34,7 @@ def get_generate_questions(query: ThemeQuery):
     return list_questions
 
 
-@define_knowledge_bp.get("/scoring", responses={"200": ScoringSerializer})
-def get_result_of_scoring(query: ScoringQuery):
-    percent = scoring(query.question_with_list_answer)
+@define_knowledge_bp.post("", responses={"200": ScoringSerializer})
+def get_result_of_scoring(body: ScoringBody):
+    percent = scoring(body.question_with_list_answer)
     return percent

@@ -47,6 +47,6 @@ from .user import (
 from .define_knowledge import (
     ThemeQuery,
     DefineKnowledgeSerializer,
-    ScoringQuery,
+    ScoringBody,
     ScoringSerializer,
 )

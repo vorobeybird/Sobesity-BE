@@ -17,17 +17,9 @@ class ThemeQuery(BaseModel):
     level: str
 
 
-class QuestionIdSerializer(BaseModel):
-    question_id: int
-
-
-class AnswerIdSerializer(BaseModel):
-    answer_id: int
-
-
-class ScoringQuery(BaseModel):
-    question_with_list_answer: dict[QuestionIdSerializer, list[AnswerIdSerializer]]
+class ScoringBody(BaseModel):
+    question_with_list_answer: dict[int, list[int]]
 
 
 class ScoringSerializer(BaseModel):
-    percent: int
+    percent: str
