@@ -27,14 +27,16 @@ define_knowledge_bp = APIBlueprint(
 )
 
 
-@define_knowledge_bp.get("", responses={"200": DefineKnowledgeSerializer})
+@define_knowledge_bp.get(
+    "generate_questions", responses={"200": DefineKnowledgeSerializer}
+)
 def get_generate_questions(query: ThemeQuery):
     list_questions = take_question_for_theme(query.theme, query.level)
 
     return list_questions
 
 
-@define_knowledge_bp.post("", responses={"200": ScoringSerializer})
+@define_knowledge_bp.post("scoring", responses={"200": ScoringSerializer})
 def get_result_of_scoring(body: ScoringBody):
     percent = scoring(body.question_with_list_answer)
     return percent
