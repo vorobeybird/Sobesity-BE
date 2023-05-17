@@ -22,4 +22,4 @@ class ScoringBody(BaseModel):
 
 
 class ScoringSerializer(BaseModel):
-    percent: str
+    percent: float

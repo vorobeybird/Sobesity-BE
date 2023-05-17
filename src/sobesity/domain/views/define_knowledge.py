@@ -39,4 +39,5 @@ def get_generate_questions(query: ThemeQuery):
 @define_knowledge_bp.post("scoring", responses={"200": ScoringSerializer})
 def get_result_of_scoring(body: ScoringBody):
     percent = scoring(body.question_with_list_answer)
-    return percent
+    result = ScoringSerializer(percent=percent).dict()
+    return result
