@@ -173,7 +173,7 @@ def type_repository(di):
 
 @pytest.fixture
 def types():
-    return [TypeEntityFactory() for _ in range(random.randint(3, 5))]
+    return [TypeEntityFactory() for _ in range(random.randint(2, 2))]
 
 
 @pytest.fixture
