@@ -12,9 +12,6 @@ from sobesity.domain.serializers import (
     BadRequestSerializer,
 )
 
-from sobesity.domain.services.generate_questions import QuestionGeneratorService
-
-from sobesity.domain.services.scoring import scoring
 from sobesity.domain.utils.response import bad_request_maker
 
 from sobesity.containers import Services
@@ -49,6 +46,10 @@ def get_generate_questions(query: ThemeQuery):
 
 @define_knowledge_bp.post("scoring", responses={"200": ScoringSerializer})
 def get_result_of_scoring(body: ScoringBody):
-    percent = scoring(body.question_with_list_answer)
+    scoring_service = current_app.container.services.scoring()
+    try:
+        percent = scoring_service.scoring(body.question_with_list_answer)
+    except ValueError as exc:
+        return bad_request_maker(BadRequestSerializer(message="Question not exist"))
     result = ScoringSerializer(percent=percent).dict()
     return result
