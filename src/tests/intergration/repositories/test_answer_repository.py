@@ -51,6 +51,3 @@ def test_delete__particular_rows_deleted(
 
     for answer in created_answers_after:
         assert answer.answer_id not in to_delete
-
-
-

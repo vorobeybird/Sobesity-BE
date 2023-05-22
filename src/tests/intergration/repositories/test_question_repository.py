@@ -30,7 +30,13 @@ def test_batch_create__get_all_rows(
 
 
 def test_update__particular_rows_updated(
-    created_questions, question_repository, questions, skill_repository, skill, type_repository, type
+    created_questions,
+    question_repository,
+    questions,
+    skill_repository,
+    skill,
+    type_repository,
+    type,
 ):
 
     question_before = created_questions[0]
@@ -46,7 +52,13 @@ def test_update__particular_rows_updated(
 
 
 def test_delete__particular_rows_deleted(
-    created_questions, question_repository, questions, skill_repository, skill, type_repository, type
+    created_questions,
+    question_repository,
+    questions,
+    skill_repository,
+    skill,
+    type_repository,
+    type,
 ):
 
     created_questions_before = created_questions

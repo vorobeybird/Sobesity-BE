@@ -15,7 +15,10 @@ from tests.factories import (
     UserEntityFactory,
     TypeEntityFactory,
 )
-
+from sobesity.domain.entities import (
+    SkillFilterEnitity,
+    QuestionFilterEnitity,
+)
 email_validator.TEST_ENVIRONMENT = True
 
 
@@ -176,3 +179,56 @@ def types():
 @pytest.fixture
 def type(types):
     return types[0]
+
+
+@pytest.fixture
+def valid_scoring_100_body(questions, answers):
+    list_question_with_right_answers = {}
+    for question in questions:
+        list_right_answers_for_this_question = take_all_right_answer_id(
+            question.question_id, answers
+        )
+        list_question_with_right_answers[
+            f"{question.question_id}":list_right_answers_for_this_question
+        ]
+    return {"question_with_list_answer": list_question_with_right_answers}
+
+
+def take_all_right_answer_id(question_id, answers):
+    list_answers_with_right_answers = []
+    for answer in answers:
+        if answer.question_id == question_id:
+            if answer.right:
+                list_answers_with_right_answers.append(answer.answer_id)
+    return list_answers_with_right_answers
+
+
+@pytest.fixture
+def take_all_not_right_answer_id(question_id, answers):
+    list_answers_with_right_answers = []
+    for answer in answers:
+        if answer.question_id == question_id:
+            if not answer.right:
+                list_answers_with_right_answers.append(answer.answer_id)
+    return list_answers_with_right_answers
+
+
+@pytest.fixture
+def question_service(di):
+    return di.services.question()
+
+
+@pytest.fixture
+def skill_service(di):
+    return di.services.skill()
+
+
+@pytest.fixture
+def exist_skill(skill_service, question_service):
+    def skill_sercher(answer):
+        question = question_service.get_list(QuestionFilterEnitity(question_ids=[answer.question_id]))
+        skill = skill_service.get_list(SkillFilterEnitity(skill_ids=[question[0].skill_id]))
+        return skill
+    return skill_sercher
+
+
