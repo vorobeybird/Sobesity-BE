@@ -27,7 +27,6 @@ def test_generate_questions__return_200(
 
 
 def test_scoring_full_right_return_100(client, auth_header, valid_scoring_100_body, type_repository, question_service, answer_service):
-    breakpoint()
     response = client.post("api/define_knowledge/scoring", json=valid_scoring_100_body, headers=auth_header,)
     assert response.status_code == HTTPStatus.OK
 
