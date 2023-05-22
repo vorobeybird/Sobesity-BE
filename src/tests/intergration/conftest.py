@@ -1,3 +1,5 @@
+import random
+
 import pytest
 
 
@@ -21,8 +23,7 @@ def created_questions(
 @pytest.fixture
 def created_answers(created_questions, answer_repository, answers):
     for answer in answers:
-        answer.question_id = created_questions[0].question_id
-
+        answer.question_id = created_questions[random.randint(0, 2)].question_id
     answer_repository.batch_create(answers)
     return answer_repository.get_list()
 

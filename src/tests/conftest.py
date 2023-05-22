@@ -190,8 +190,8 @@ def valid_scoring_100_body(created_answers, question_service):
             question.question_id, created_answers
         )
         list_question_with_right_answers[
-            f"{question.question_id}":list_right_answers_for_this_question
-        ]
+            f"{question.question_id}"] = list_right_answers_for_this_question
+
     return {"question_with_list_answer": list_question_with_right_answers}
 
 

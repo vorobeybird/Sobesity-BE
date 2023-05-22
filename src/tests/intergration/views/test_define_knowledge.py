@@ -26,8 +26,8 @@ def test_generate_questions__return_200(
     assert response.json != []
 
 
-def test_scoring_full_right_return_100(client, valid_scoring_100_body):
-
-    response = client.post("api/define_knowledge/scoring", json=valid_scoring_100_body)
+def test_scoring_full_right_return_100(client, auth_header, valid_scoring_100_body, type_repository):
+    response = client.post("api/define_knowledge/scoring", json=valid_scoring_100_body, headers=auth_header,)
     assert response.status_code == HTTPStatus.OK
+
 
