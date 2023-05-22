@@ -22,7 +22,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-class ScoringService():
+class ScoringService:
     def __init__(self, question_service, skill_service, answer_service, type_service):
         self.question_service = question_service
         self.skill_service = skill_service
@@ -64,13 +64,13 @@ class ScoringService():
             else:
                 logger.info("Can't fined question: '")
                 raise ValueError("Question do not exist")
-        total_score_percent = total_score_right / len(dict_with_questions_and_answers) * 100
+        total_score_percent = (
+            total_score_right / len(dict_with_questions_and_answers) * 100
+        )
         logger.info(f"TOTAL PRECENT:{total_score_percent}")
         return total_score_percent
 
-    def get_percent_when_question_multiple(self,
-        question, array_selected_answers
-    ):
+    def get_percent_when_question_multiple(self, question, array_selected_answers):
         answers = self.answer_service.get_list(
             AnswerFilterEnitity(question_ids=[question[0].question_id])
         )
@@ -80,8 +80,10 @@ class ScoringService():
         for answer in answers:
             if answer.right:
                 array_only_right_answers.append(answer.answer_id)
-                logger.info(f"Add answer '{answer.answer}' in array with right answers:")
-        percent = len(set(array_selected_answers) & set(array_only_right_answers)) / len(
-            array_only_right_answers
-        )
+                logger.info(
+                    f"Add answer '{answer.answer}' in array with right answers:"
+                )
+        percent = len(
+            set(array_selected_answers) & set(array_only_right_answers)
+        ) / len(array_only_right_answers)
         return percent

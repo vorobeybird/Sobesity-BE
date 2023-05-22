@@ -22,8 +22,6 @@ from sobesity.infrastructure.repositories import (
 from sobesity.infrastructure.resources import JWTResource
 
 
-
-
 class Resources(containers.DeclarativeContainer):
     config = providers.Configuration(pydantic_settings=[Settings()])
     datasource = providers.Callable(datasource)
@@ -51,8 +49,21 @@ class Services(containers.DeclarativeContainer):
     type = providers.Singleton(TypeService, repositories.type)
     skill = providers.Singleton(SkillService, repositories.skill)
     user = providers.Singleton(UserService, repositories.user)
-    question_generator = providers.Singleton(QuestionGeneratorService, skill_service=skill, question_service=question, answer_service=answer, type_service=type)
-    scoring = providers.Singleton(ScoringService, skill_service=skill, question_service=question, answer_service=answer, type_service=type)
+    question_generator = providers.Singleton(
+        QuestionGeneratorService,
+        skill_service=skill,
+        question_service=question,
+        answer_service=answer,
+        type_service=type,
+    )
+    scoring = providers.Singleton(
+        ScoringService,
+        skill_service=skill,
+        question_service=question,
+        answer_service=answer,
+        type_service=type,
+    )
+
 
 class AccessManagers(containers.DeclarativeContainer):
     resources = providers.DependenciesContainer()
@@ -71,4 +82,3 @@ class Application(containers.DeclarativeContainer):
     access_managers = providers.Container(
         AccessManagers, resources=resources, services=services
     )
-

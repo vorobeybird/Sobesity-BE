@@ -19,6 +19,7 @@ from sobesity.domain.entities import (
     SkillFilterEnitity,
     QuestionFilterEnitity,
 )
+
 email_validator.TEST_ENVIRONMENT = True
 
 
@@ -192,9 +193,11 @@ def valid_scoring_50_body(created_answers, question_service):
         questions[1].question_id, created_answers
     )
     list_question_with_all_answers[
-        f"{questions[0].question_id}"] = list_false_answers_for_this_question
+        f"{questions[0].question_id}"
+    ] = list_false_answers_for_this_question
     list_question_with_all_answers[
-        f"{questions[1].question_id}"] = list_right_answers_for_this_question
+        f"{questions[1].question_id}"
+    ] = list_right_answers_for_this_question
 
     return {"question_with_list_answer": list_question_with_all_answers}
 
@@ -208,7 +211,8 @@ def valid_scoring_0_body(created_answers, question_service):
             question.question_id, created_answers
         )
         list_question_with_false_answers[
-            f"{question.question_id}"] = list_false_answers_for_this_question
+            f"{question.question_id}"
+        ] = list_false_answers_for_this_question
 
     return {"question_with_list_answer": list_question_with_false_answers}
 
@@ -222,7 +226,6 @@ def take_all_false_answer_id(question_id, answers):
     return list_answers_with_false_answers
 
 
-
 @pytest.fixture
 def valid_scoring_100_body(created_answers, question_service):
     list_question_with_right_answers = {}
@@ -232,7 +235,8 @@ def valid_scoring_100_body(created_answers, question_service):
             question.question_id, created_answers
         )
         list_question_with_right_answers[
-            f"{question.question_id}"] = list_right_answers_for_this_question
+            f"{question.question_id}"
+        ] = list_right_answers_for_this_question
 
     return {"question_with_list_answer": list_question_with_right_answers}
 
@@ -274,9 +278,14 @@ def answer_service(di):
 @pytest.fixture
 def exist_skill(skill_service, question_service):
     def skill_sercher(answer):
-        question = question_service.get_list(QuestionFilterEnitity(question_ids=[answer.question_id]))
-        skill = skill_service.get_list(SkillFilterEnitity(skill_ids=[question[0].skill_id]))
+        question = question_service.get_list(
+            QuestionFilterEnitity(question_ids=[answer.question_id])
+        )
+        skill = skill_service.get_list(
+            SkillFilterEnitity(skill_ids=[question[0].skill_id])
+        )
         return skill
+
     return skill_sercher
 
 
@@ -288,10 +297,10 @@ def not_valid_scoring_not_exit_question_body(created_answers, question_service):
         list_right_answers_for_this_question = take_all_right_answer_id(
             question.question_id, created_answers
         )
-        list_question_with_right_answers[
-            "0"] = list_right_answers_for_this_question
+        list_question_with_right_answers["0"] = list_right_answers_for_this_question
 
     return {"question_with_list_answer": list_question_with_right_answers}
+
 
 @pytest.fixture
 def not_valid_scoring_not_exit_answer_body(created_answers, question_service):
@@ -301,7 +310,6 @@ def not_valid_scoring_not_exit_answer_body(created_answers, question_service):
         list_right_answers_for_this_question = take_all_right_answer_id(
             question.question_id, created_answers
         )
-        list_question_with_right_answers[
-            f"{question.question_id}"] = [0]
+        list_question_with_right_answers[f"{question.question_id}"] = [0]
 
     return {"question_with_list_answer": list_question_with_right_answers}

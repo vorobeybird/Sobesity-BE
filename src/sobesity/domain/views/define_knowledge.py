@@ -16,7 +16,7 @@ from sobesity.domain.utils.response import bad_request_maker
 
 from sobesity.containers import Services
 
-from flask import  current_app
+from flask import current_app
 
 define_knowledge_bp = APIBlueprint(
     "define_knowledge",
@@ -38,7 +38,9 @@ def get_generate_questions(query: ThemeQuery):
 
     generate_question_service = current_app.container.services.question_generator()
     try:
-        list_questions = generate_question_service.take_question_for_theme(query.theme, query.level)
+        list_questions = generate_question_service.take_question_for_theme(
+            query.theme, query.level
+        )
     except ValueError as exc:
         return bad_request_maker(BadRequestSerializer(message="Skill not exist"))
     return list_questions

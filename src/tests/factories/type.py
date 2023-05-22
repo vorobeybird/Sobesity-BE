@@ -10,4 +10,4 @@ class TypeEntityFactory(factory.Factory):
         model = TypeEntity
 
     type_id = factory.Sequence(lambda n: TypeId(n))
-    name = random.choice(['single', 'multiple'])
+    name = random.choice(["single", "multiple"])

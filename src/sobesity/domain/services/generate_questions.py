@@ -24,7 +24,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-class QuestionGeneratorService():
+class QuestionGeneratorService:
     def __init__(self, question_service, skill_service, answer_service, type_service):
         self.question_service = question_service
         self.skill_service = skill_service
@@ -41,7 +41,9 @@ class QuestionGeneratorService():
             )
             logger.info("Take questions")
             if not all_questions:
-                return bad_request_maker(NotFoundSerializer(message="Questions not exists"))
+                return bad_request_maker(
+                    NotFoundSerializer(message="Questions not exists")
+                )
             questions = random.sample(all_questions, quantity)
             output_questions = []
             for question in questions:
@@ -51,7 +53,9 @@ class QuestionGeneratorService():
                 )
                 logger.info(f"Fined the answers for question: '{question}'")
 
-                type = self.type_service.get_list(TypeFilterEnitity(type_ids=[question.type_id]))
+                type = self.type_service.get_list(
+                    TypeFilterEnitity(type_ids=[question.type_id])
+                )
                 logger.info(f"Fined the type of this question: '{type}'")
 
                 for answer in answers_for_this_question:
@@ -78,4 +82,3 @@ class QuestionGeneratorService():
         else:
             questions = self.generate_questions(theme, 3)
         return questions
-
