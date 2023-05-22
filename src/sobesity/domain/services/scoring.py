@@ -55,8 +55,12 @@ class ScoringService():
                         )
                     )
                     logger.info(f"Take  answer: {answer}")
-                    if answer[0].right:
-                        total_score_right += 1
+                    if answer:
+                        if answer[0].right:
+                            total_score_right += 1
+                    else:
+                        logger.info("Can't fined answer: '")
+                        raise IndexError("Answer do not exist")
             else:
                 logger.info("Can't fined question: '")
                 raise ValueError("Question do not exist")

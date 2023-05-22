@@ -182,26 +182,44 @@ def type(types):
 
 
 @pytest.fixture
+def valid_scoring_50_body(created_answers, question_service):
+    list_question_with_all_answers = {}
+    questions = random.sample(question_service.get_list(), 2)
+    list_false_answers_for_this_question = take_all_false_answer_id(
+        questions[0].question_id, created_answers
+    )
+    list_right_answers_for_this_question = take_all_right_answer_id(
+        questions[1].question_id, created_answers
+    )
+    list_question_with_all_answers[
+        f"{questions[0].question_id}"] = list_false_answers_for_this_question
+    list_question_with_all_answers[
+        f"{questions[1].question_id}"] = list_right_answers_for_this_question
+
+    return {"question_with_list_answer": list_question_with_all_answers}
+
+
+@pytest.fixture
 def valid_scoring_0_body(created_answers, question_service):
-    list_question_with_right_answers = {}
+    list_question_with_false_answers = {}
     questions = question_service.get_list()
     for question in questions:
-        list_right_answers_for_this_question = take_all_false_answer_id(
+        list_false_answers_for_this_question = take_all_false_answer_id(
             question.question_id, created_answers
         )
-        list_question_with_right_answers[
-            f"{question.question_id}"] = list_right_answers_for_this_question
+        list_question_with_false_answers[
+            f"{question.question_id}"] = list_false_answers_for_this_question
 
-    return {"question_with_list_answer": list_question_with_right_answers}
+    return {"question_with_list_answer": list_question_with_false_answers}
 
 
 def take_all_false_answer_id(question_id, answers):
-    list_answers_with_right_answers = []
+    list_answers_with_false_answers = []
     for answer in answers:
         if answer.question_id == question_id:
             if not answer.right:
-                list_answers_with_right_answers.append(answer.answer_id)
-    return list_answers_with_right_answers
+                list_answers_with_false_answers.append(answer.answer_id)
+    return list_answers_with_false_answers
 
 
 

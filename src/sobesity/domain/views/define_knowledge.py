@@ -51,5 +51,7 @@ def get_result_of_scoring(body: ScoringBody):
         percent = scoring_service.scoring(body.question_with_list_answer)
     except ValueError as exc:
         return bad_request_maker(BadRequestSerializer(message="Question not exist"))
+    except IndexError as exc:
+        return bad_request_maker(BadRequestSerializer(message="Answer not exist"))
     result = ScoringSerializer(percent=percent).dict()
     return result
