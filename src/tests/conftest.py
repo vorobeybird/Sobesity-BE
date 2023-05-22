@@ -280,3 +280,28 @@ def exist_skill(skill_service, question_service):
     return skill_sercher
 
 
+@pytest.fixture
+def not_valid_scoring_not_exit_question_body(created_answers, question_service):
+    list_question_with_right_answers = {}
+    questions = question_service.get_list()
+    for question in questions:
+        list_right_answers_for_this_question = take_all_right_answer_id(
+            question.question_id, created_answers
+        )
+        list_question_with_right_answers[
+            "0"] = list_right_answers_for_this_question
+
+    return {"question_with_list_answer": list_question_with_right_answers}
+
+@pytest.fixture
+def not_valid_scoring_not_exit_answer_body(created_answers, question_service):
+    list_question_with_right_answers = {}
+    questions = question_service.get_list()
+    for question in questions:
+        list_right_answers_for_this_question = take_all_right_answer_id(
+            question.question_id, created_answers
+        )
+        list_question_with_right_answers[
+            f"{question.question_id}"] = [0]
+
+    return {"question_with_list_answer": list_question_with_right_answers}

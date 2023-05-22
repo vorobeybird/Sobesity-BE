@@ -38,7 +38,12 @@ def test_scoring_full_false_return_0(client, auth_header, valid_scoring_0_body):
     assert response.json == {'percent': 0}
 
 
-def test_scoring_half_right_return_50(client, auth_header, valid_scoring_50_body):
+def test_scoring_half_right_return_50(client, auth_header, valid_scoring_50_body, not_valid_scoring_not_exit_question_body, not_valid_scoring_not_exit_answer_body):
     response = client.post("api/define_knowledge/scoring", json=valid_scoring_50_body, headers=auth_header,)
     assert response.status_code == HTTPStatus.OK
     assert response.json == {'percent': 50}
+    response = client.post("api/define_knowledge/scoring", json=not_valid_scoring_not_exit_question_body, headers=auth_header, )
+    assert response.status_code == HTTPStatus.BAD_REQUEST
+    response = client.post("api/define_knowledge/scoring", json=not_valid_scoring_not_exit_answer_body,
+                           headers=auth_header, )
+    assert response.status_code == HTTPStatus.BAD_REQUEST
