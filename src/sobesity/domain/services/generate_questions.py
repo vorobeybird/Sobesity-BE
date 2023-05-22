@@ -74,7 +74,7 @@ class QuestionGeneratorService():
 
     def take_question_for_theme(self, theme, level=None):
         if not level:
-            questions = self.generate_questions(theme, 2)
+            questions = self.generate_questions(theme, 3)
         else:
             questions = self.generate_questions(theme, 3)
         return questions

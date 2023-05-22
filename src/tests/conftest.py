@@ -143,7 +143,7 @@ def question_repository(di):
 
 @pytest.fixture
 def questions():
-    return [QuestionEntityFactory() for _ in range(random.randint(3, 5))]
+    return [QuestionEntityFactory() for _ in range(random.randint(3, 3))]
 
 
 @pytest.fixture
@@ -158,7 +158,7 @@ def answer_repository(di):
 
 @pytest.fixture
 def answers():
-    return [AnswerEntityFactory() for _ in range(random.randint(3, 5))]
+    return [AnswerEntityFactory() for _ in range(random.randint(12, 12))]
 
 
 @pytest.fixture
@@ -182,11 +182,12 @@ def type(types):
 
 
 @pytest.fixture
-def valid_scoring_100_body(questions, answers):
+def valid_scoring_100_body(created_answers, question_service):
     list_question_with_right_answers = {}
+    questions = question_service.get_list()
     for question in questions:
         list_right_answers_for_this_question = take_all_right_answer_id(
-            question.question_id, answers
+            question.question_id, created_answers
         )
         list_question_with_right_answers[
             f"{question.question_id}":list_right_answers_for_this_question
@@ -221,6 +222,11 @@ def question_service(di):
 @pytest.fixture
 def skill_service(di):
     return di.services.skill()
+
+
+@pytest.fixture
+def answer_service(di):
+    return di.services.answer()
 
 
 @pytest.fixture

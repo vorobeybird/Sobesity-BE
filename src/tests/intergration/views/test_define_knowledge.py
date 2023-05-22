@@ -23,6 +23,7 @@ def test_generate_questions__return_200(
         headers=auth_header,
     )
     assert response.status_code == HTTPStatus.BAD_REQUEST
+    assert response.json != []
 
 
 def test_scoring_full_right_return_100(client, valid_scoring_100_body):
