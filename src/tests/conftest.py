@@ -144,7 +144,7 @@ def question_repository(di):
 
 @pytest.fixture
 def questions():
-    return [QuestionEntityFactory() for _ in range(random.randint(3, 3))]
+    return [QuestionEntityFactory() for _ in range(3)]
 
 
 @pytest.fixture
@@ -159,7 +159,7 @@ def answer_repository(di):
 
 @pytest.fixture
 def answers():
-    return [AnswerEntityFactory() for _ in range(random.randint(12, 12))]
+    return [AnswerEntityFactory() for _ in range(12)]
 
 
 @pytest.fixture
@@ -174,7 +174,7 @@ def type_repository(di):
 
 @pytest.fixture
 def types():
-    return [TypeEntityFactory() for _ in range(random.randint(2, 2))]
+    return [TypeEntityFactory() for _ in range(2)]
 
 
 @pytest.fixture
