@@ -11,8 +11,6 @@ from sobesity.domain.entities import (
 def created_questions(
     created_skills, question_repository, questions, type_repository, types
 ):
-    types[0].name = "single"
-    types[1].name = "multiple"
     type_repository.batch_create(types)
     created_types = type_repository.get_list()
 
