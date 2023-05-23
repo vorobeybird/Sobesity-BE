@@ -6,7 +6,11 @@ from flask_openapi3 import APIBlueprint, Tag
 
 from sobesity.containers import Services
 from sobesity.domain.entities.question import QuestionFilterEnitity
-from sobesity.domain.exceptions import SkillExistViolation, TypeNotExist, LevelNotExistViolation
+from sobesity.domain.exceptions import (
+    SkillExistViolation,
+    TypeNotExist,
+    LevelNotExistViolation,
+)
 from sobesity.domain.interfaces.services.question import IQuestionService
 from sobesity.domain.serializers import (
     BadRequestSerializer,
