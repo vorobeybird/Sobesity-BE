@@ -10,6 +10,7 @@ from sobesity.domain.services import (
     TypeService,
     QuestionGeneratorService,
     ScoringService,
+    LevelService,
 )
 from sobesity.infrastructure.datasource import datasource
 from sobesity.infrastructure.repositories import (
@@ -18,6 +19,7 @@ from sobesity.infrastructure.repositories import (
     SkillRepository,
     UserRepository,
     TypeRepository,
+    LevelRepository,
 )
 from sobesity.infrastructure.resources import JWTResource
 
@@ -40,6 +42,7 @@ class Repositories(containers.DeclarativeContainer):
     type = providers.Singleton(TypeRepository, resources.datasource)
     skill = providers.Singleton(SkillRepository, resources.datasource)
     user = providers.Singleton(UserRepository, resources.datasource)
+    level = providers.Singleton(LevelRepository, resources.datasource)
 
 
 class Services(containers.DeclarativeContainer):
@@ -63,6 +66,7 @@ class Services(containers.DeclarativeContainer):
         answer_service=answer,
         type_service=type,
     )
+    level = providers.Singleton(LevelService, repositories.level)
 
 
 class AccessManagers(containers.DeclarativeContainer):
