@@ -22,6 +22,7 @@ def build_question_entity(cursor) -> QuestionEntity:
         type_id=cursor.type_id,
         code=cursor.code,
         skill_id=cursor.skill_id,
+        level_id=cursor.level_id,
     )
 
 

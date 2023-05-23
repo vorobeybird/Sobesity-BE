@@ -17,4 +17,4 @@ from .user import (
     UserFilterParamError,
     UserNotFound,
 )
-from .level import LevelNameUniqueViolation
+from .level import LevelNameUniqueViolation, LevelNotExistViolation

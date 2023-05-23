@@ -7,7 +7,7 @@ from sqlalchemy import delete, insert, select, update
 from sqlalchemy.exc import IntegrityError
 
 from sobesity.domain.entities import QuestionEntity, QuestionFilterEnitity, QuestionId
-from sobesity.domain.exceptions import SkillExistViolation, TypeNotExist
+from sobesity.domain.exceptions import SkillExistViolation, TypeNotExist, LevelNotExistViolation
 from sobesity.domain.interfaces import IQuestionRepository
 from sobesity.infrastructure.constants import ModelFields
 from sobesity.infrastructure.models import question_table
@@ -35,6 +35,11 @@ class QuestionRepository(IQuestionRepository):
             )
         if question_filter.codes is not None:
             query = query.where(question_table.c.code.in_(question_filter.codes))
+        if question_filter.level_ids is not None:
+            query = query.where(question_table.c.level_id.in_(question_filter.level_ids))
+        if question_filter.type_ids is not None:
+            query = query.where(question_table.c.type_id.in_(question_filter.type_ids))
+
         return query
 
     def get_list(
@@ -69,6 +74,9 @@ class QuestionRepository(IQuestionRepository):
                 elif 'table "type"' in str(exc.orig):
                     logger.exception(exc)
                     raise TypeNotExist()
+                elif 'table "level"' in str(exc.orig):
+                    logger.exception(exc)
+                    raise LevelNotExistViolation()
                 raise
 
     def update(
@@ -80,16 +88,22 @@ class QuestionRepository(IQuestionRepository):
 
         query = self._patch_query(query, where)
         query = query.values(
-            {"question": to_set.question, "skill_id": to_set.skill_id}
-        ).returning(question_table.c.question_id, question_table.c.skill_id)
+            {"question": to_set.question, "skill_id": to_set.skill_id, "level_id": to_set.level_id, "type_id": to_set.type_id, "code": to_set.code}
+        ).returning(question_table.c.question_id, question_table.c.skill_id, question_table.c.level_id)
 
         with self.datasource() as conn:
             try:
                 result = conn.execute(query)
             except IntegrityError as exc:
-                if isinstance(exc.orig, ForeignKeyViolation):
+                if 'table "skill"' in str(exc.orig):
                     logger.exception(exc)
                     raise SkillExistViolation()
+                elif 'table "type"' in str(exc.orig):
+                    logger.exception(exc)
+                    raise TypeNotExist()
+                elif 'table "level"' in str(exc.orig):
+                    logger.exception(exc)
+                    raise LevelNotExistViolation()
             return [QuestionId(res.question_id) for res in result]
 
     def delete(self, question_ids: list[QuestionId]) -> None:
