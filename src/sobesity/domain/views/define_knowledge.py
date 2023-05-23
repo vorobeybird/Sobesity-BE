@@ -18,6 +18,8 @@ from sobesity.containers import Services
 
 from flask import current_app
 
+from sobesity.domain.exceptions import QuestionsNotExistViolation, SkillExistViolation
+
 define_knowledge_bp = APIBlueprint(
     "define_knowledge",
     __name__,
@@ -41,8 +43,10 @@ def get_generate_questions(query: ThemeQuery):
         list_questions = generate_question_service.take_question_for_theme(
             query.theme, query.level
         )
-    except ValueError as exc:
-        return bad_request_maker(BadRequestSerializer(message="Skill not exist"))
+    except QuestionsNotExistViolation as exc:
+        return bad_request_maker(BadRequestSerializer(message=exc.message))
+    except SkillExistViolation as exc:
+        return bad_request_maker(BadRequestSerializer(message=exc.message))
     return list_questions
 
 

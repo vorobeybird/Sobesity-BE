@@ -16,9 +16,8 @@ from sobesity.domain.entities import (
     TypeFilterEnitity,
     TypeId,
 )
-from sobesity.domain.serializers import NotFoundSerializer
-from sobesity.domain.utils.response import bad_request_maker
 
+from sobesity.domain.exceptions import QuestionsNotExistViolation, SkillExistViolation
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -41,9 +40,8 @@ class QuestionGeneratorService:
             )
             logger.info("Take questions")
             if not all_questions:
-                return bad_request_maker(
-                    NotFoundSerializer(message="Questions not exists")
-                )
+                logger.info(f"Can't fined questions for this skill: '{skill}'")
+                raise QuestionsNotExistViolation()
             questions = random.sample(all_questions, quantity)
             output_questions = []
             for question in questions:
@@ -73,7 +71,7 @@ class QuestionGeneratorService:
                 logger.info("Append the question to list questions")
         else:
             logger.info(f"Can't fined skill: '{skill}'")
-            raise ValueError("Skill do not exist")
+            raise SkillExistViolation()
         return output_questions
 
     def take_question_for_theme(self, theme, level=None):
