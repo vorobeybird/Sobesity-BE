@@ -10,6 +10,7 @@ from sobesity.domain.exceptions import (
     SkillExistViolation,
     TypeNotExist,
     LevelNotExistViolation,
+    QuestionExistViolation,
 )
 from sobesity.domain.interfaces.services.question import IQuestionService
 from sobesity.domain.serializers import (
@@ -89,7 +90,12 @@ def update_question(
 ):
     try:
         return question_service.update(body.get_to_set(), body.get_where())
-    except (SkillExistViolation, TypeNotExist, LevelNotExistViolation) as exc:
+    except (
+        SkillExistViolation,
+        TypeNotExist,
+        LevelNotExistViolation,
+        QuestionExistViolation,
+    ) as exc:
         return bad_request_maker(BadRequestSerializer(message=exc.message))
 
 

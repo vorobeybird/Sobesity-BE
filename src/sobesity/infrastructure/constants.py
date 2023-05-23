@@ -10,3 +10,4 @@ class ModelFields(str, Enum):
     REGISTERED_AT = "registered_at"
     PASSWORD = "password"
     LEVEL_ID = "level_id"
+    KNOWLEDGE_ID = "knowledge_id"

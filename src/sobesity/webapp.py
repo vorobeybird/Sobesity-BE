@@ -14,6 +14,7 @@ from sobesity.domain.views import (
     type,
     define_knowledge,
     level,
+    knowledge,
 )
 
 
@@ -35,6 +36,7 @@ def register_apis(app):
         type.type_bp,
         define_knowledge.define_knowledge_bp,
         level.level_bp,
+        knowledge.knowledge_bp,
     )
     for api in apis:
         app.register_api(api)
@@ -42,7 +44,7 @@ def register_apis(app):
 
 def init_dependency():
     container = Application()
-    container.services.wire([skill, user, question, answer, type, level])
+    container.services.wire([skill, user, question, answer, type, level, knowledge])
     return container
 
 

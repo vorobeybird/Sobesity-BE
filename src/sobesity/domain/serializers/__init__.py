@@ -59,3 +59,12 @@ from .level import (
     LevelIdsSerializer,
     LevelSerializer,
 )
+from .knowledge import (
+    DeleteKnowledgeBody,
+    GetKnowledges,
+    PatchKnowledgeBody,
+    PathKnowledgeId,
+    PostKnowledgeBody,
+    KnowledgeIdsSerializer,
+    KnowledgeSerializer,
+)

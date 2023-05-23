@@ -6,3 +6,4 @@ from .type import TypeService
 from .generate_questions import QuestionGeneratorService
 from .scoring import ScoringService
 from .level import LevelService
+from .knowledge import KnowledgeService

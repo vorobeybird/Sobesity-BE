@@ -4,3 +4,4 @@ from .question import IQuestionService
 from .skill import ISkillService
 from .user import IUserService
 from .level import ILevelService
+from .knowledge import IKnowledgeService
