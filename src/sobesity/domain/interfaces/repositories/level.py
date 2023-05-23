@@ -12,7 +12,7 @@ class ILevelRepository(ABC):
         pass
 
     @abstractclassmethod
-    def batch_create(self, skills: list[LevelEntity]) -> None:
+    def batch_create(self, levels: list[LevelEntity]) -> None:
         pass
 
     @abstractclassmethod

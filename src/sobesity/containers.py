@@ -70,7 +70,7 @@ class Services(containers.DeclarativeContainer):
         type_service=type,
     )
     level = providers.Singleton(LevelService, repositories.level)
-    knowledge = providers.Singleton(KnowledgeService, repositories.level)
+    knowledge = providers.Singleton(KnowledgeService, repositories.knowledge)
 
 
 class AccessManagers(containers.DeclarativeContainer):

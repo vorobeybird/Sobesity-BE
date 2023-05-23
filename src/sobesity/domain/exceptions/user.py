@@ -45,3 +45,9 @@ class UserFilterParamError(DomainException):
     def __init__(self, *args: object) -> None:
         self.message = "One of parameters must be specified"
         super().__init__(self.message)
+
+
+class UserNotExist(Exception):
+    def __init__(self) -> None:
+        self.message = "User not exist"
+        super().__init__(self.message)

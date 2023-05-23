@@ -16,5 +16,6 @@ from .user import (
     PasswordNotMatch,
     UserFilterParamError,
     UserNotFound,
+    UserNotExist,
 )
 from .level import LevelNameUniqueViolation, LevelNotExistViolation

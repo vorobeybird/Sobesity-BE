@@ -13,7 +13,7 @@ from sobesity.domain.entities import (
 )
 from sobesity.domain.exceptions import (
     SkillExistViolation,
-    UserNotFound,
+    UserNotExist,
     LevelNotExistViolation,
 )
 from sobesity.domain.interfaces import IKnowledgeRepository
@@ -79,7 +79,7 @@ class KnowledgeRepository(IKnowledgeRepository):
                     raise SkillExistViolation()
                 elif 'table "user"' in str(exc.orig):
                     logger.exception(exc)
-                    raise UserNotFound()
+                    raise UserNotExist()
                 elif 'table "level"' in str(exc.orig):
                     logger.exception(exc)
                     raise LevelNotExistViolation()
@@ -110,7 +110,7 @@ class KnowledgeRepository(IKnowledgeRepository):
                     raise SkillExistViolation()
                 elif 'table "user"' in str(exc.orig):
                     logger.exception(exc)
-                    raise UserNotFound()
+                    raise UserNotExist()
                 elif 'table "level"' in str(exc.orig):
                     logger.exception(exc)
                     raise LevelNotExistViolation()

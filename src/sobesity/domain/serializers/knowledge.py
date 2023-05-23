@@ -40,7 +40,7 @@ class KnowledgeBodyElem(BaseModel):
 
     def to_domain(self) -> KnowledgeEntity:
         return KnowledgeEntity(
-            question_id=None,
+            knowledge_id=None,
             user_id=self.user_id,
             skill_id=self.skill_id,
             level_id=self.level_id,
@@ -84,11 +84,11 @@ class PatchKnowledgeBody(BaseModel):
 
     def get_to_set(self):
         return KnowledgeEntity(
-            question_id=None,
+            knowledge_id=None,
             user_id=self.user_id,
             skill_id=self.skill_id,
             level_id=self.level_id,
         )
 
     def get_where(self) -> list[KnowledgeFilterEnitity]:
-        return KnowledgeFilterEnitity(question_ids=[self.knowledge_id])
+        return KnowledgeFilterEnitity(knowledge_ids=[self.knowledge_id])

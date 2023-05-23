@@ -8,7 +8,7 @@ from sobesity.containers import Services
 from sobesity.domain.entities.knowledge import KnowledgeFilterEnitity
 from sobesity.domain.exceptions import (
     SkillExistViolation,
-    UserNotFound,
+    UserNotExist,
     LevelNotExistViolation,
 )
 from sobesity.domain.interfaces.services.knowledge import IKnowledgeService
@@ -63,8 +63,7 @@ def create_knowledges(
 ):
     try:
         knowledge_service.batch_create(body.to_domain())
-
-    except (SkillExistViolation, UserNotFound, LevelNotExistViolation) as exc:
+    except (SkillExistViolation, UserNotExist, LevelNotExistViolation) as exc:
         return bad_request_maker(BadRequestSerializer(message=exc.message))
 
     return Response(), HTTPStatus.CREATED
@@ -88,5 +87,5 @@ def update_question(
 ):
     try:
         return knowledge_service.update(body.get_to_set(), body.get_where())
-    except (SkillExistViolation, UserNotFound, LevelNotExistViolation) as exc:
+    except (SkillExistViolation, UserNotExist, LevelNotExistViolation) as exc:
         return bad_request_maker(BadRequestSerializer(message=exc.message))
