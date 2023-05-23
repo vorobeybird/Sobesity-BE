@@ -17,7 +17,12 @@ from sobesity.containers import Services
 
 from flask import current_app
 
-from sobesity.domain.exceptions import QuestionExistViolation, QuestionsNotExistViolation, SkillExistViolation, AnswerNotExistViolation
+from sobesity.domain.exceptions import (
+    QuestionExistViolation,
+    QuestionsNotExistViolation,
+    SkillExistViolation,
+    AnswerNotExistViolation,
+)
 
 define_knowledge_bp = APIBlueprint(
     "define_knowledge",

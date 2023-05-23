@@ -4,6 +4,7 @@ from sobesity.domain.entities import (
     TypeEntity,
     AnswerEntity,
     QuestionEntity,
+    LevelEntity,
 )
 
 
@@ -50,4 +51,11 @@ def build_user_entity(cursor) -> UserEntity:
         salt=cursor.salt,
         first_name=cursor.first_name,
         last_name=cursor.last_name,
+    )
+
+
+def build_level_entity(cursor) -> LevelEntity:
+    return LevelEntity(
+        level_id=cursor.level_id,
+        name=cursor.name,
     )

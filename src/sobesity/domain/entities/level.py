@@ -13,4 +13,4 @@ class LevelEntity:
 @dataclass
 class LevelFilterEnitity:
     level_ids: Optional[list[LevelId]] = None
-    levels: Optional[list[str]] = None
+    names: Optional[list[str]] = None

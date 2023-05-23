@@ -64,4 +64,4 @@ class PatchLevelBody(BaseModel):
         return LevelEntity(level_id=None, name=self.name)
 
     def get_where(self) -> list[LevelFilterEnitity]:
-        return LevelFilterEnitity(level_ids=[self.skill_id])
+        return LevelFilterEnitity(level_ids=[self.level_id])

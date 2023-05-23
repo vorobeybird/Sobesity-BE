@@ -1,4 +1,3 @@
-
 from sobesity.domain.exceptions.base import DomainException
 
 

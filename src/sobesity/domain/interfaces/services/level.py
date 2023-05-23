@@ -1,13 +1,13 @@
 from abc import ABC, abstractclassmethod
 from typing import Optional
 
-from sobesity.domain.entities import LevelEntity, LevelilterEnitity, LevelId
+from sobesity.domain.entities import LevelEntity, LevelFilterEnitity, LevelId
 
 
-class ILevelRepository(ABC):
+class ILevelService(ABC):
     @abstractclassmethod
     def get_list(
-        self, level_filter: Optional[LevelilterEnitity] = None
+        self, level_filter: Optional[LevelFilterEnitity] = None
     ) -> list[LevelEntity]:
         pass
 
@@ -17,7 +17,7 @@ class ILevelRepository(ABC):
 
     @abstractclassmethod
     def update(
-        self, old_level: LevelEntity, update: LevelilterEnitity
+        self, old_level: LevelEntity, update: LevelFilterEnitity
     ) -> list[LevelId]:
         pass
 

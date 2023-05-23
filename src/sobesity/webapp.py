@@ -6,7 +6,15 @@ from flask_openapi3 import HTTPBearer, Info, OpenAPI
 
 from sobesity.containers import Application
 
-from sobesity.domain.views import skill, user, question, answer, type, define_knowledge
+from sobesity.domain.views import (
+    skill,
+    user,
+    question,
+    answer,
+    type,
+    define_knowledge,
+    level,
+)
 
 
 def setup_logger(config):
@@ -26,6 +34,7 @@ def register_apis(app):
         answer.answer_bp,
         type.type_bp,
         define_knowledge.define_knowledge_bp,
+        level.level_bp,
     )
     for api in apis:
         app.register_api(api)
@@ -33,7 +42,7 @@ def register_apis(app):
 
 def init_dependency():
     container = Application()
-    container.services.wire([skill, user, question, answer, type])
+    container.services.wire([skill, user, question, answer, type, level])
     return container
 
 

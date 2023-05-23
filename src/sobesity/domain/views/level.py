@@ -6,7 +6,7 @@ from flask_openapi3 import APIBlueprint, Tag
 
 from sobesity.containers import Services
 from sobesity.domain.entities import LevelFilterEnitity
-from sobesity.domain.exceptions.skill import LevelNameUniqueViolation
+from sobesity.domain.exceptions.level import LevelNameUniqueViolation
 from sobesity.domain.interfaces.services import ILevelService
 from sobesity.domain.serializers import (
     BadRequestSerializer,
@@ -25,7 +25,7 @@ level_bp = APIBlueprint(
     "level",
     __name__,
     url_prefix="/api/level",
-    abp_tags=[Tag(name="skill", description="User's levels")],
+    abp_tags=[Tag(name="level", description="User's levels")],
     doc_ui=True,
     abp_security=[{"jwt": []}],
 )

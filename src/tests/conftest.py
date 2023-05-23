@@ -14,6 +14,7 @@ from tests.factories import (
     SkillEntityFactory,
     UserEntityFactory,
     TypeEntityFactory,
+    LevelEntityFactory,
 )
 from sobesity.domain.entities import (
     SkillFilterEnitity,
@@ -313,3 +314,18 @@ def not_valid_scoring_not_exit_answer_body(created_answers, question_service):
         list_question_with_right_answers[f"{question.question_id}"] = [0]
 
     return {"question_with_list_answer": list_question_with_right_answers}
+
+
+@pytest.fixture
+def levels():
+    return [LevelEntityFactory() for _ in range(random.randint(3, 5))]
+
+
+@pytest.fixture
+def level(levels):
+    return levels[0]
+
+
+@pytest.fixture
+def level_repository(di):
+    return di.repositories.level()
