@@ -17,6 +17,7 @@ from sobesity.domain.entities import (
 from sobesity.domain.serializers import NotFoundSerializer
 from sobesity.domain.utils.response import bad_request_maker
 
+from sobesity.domain.constants import TypeName
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -40,7 +41,7 @@ class ScoringService:
                     TypeFilterEnitity(type_ids=[question[0].type_id])
                 )
 
-                if type_of_question[0].name == "multiple":
+                if type_of_question[0].name == TypeName.MULTIPLY:
                     logger.info(f"When type multiple:")
                     percent = self.get_percent_when_question_multiple(
                         question, dict_with_questions_and_answers[question_id]
