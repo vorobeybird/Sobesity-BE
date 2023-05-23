@@ -10,7 +10,7 @@ def question_to_json(question):
         "question_id": question.question_id,
         "type_id": question.type_id,
         "code": question.code,
-        "level_id": question.level_id
+        "level_id": question.level_id,
     }
 
 
@@ -84,7 +84,7 @@ def test_update(client, mock_question_repository, auth_header):
         "skill_id": 1,
         "type_id": 1,
         "code": "smt='hello' print('smt')",
-        "level_id": 1
+        "level_id": 1,
     }
     expected_affected_ids = [question_id]
     mock_question_repository.update.return_value = expected_affected_ids

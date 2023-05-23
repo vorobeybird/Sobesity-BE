@@ -1,6 +1,12 @@
 import factory
 
-from sobesity.domain.entities import QuestionEntity, QuestionId, SkillId, TypeId
+from sobesity.domain.entities import (
+    QuestionEntity,
+    QuestionId,
+    SkillId,
+    TypeId,
+    LevelId,
+)
 
 
 class QuestionEntityFactory(factory.Factory):
@@ -12,3 +18,4 @@ class QuestionEntityFactory(factory.Factory):
     type_id = factory.Sequence(lambda n: TypeId(n))
     code = factory.Faker("sentence")
     skill_id = factory.Sequence(lambda n: SkillId(n))
+    level_id = factory.Sequence(lambda n: LevelId(n))
