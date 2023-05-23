@@ -1,8 +1,11 @@
 import random
 
-import factory
+import factory.fuzzy
+
 
 from sobesity.domain.entities import TypeEntity, TypeId
+
+from sobesity.domain.constants import TypeName
 
 
 class TypeEntityFactory(factory.Factory):
@@ -10,8 +13,4 @@ class TypeEntityFactory(factory.Factory):
         model = TypeEntity
 
     type_id = factory.Sequence(lambda n: TypeId(n))
-    name = factory.Faker("word")
-
-
-class KnownTypeEnityFactory(TypeEntityFactory):
-    name = random.choice(["single", "multiple"])
+    name = factory.fuzzy.FuzzyChoice([TypeName.SINGLE, TypeName.MULTIPLY])
