@@ -6,7 +6,7 @@ def test_get_list__empty_db__return_nothing(question_repository):
 
 
 def test_batch_create__get_all_rows(
-    skill_repository, skill, question_repository, questions, type_repository, type
+    skill_repository, skill, question_repository, questions, type_repository, type, level_repository, level
 ):
     skill_repository.batch_create([skill])
     created_skill = skill_repository.get_list()
@@ -14,9 +14,13 @@ def test_batch_create__get_all_rows(
     type_repository.batch_create([type])
     created_type = type_repository.get_list()
 
+    level_repository.batch_create([level])
+    created_level = level_repository.get_list()
+
     for question in questions:
         question.skill_id = created_skill[0].skill_id
         question.type_id = created_type[0].type_id
+        question.level_id = created_level[0].level_id
 
     question_repository.batch_create(questions)
     created_questions = question_repository.get_list()
@@ -37,6 +41,8 @@ def test_update__particular_rows_updated(
     skill,
     type_repository,
     type,
+    level_repository,
+    level,
 ):
 
     question_before = created_questions[0]
