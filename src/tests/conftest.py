@@ -20,6 +20,8 @@ from sobesity.domain.entities import (
     QuestionFilterEnitity,
 )
 
+from sobesity.domain.constants import TypeName
+
 email_validator.TEST_ENVIRONMENT = True
 
 
@@ -174,7 +176,10 @@ def type_repository(di):
 
 @pytest.fixture
 def types():
-    return [TypeEntityFactory() for _ in range(2)]
+    return [
+        TypeEntityFactory(name=TypeName.MULTIPLY),
+        TypeEntityFactory(name=TypeName.SINGLE),
+    ]
 
 
 @pytest.fixture
