@@ -13,12 +13,11 @@ from sobesity.domain.serializers import (
 )
 
 from sobesity.domain.utils.response import bad_request_maker
-
 from sobesity.containers import Services
 
 from flask import current_app
 
-from sobesity.domain.exceptions import QuestionsNotExistViolation, SkillExistViolation
+from sobesity.domain.exceptions import QuestionExistViolation, QuestionsNotExistViolation, SkillExistViolation, AnswerNotExistViolation
 
 define_knowledge_bp = APIBlueprint(
     "define_knowledge",
@@ -55,9 +54,9 @@ def get_result_of_scoring(body: ScoringBody):
     scoring_service = current_app.container.services.scoring()
     try:
         percent = scoring_service.scoring(body.question_with_list_answer)
-    except ValueError as exc:
-        return bad_request_maker(BadRequestSerializer(message="Question not exist"))
-    except IndexError as exc:
-        return bad_request_maker(BadRequestSerializer(message="Answer not exist"))
+    except QuestionExistViolation as exc:
+        return bad_request_maker(BadRequestSerializer(message=exc.message))
+    except AnswerNotExistViolation as exc:
+        return bad_request_maker(BadRequestSerializer(message=exc.message))
     result = ScoringSerializer(percent=percent).dict()
     return result

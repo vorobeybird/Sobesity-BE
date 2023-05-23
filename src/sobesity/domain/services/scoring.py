@@ -14,8 +14,7 @@ from sobesity.domain.entities import (
     TypeFilterEnitity,
     TypeId,
 )
-from sobesity.domain.serializers import NotFoundSerializer
-from sobesity.domain.utils.response import bad_request_maker
+from sobesity.domain.exceptions import AnswerNotExistViolation, QuestionExistViolation
 
 from sobesity.domain.constants import TypeName
 
@@ -61,10 +60,10 @@ class ScoringService:
                             total_score_right += 1
                     else:
                         logger.info("Can't fined answer: '")
-                        raise IndexError("Answer do not exist")
+                        raise AnswerNotExistViolation()
             else:
                 logger.info("Can't fined question: '")
-                raise ValueError("Question do not exist")
+                raise QuestionExistViolation()
         total_score_percent = (
             total_score_right / len(dict_with_questions_and_answers) * 100
         )
@@ -77,7 +76,7 @@ class ScoringService:
         )
         array_only_right_answers = []
         if not answers:
-            return bad_request_maker(NotFoundSerializer(message="Answers not exists"))
+            raise AnswerNotExistViolation()
         for answer in answers:
             if answer.right:
                 array_only_right_answers.append(answer.answer_id)
