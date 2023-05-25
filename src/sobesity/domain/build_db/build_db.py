@@ -44,10 +44,13 @@ def main():
 
         for question_with_answers in questions_with_answers:
             question = question_with_answers["question"]
+            code = question_with_answers.get("code")
 
             exist_question = question_service.get_list(
                 QuestionFilterEnitity(
-                    questions=[question], skill_ids=[created_skill[0].skill_id]
+                    questions=[question],
+                    skill_ids=[created_skill[0].skill_id],
+                    codes=[code],
                 )
             )
 
@@ -70,7 +73,6 @@ def main():
                     TypeFilterEnitity(names=[type_of_question])
                 )
 
-                code = question_with_answers.get("code")
                 question_to_create = [
                     QuestionEntity(
                         question_id=None,
@@ -82,16 +84,23 @@ def main():
                 ]
                 question_service.batch_create(question_to_create)
                 logger.info(f"Create question '{question}'")
+            else:
+                logger.info(f"Question '{question}' already created")
             answers_for_this_question = question_with_answers["answers"]
-            created_question = question_service.get_list(
-                QuestionFilterEnitity(
-                    questions=[question], skill_ids=[created_skill[0].skill_id]
+            if not code:
+                created_question = question_service.get_list(
+                    QuestionFilterEnitity(
+                        questions=[question], skill_ids=[created_skill[0].skill_id]
+                    )
                 )
-            )
-
-            logger.info(f"Question '{question}' already created")
-
-            answers_to_create = []
+            else:
+                created_question = question_service.get_list(
+                    QuestionFilterEnitity(
+                        questions=[question],
+                        skill_ids=[created_skill[0].skill_id],
+                        codes=[code],
+                    )
+                )
 
             for answer_with_right in answers_for_this_question:
 
@@ -101,6 +110,7 @@ def main():
                         answers=[answer], question_ids=[created_question[0].question_id]
                     )
                 )
+                answers_to_create = []
                 if not exist_answer:
                     try:
                         right = answer_with_right["right"]
@@ -117,7 +127,9 @@ def main():
                     )
                     answer_service.batch_create(answers_to_create)
                     logger.info(f"Create answer '{answer}'")
-                logger.info(f"Answer '{answer}' already created")
+                else:
+                    logger.info(f"Answer '{answer}' already created")
+
     logger.info("Successfully finished")
 
 

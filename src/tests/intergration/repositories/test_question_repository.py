@@ -30,46 +30,38 @@ def test_batch_create__get_all_rows(
 
 
 def test_update__particular_rows_updated(
-    question_repository, questions, skill_repository, skill, type_repository, type
+    created_questions,
+    question_repository,
+    questions,
+    skill_repository,
+    skill,
+    type_repository,
+    type,
 ):
-    skill_repository.batch_create([skill])
-    created_skill = skill_repository.get_list()
 
-    type_repository.batch_create([type])
-    created_type = type_repository.get_list()
-
-    for question in questions:
-        question.skill_id = created_skill[0].skill_id
-        question.type_id = created_type[0].type_id
-
-    question_repository.batch_create(questions[:1])
-    question_before = question_repository.get_list()[0]
+    question_before = created_questions[0]
 
     to_set = questions[1]
     where = QuestionFilterEnitity(question_ids=[question_before.question_id])
     updated_ids = question_repository.update(to_set, where)
 
-    question_after = question_repository.get_list()[0]
+    question_after = question_repository.get_list()[-1]
 
     assert question_before.question_id == question_after.question_id == updated_ids[0]
     assert question_after.question == to_set.question
 
 
 def test_delete__particular_rows_deleted(
-    question_repository, questions, skill_repository, skill, type_repository, type
+    created_questions,
+    question_repository,
+    questions,
+    skill_repository,
+    skill,
+    type_repository,
+    type,
 ):
-    skill_repository.batch_create([skill])
-    created_skill = skill_repository.get_list()
 
-    type_repository.batch_create([type])
-    created_type = type_repository.get_list()
-
-    for question in questions:
-        question.skill_id = created_skill[0].skill_id
-        question.type_id = created_type[0].type_id
-
-    question_repository.batch_create(questions)
-    created_questions_before = question_repository.get_list()
+    created_questions_before = created_questions
     to_delete = [quesiton.question_id for quesiton in created_questions_before[:2]]
 
     question_repository.delete(to_delete)

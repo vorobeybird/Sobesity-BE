@@ -8,6 +8,8 @@ from sobesity.domain.services import (
     SkillService,
     UserService,
     TypeService,
+    QuestionGeneratorService,
+    ScoringService,
 )
 from sobesity.infrastructure.datasource import datasource
 from sobesity.infrastructure.repositories import (
@@ -47,6 +49,20 @@ class Services(containers.DeclarativeContainer):
     type = providers.Singleton(TypeService, repositories.type)
     skill = providers.Singleton(SkillService, repositories.skill)
     user = providers.Singleton(UserService, repositories.user)
+    question_generator = providers.Singleton(
+        QuestionGeneratorService,
+        skill_service=skill,
+        question_service=question,
+        answer_service=answer,
+        type_service=type,
+    )
+    scoring = providers.Singleton(
+        ScoringService,
+        skill_service=skill,
+        question_service=question,
+        answer_service=answer,
+        type_service=type,
+    )
 
 
 class AccessManagers(containers.DeclarativeContainer):

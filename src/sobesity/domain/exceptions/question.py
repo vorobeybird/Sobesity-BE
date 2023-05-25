@@ -14,3 +14,9 @@ class QuestionExistViolation(Exception):
     def __init__(self) -> None:
         self.message = "Question not exist"
         super().__init__(self.message)
+
+
+class QuestionsNotExistViolation(Exception):
+    def __init__(self) -> None:
+        self.message = "Questions not exist"
+        super().__init__(self.message)
