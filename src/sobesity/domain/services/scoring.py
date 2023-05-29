@@ -64,7 +64,10 @@ class ScoringService:
             AnswerFilterEnitity(question_ids=[question[0].question_id])
         )
         array_only_right_answers = []
-        if not answers:
+        available_answers = {answer.answer_id for answer in answers}
+        chosen_answers_exitst = (available_answers & set(array_only_right_answers)) == len(available_answers)
+
+        if not answers or not chosen_answers_exitst:
             raise AnswerNotExistViolation()
         for answer in answers:
             if answer.right:

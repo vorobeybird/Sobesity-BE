@@ -49,8 +49,6 @@ def test_scoring_half_right_return_50__response_200(
     client,
     auth_header,
     valid_scoring_50_body,
-    not_valid_scoring_not_exit_question_body,
-    not_valid_scoring_not_exit_answer_body,
 ):
     response = client.post(
         "api/define_knowledge/scoring",
