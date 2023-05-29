@@ -65,9 +65,9 @@ class ScoringService:
         )
         array_only_right_answers = []
         available_answers = {answer.answer_id for answer in answers}
-        chosen_answers_exitst = (
-            available_answers & set(array_only_right_answers)
-        ) == len(available_answers)
+        chosen_answers_exitst = len(
+            available_answers & set(array_selected_answers)
+        ) == len(array_selected_answers)
 
         if not answers or not chosen_answers_exitst:
             raise AnswerNotExistViolation()
