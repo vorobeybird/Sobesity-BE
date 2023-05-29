@@ -10,7 +10,7 @@ jobs:
     - uses: actions/checkout@master
 
     - name: Run check
-      run: make format-check
+      run: make lint
 
     - name: Run tests
       run: make tests

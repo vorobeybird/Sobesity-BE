@@ -17,4 +17,5 @@ def get_connection():
         connection.commit()
 
 
-datasource = lambda: get_connection
+def datasource():
+    return get_connection

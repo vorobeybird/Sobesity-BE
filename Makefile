@@ -52,7 +52,7 @@ fix-imports:
 
 .PHONY: flake8
 flake8:
-	${DOCKER_COMPOSE} run --rm app --no-deps flake8 ${PROJECT_CODE_PATH}
+	${DOCKER_COMPOSE} run --rm --no-deps app flake8 ${PROJECT_CODE_PATH}
 
 .PHONY: migrate
 migrate:

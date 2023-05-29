@@ -30,14 +30,14 @@ class ScoringService:
                 )
 
                 if type_of_question[0].name == TypeName.MULTIPLY:
-                    logger.info(f"When type multiple:")
+                    logger.info("When type multiple:")
                     percent = self.get_percent_when_question_multiple(
                         question, dict_with_questions_and_answers[question_id]
                     )
                     if percent > 0:
                         total_score_right += percent
                 else:
-                    logger.info(f"When type single:")
+                    logger.info("When type single:")
                     answer = self.answer_service.get_list(
                         AnswerFilterEnitity(
                             answer_ids=[dict_with_questions_and_answers[question_id][0]]

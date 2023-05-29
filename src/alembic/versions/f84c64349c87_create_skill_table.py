@@ -1,7 +1,7 @@
 """create skill table
 
 Revision ID: f84c64349c87
-Revises: 
+Revises:
 Create Date: 2023-01-25 11:23:17.451504
 
 """
