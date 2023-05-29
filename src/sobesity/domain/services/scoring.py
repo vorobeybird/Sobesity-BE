@@ -8,7 +8,6 @@ from sobesity.domain.entities import (
 )
 from sobesity.domain.exceptions import AnswerNotExistViolation, QuestionExistViolation
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
@@ -65,7 +64,12 @@ class ScoringService:
             AnswerFilterEnitity(question_ids=[question[0].question_id])
         )
         array_only_right_answers = []
-        if not answers:
+        available_answers = {answer.answer_id for answer in answers}
+        chosen_answers_exitst = len(
+            available_answers & set(array_selected_answers)
+        ) == len(array_selected_answers)
+
+        if not answers or not chosen_answers_exitst:
             raise AnswerNotExistViolation()
         for answer in answers:
             if answer.right:
