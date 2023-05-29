@@ -1,5 +1,4 @@
 from sobesity.domain.entities import JWTToken, LoginUserEntity, UserEntity, UserFilter
-from sobesity.domain.entities.user import UserEntity, UserFilter
 from sobesity.domain.exceptions import EmailNotExists, PasswordNotMatch, UserNotFound
 from sobesity.domain.interfaces.access_managers import IUserAccessManager
 from sobesity.domain.interfaces.resources import IJWTResource

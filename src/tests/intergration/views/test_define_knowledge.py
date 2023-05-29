@@ -1,7 +1,5 @@
 from http import HTTPStatus
 
-from http_constants.headers import HttpHeaders
-
 
 def test_generate_questions__return_200(
     client,
@@ -12,14 +10,15 @@ def test_generate_questions__return_200(
 ):
 
     skill = exist_skill(created_answers[0])
+    level = "any"
     response = client.get(
-        f"api/define_knowledge/generate_questions?theme={skill[0].name}&level=any",
+        f"api/define_knowledge/generate_questions?theme={skill[0].name}&level={level}",
         headers=auth_header,
     )
     assert response.status_code == HTTPStatus.OK
 
     response = client.get(
-        f"api/define_knowledge/generate_questions?theme=NonExistTheme&level=any",
+        f"api/define_knowledge/generate_questions?theme=NonExistTheme&level={level}",
         headers=auth_header,
     )
     assert response.status_code == HTTPStatus.BAD_REQUEST

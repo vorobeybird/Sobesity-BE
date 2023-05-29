@@ -1,6 +1,6 @@
 import pytest
 
-from sobesity.domain.entities.type import TypeEntity, TypeFilterEnitity
+from sobesity.domain.entities.type import TypeFilterEnitity
 from sobesity.domain.exceptions import TypeNameUniqueViolation
 
 

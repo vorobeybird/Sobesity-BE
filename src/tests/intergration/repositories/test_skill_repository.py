@@ -1,6 +1,6 @@
 import pytest
 
-from sobesity.domain.entities.skill import SkillEntity, SkillFilterEnitity
+from sobesity.domain.entities.skill import SkillFilterEnitity
 from sobesity.domain.exceptions import SkillNameUniqueViolation
 
 

@@ -5,22 +5,22 @@ import email_validator
 import pytest
 from http_constants.headers import HttpHeaders
 
-from sobesity.domain.entities import UserFilter, UserId
+from sobesity.domain.constants import TypeName
+from sobesity.domain.entities import (
+    QuestionFilterEnitity,
+    SkillFilterEnitity,
+    UserFilter,
+    UserId,
+)
 from sobesity.webapp import create_app
 from tests.factories import (
     AnswerEntityFactory,
     CreateUserFactory,
     QuestionEntityFactory,
     SkillEntityFactory,
-    UserEntityFactory,
     TypeEntityFactory,
+    UserEntityFactory,
 )
-from sobesity.domain.entities import (
-    SkillFilterEnitity,
-    QuestionFilterEnitity,
-)
-
-from sobesity.domain.constants import TypeName
 
 email_validator.TEST_ENVIRONMENT = True
 
@@ -312,9 +312,6 @@ def not_valid_scoring_not_exit_answer_body(created_answers, question_service):
     list_question_with_right_answers = {}
     questions = question_service.get_list()
     for question in questions:
-        list_right_answers_for_this_question = take_all_right_answer_id(
-            question.question_id, created_answers
-        )
         list_question_with_right_answers[f"{question.question_id}"] = [0]
 
     return {"question_with_list_answer": list_question_with_right_answers}

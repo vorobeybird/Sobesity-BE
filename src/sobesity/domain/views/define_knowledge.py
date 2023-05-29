@@ -1,28 +1,21 @@
-from http import HTTPStatus
-
-from dependency_injector.wiring import Provide, inject
-from flask import Response
+from dependency_injector.wiring import inject
+from flask import current_app
 from flask_openapi3 import APIBlueprint, Tag
 
-from sobesity.domain.serializers import (
-    ThemeQuery,
-    DefineKnowledgeSerializer,
-    ScoringBody,
-    ScoringSerializer,
-    BadRequestSerializer,
-)
-
-from sobesity.domain.utils.response import bad_request_maker
-from sobesity.containers import Services
-
-from flask import current_app
-
 from sobesity.domain.exceptions import (
+    AnswerNotExistViolation,
     QuestionExistViolation,
     QuestionsNotExistViolation,
     SkillExistViolation,
-    AnswerNotExistViolation,
 )
+from sobesity.domain.serializers import (
+    BadRequestSerializer,
+    DefineKnowledgeSerializer,
+    ScoringBody,
+    ScoringSerializer,
+    ThemeQuery,
+)
+from sobesity.domain.utils.response import bad_request_maker
 
 define_knowledge_bp = APIBlueprint(
     "define_knowledge",
