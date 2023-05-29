@@ -18,7 +18,6 @@ from sobesity.domain.exceptions import AnswerNotExistViolation, QuestionExistVio
 
 from sobesity.domain.constants import TypeName
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 

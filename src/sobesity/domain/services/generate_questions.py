@@ -19,7 +19,6 @@ from sobesity.domain.entities import (
 
 from sobesity.domain.exceptions import QuestionsNotExistViolation, SkillExistViolation
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
