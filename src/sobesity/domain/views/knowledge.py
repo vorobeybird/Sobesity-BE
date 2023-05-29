@@ -7,21 +7,20 @@ from flask_openapi3 import APIBlueprint, Tag
 from sobesity.containers import Services
 from sobesity.domain.entities.knowledge import KnowledgeFilterEnitity
 from sobesity.domain.exceptions import (
+    LevelNotExistViolation,
     SkillExistViolation,
     UserNotExist,
-    LevelNotExistViolation,
 )
 from sobesity.domain.interfaces.services.knowledge import IKnowledgeService
 from sobesity.domain.serializers import (
     BadRequestSerializer,
     DeleteKnowledgeBody,
     GetKnowledges,
-    NotFoundSerializer,
-    PatchKnowledgeBody,
-    PathKnowledgeId,
-    PostKnowledgeBody,
     KnowledgeIdsSerializer,
     KnowledgeSerializer,
+    NotFoundSerializer,
+    PathKnowledgeId,
+    PostKnowledgeBody,
 )
 from sobesity.domain.utils.response import bad_request_maker
 

@@ -1,11 +1,11 @@
 from sobesity.domain.entities import (
-    SkillEntity,
-    UserEntity,
-    TypeEntity,
     AnswerEntity,
-    QuestionEntity,
-    LevelEntity,
     KnowledgeEntity,
+    LevelEntity,
+    QuestionEntity,
+    SkillEntity,
+    TypeEntity,
+    UserEntity,
 )
 
 

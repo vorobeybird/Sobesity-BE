@@ -12,12 +12,12 @@ from sobesity.domain.serializers import (
     BadRequestSerializer,
     DeleteLevelBody,
     GetLevels,
+    LevelIdsSerializer,
+    LevelSerializer,
     NotFoundSerializer,
     PatchLevelBody,
     PathLevelId,
     PostLevelBody,
-    LevelIdsSerializer,
-    LevelSerializer,
 )
 from sobesity.domain.utils.response import bad_request_maker
 

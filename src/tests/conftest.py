@@ -5,23 +5,23 @@ import email_validator
 import pytest
 from http_constants.headers import HttpHeaders
 
-from sobesity.domain.entities import UserFilter, UserId
+from sobesity.domain.constants import TypeName
+from sobesity.domain.entities import (
+    QuestionFilterEnitity,
+    SkillFilterEnitity,
+    UserFilter,
+    UserId,
+)
 from sobesity.webapp import create_app
 from tests.factories import (
     AnswerEntityFactory,
     CreateUserFactory,
+    LevelEntityFactory,
     QuestionEntityFactory,
     SkillEntityFactory,
-    UserEntityFactory,
     TypeEntityFactory,
-    LevelEntityFactory,
+    UserEntityFactory,
 )
-from sobesity.domain.entities import (
-    SkillFilterEnitity,
-    QuestionFilterEnitity,
-)
-
-from sobesity.domain.constants import TypeName
 
 email_validator.TEST_ENVIRONMENT = True
 

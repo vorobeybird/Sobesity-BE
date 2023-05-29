@@ -1,7 +1,5 @@
 from http import HTTPStatus
 
-from http_constants.headers import HttpHeaders
-
 
 def test_generate_questions__return_200(
     client,

@@ -2,15 +2,14 @@ import logging
 from dataclasses import asdict
 from typing import Optional
 
-from psycopg2.errors import ForeignKeyViolation
 from sqlalchemy import delete, insert, select, update
 from sqlalchemy.exc import IntegrityError
 
 from sobesity.domain.entities import QuestionEntity, QuestionFilterEnitity, QuestionId
 from sobesity.domain.exceptions import (
+    LevelNotExistViolation,
     SkillExistViolation,
     TypeNotExist,
-    LevelNotExistViolation,
 )
 from sobesity.domain.interfaces import IQuestionRepository
 from sobesity.infrastructure.constants import ModelFields

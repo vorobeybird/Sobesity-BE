@@ -1,11 +1,8 @@
-import random
 
 import factory.fuzzy
 
-
-from sobesity.domain.entities import TypeEntity, TypeId
-
 from sobesity.domain.constants import TypeName
+from sobesity.domain.entities import TypeEntity, TypeId
 
 
 class TypeEntityFactory(factory.Factory):

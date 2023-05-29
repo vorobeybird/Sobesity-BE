@@ -1,4 +1,3 @@
-from sobesity.domain.entities.question import KnowledgeFilterEnitity
 
 
 def test_get_list__empty_db__return_nothing(knowledge_repository):

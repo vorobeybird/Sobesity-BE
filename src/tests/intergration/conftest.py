@@ -2,9 +2,7 @@ import random
 
 import pytest
 
-from sobesity.domain.entities import (
-    TypeFilterEnitity,
-)
+from sobesity.domain.entities import TypeFilterEnitity
 
 
 @pytest.fixture

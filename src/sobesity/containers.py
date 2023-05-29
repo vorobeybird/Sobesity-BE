@@ -4,24 +4,24 @@ from sobesity.config import Settings
 from sobesity.domain.access_managers import UserAccessManager
 from sobesity.domain.services import (
     AnswerService,
-    QuestionService,
-    SkillService,
-    UserService,
-    TypeService,
-    QuestionGeneratorService,
-    ScoringService,
-    LevelService,
     KnowledgeService,
+    LevelService,
+    QuestionGeneratorService,
+    QuestionService,
+    ScoringService,
+    SkillService,
+    TypeService,
+    UserService,
 )
 from sobesity.infrastructure.datasource import datasource
 from sobesity.infrastructure.repositories import (
     AnswerRepository,
+    KnowledgeRepository,
+    LevelRepository,
     QuestionRepository,
     SkillRepository,
-    UserRepository,
     TypeRepository,
-    LevelRepository,
-    KnowledgeRepository,
+    UserRepository,
 )
 from sobesity.infrastructure.resources import JWTResource
 

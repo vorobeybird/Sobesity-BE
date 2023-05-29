@@ -5,10 +5,10 @@ Revises: a990ffce9c9d
 Create Date: 2023-04-13 08:25:54.041072
 
 """
-from alembic import op
 import sqlalchemy as sa
-from sobesity.infrastructure.models.type import type_id_seq
 
+from alembic import op
+from sobesity.infrastructure.models.type import type_id_seq
 
 # revision identifiers, used by Alembic.
 revision = "7d44a4a3adcd"

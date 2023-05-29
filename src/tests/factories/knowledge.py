@@ -3,9 +3,9 @@ import factory
 from sobesity.domain.entities import (
     KnowledgeEntity,
     KnowledgeId,
+    LevelId,
     SkillId,
     UserId,
-    LevelId,
 )
 
 

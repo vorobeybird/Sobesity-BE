@@ -5,16 +5,15 @@ from flask_cors import CORS
 from flask_openapi3 import HTTPBearer, Info, OpenAPI
 
 from sobesity.containers import Application
-
 from sobesity.domain.views import (
-    skill,
-    user,
-    question,
     answer,
-    type,
     define_knowledge,
-    level,
     knowledge,
+    level,
+    question,
+    skill,
+    type,
+    user,
 )
 
 

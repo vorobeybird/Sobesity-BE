@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, Sequence, String, Table
+from sqlalchemy import Column, ForeignKey, Integer, Sequence, Table
 
 from sobesity.infrastructure.datasource import metadata
 

@@ -1,6 +1,6 @@
 import pytest
 
-from sobesity.domain.entities.level import LevelEntity, LevelFilterEnitity
+from sobesity.domain.entities.level import LevelFilterEnitity
 from sobesity.domain.exceptions import LevelNameUniqueViolation
 
 

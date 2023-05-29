@@ -5,8 +5,9 @@ Revises: d3cdadbec5ab
 Create Date: 2023-05-23 11:26:40.963694
 
 """
-from alembic import op
 import sqlalchemy as sa
+
+from alembic import op
 from sobesity.infrastructure.models.knowledge import knowledge_id_seq
 
 # revision identifiers, used by Alembic.

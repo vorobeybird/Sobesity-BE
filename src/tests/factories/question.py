@@ -1,11 +1,11 @@
 import factory
 
 from sobesity.domain.entities import (
+    LevelId,
     QuestionEntity,
     QuestionId,
     SkillId,
     TypeId,
-    LevelId,
 )
 
 
