@@ -62,7 +62,7 @@ def test_scoring_half_right_return_50__response_200(
 def test_scoring_half_right__questions_not_exist__return_400(
     client,
     auth_header,
-        not_valid_scoring_not_exit_question_body,
+    not_valid_scoring_not_exit_question_body,
 ):
     response = client.post(
         "api/define_knowledge/scoring",
@@ -71,10 +71,11 @@ def test_scoring_half_right__questions_not_exist__return_400(
     )
     assert response.status_code == HTTPStatus.BAD_REQUEST
 
+
 def test_scoring_half_right__answer_not_exist__return_400(
     client,
     auth_header,
-        not_valid_scoring_not_exit_answer_body,
+    not_valid_scoring_not_exit_answer_body,
 ):
     response = client.post(
         "api/define_knowledge/scoring",
