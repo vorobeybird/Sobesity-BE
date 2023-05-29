@@ -8,6 +8,12 @@ from .answer import (
     PostAnswerBody,
 )
 from .base import BadRequestSerializer, NotFoundSerializer
+from .define_knowledge import (
+    DefineKnowledgeSerializer,
+    ScoringBody,
+    ScoringSerializer,
+    ThemeQuery,
+)
 from .question import (
     DeleteQuestionBody,
     GetQuestions,
@@ -26,7 +32,6 @@ from .skill import (
     SkillIdsSerializer,
     SkillSerializer,
 )
-
 from .type import (
     DeleteTypeBody,
     GetTypes,
@@ -42,11 +47,4 @@ from .user import (
     GetUserSerializer,
     LoginUserSerializer,
     UserQuery,
-)
-
-from .define_knowledge import (
-    ThemeQuery,
-    DefineKnowledgeSerializer,
-    ScoringBody,
-    ScoringSerializer,
 )
