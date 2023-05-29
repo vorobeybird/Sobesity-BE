@@ -34,8 +34,8 @@ in-app:
 app-bash:
 	${DOCKER_COMPOSE} run --rm app bash
 
-.PHONY: format
-format:
+.PHONY: format-black
+format-black:
 	${DOCKER_COMPOSE} run --rm --no-deps app sh -c "black ${PROJECT_CODE_PATH}"
 
 .PHONY: format-check
@@ -65,8 +65,8 @@ create-migration:
 .PHONY: lint
 lint: flake8 import-check format-check
 
-.PHONY: format-all
-format-all: format fix-imports
+.PHONY: format
+format: format-black fix-imports
 
 .PHONY: run
 run:
