@@ -5,8 +5,7 @@ from flask_cors import CORS
 from flask_openapi3 import HTTPBearer, Info, OpenAPI
 
 from sobesity.containers import Application
-
-from sobesity.domain.views import skill, user, question, answer, type, define_knowledge
+from sobesity.domain.views import answer, define_knowledge, question, skill, type, user
 
 
 def setup_logger(config):

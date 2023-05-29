@@ -1,22 +1,12 @@
 import logging
 import random
-import json
 
 from sobesity.domain.entities import (
-    SkillEntity,
-    SkillFilterEnitity,
-    SkillId,
-    QuestionEntity,
-    QuestionFilterEnitity,
-    QuestionId,
-    AnswerEntity,
     AnswerFilterEnitity,
-    AnswerId,
-    TypeEntity,
+    QuestionFilterEnitity,
+    SkillFilterEnitity,
     TypeFilterEnitity,
-    TypeId,
 )
-
 from sobesity.domain.exceptions import QuestionsNotExistViolation, SkillExistViolation
 
 logger = logging.getLogger(__name__)

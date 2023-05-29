@@ -1,9 +1,9 @@
 from sobesity.domain.entities import (
-    SkillEntity,
-    UserEntity,
-    TypeEntity,
     AnswerEntity,
     QuestionEntity,
+    SkillEntity,
+    TypeEntity,
+    UserEntity,
 )
 
 

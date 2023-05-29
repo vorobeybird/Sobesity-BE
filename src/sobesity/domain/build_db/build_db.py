@@ -1,18 +1,16 @@
-import yaml
 import logging
+
+import yaml
+
 from sobesity.domain.entities import (
-    SkillEntity,
-    SkillFilterEnitity,
-    SkillId,
-    QuestionEntity,
-    QuestionFilterEnitity,
-    QuestionId,
     AnswerEntity,
     AnswerFilterEnitity,
-    AnswerId,
+    QuestionEntity,
+    QuestionFilterEnitity,
+    SkillEntity,
+    SkillFilterEnitity,
     TypeEntity,
     TypeFilterEnitity,
-    TypeId,
 )
 from sobesity.webapp import init_dependency
 

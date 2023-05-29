@@ -1,22 +1,12 @@
 import logging
 
+from sobesity.domain.constants import TypeName
 from sobesity.domain.entities import (
-    SkillEntity,
-    SkillFilterEnitity,
-    SkillId,
-    QuestionEntity,
-    QuestionFilterEnitity,
-    QuestionId,
-    AnswerEntity,
     AnswerFilterEnitity,
-    AnswerId,
-    TypeEntity,
+    QuestionFilterEnitity,
     TypeFilterEnitity,
-    TypeId,
 )
 from sobesity.domain.exceptions import AnswerNotExistViolation, QuestionExistViolation
-
-from sobesity.domain.constants import TypeName
 
 logger = logging.getLogger(__name__)
 
