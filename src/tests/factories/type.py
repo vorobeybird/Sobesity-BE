@@ -1,4 +1,3 @@
-
 import factory.fuzzy
 
 from sobesity.domain.constants import TypeName

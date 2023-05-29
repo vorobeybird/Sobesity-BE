@@ -13,8 +13,8 @@ from sobesity.domain.exceptions import CorruptedToken, ExpiredToken
 from sobesity.domain.interfaces.resources import IJWTResource
 from sobesity.domain.serializers.base import BadRequestSerializer
 
-UNPROTECTED_ENDPOINTS = ("openapi\..*", "user\..*")
-PROTECTED_ENDPOINTS = ("user\.current_user",)
+UNPROTECTED_ENDPOINTS = ("openapi\\..*", "user\\..*")
+PROTECTED_ENDPOINTS = ("user\\.current_user",)
 
 logger = logging.getLogger(__name__)
 

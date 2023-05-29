@@ -22,6 +22,7 @@ http-constants = "^0.5.0"
 factory-boy = "^3.2.1"
 flask-cors = "^3.0.10"
 pyyaml = "^6.0"
+flake8-pyproject = "^1.2.3"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.2.1"
@@ -40,3 +41,12 @@ build-backend = "poetry.core.masonry.api"
 [tool.isort]
 profile = "black"
 
+[tool.flake8]
+exclude = [
+    "__pycache__",
+    ".venv",
+    ]
+per-file-ignores = [
+    '__init__.py:F401',
+]
+max-line-length = 88

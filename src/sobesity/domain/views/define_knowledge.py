@@ -1,4 +1,3 @@
-
 from dependency_injector.wiring import inject
 from flask import current_app
 from flask_openapi3 import APIBlueprint, Tag

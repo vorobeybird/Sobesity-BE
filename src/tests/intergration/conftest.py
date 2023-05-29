@@ -45,11 +45,11 @@ def created_answers(
         add_second_right_answer_to_list = False
 
         if type_of_question[0].name == "multiple":
-            while add_second_right_answer_to_list == False:
+            while not add_second_right_answer_to_list:
                 second_right_answer_for_multiple = answers_for_create[
                     random.randint(0, 3)
                 ]
-                if second_right_answer_for_multiple.right == False:
+                if not second_right_answer_for_multiple.right:
                     second_right_answer_for_multiple.right = True
                     add_second_right_answer_to_list = True
 

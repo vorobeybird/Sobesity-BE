@@ -1,4 +1,3 @@
-
 from sobesity.domain.entities.answer import AnswerFilterEnitity
 
 

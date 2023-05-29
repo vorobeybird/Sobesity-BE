@@ -11,7 +11,7 @@ class InvalidEmail(DomainException):
 
 
 class UserNotFound(EntityNotFound):
-    def __init__(self, search_params: "UserFilter") -> None:
+    def __init__(self, search_params: "UserFilter") -> None:  # noqa: F821
         self.message = f"User not found with params ({search_params})"
         self.search_params = search_params
         super().__init__(self.message)

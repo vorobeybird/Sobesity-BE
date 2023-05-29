@@ -14,6 +14,7 @@ from .define_knowledge import (
     ScoringSerializer,
     ThemeQuery,
 )
+
 from .knowledge import (
     DeleteKnowledgeBody,
     GetKnowledges,
@@ -32,6 +33,7 @@ from .level import (
     PathLevelId,
     PostLevelBody,
 )
+
 from .question import (
     DeleteQuestionBody,
     GetQuestions,

@@ -8,7 +8,7 @@ from sobesity.domain.entities import (
 )
 from sobesity.domain.exceptions import AnswerNotExistViolation, QuestionExistViolation
 
-logging.basicConfig(level=logging.INFO)
+
 logger = logging.getLogger(__name__)
 
 
@@ -31,14 +31,14 @@ class ScoringService:
                 )
 
                 if type_of_question[0].name == TypeName.MULTIPLY:
-                    logger.info(f"When type multiple:")
+                    logger.info("When type multiple:")
                     percent = self.get_percent_when_question_multiple(
                         question, dict_with_questions_and_answers[question_id]
                     )
                     if percent > 0:
                         total_score_right += percent
                 else:
-                    logger.info(f"When type single:")
+                    logger.info("When type single:")
                     answer = self.answer_service.get_list(
                         AnswerFilterEnitity(
                             answer_ids=[dict_with_questions_and_answers[question_id][0]]
@@ -65,7 +65,12 @@ class ScoringService:
             AnswerFilterEnitity(question_ids=[question[0].question_id])
         )
         array_only_right_answers = []
-        if not answers:
+        available_answers = {answer.answer_id for answer in answers}
+        chosen_answers_exitst = len(
+            available_answers & set(array_selected_answers)
+        ) == len(array_selected_answers)
+
+        if not answers or not chosen_answers_exitst:
             raise AnswerNotExistViolation()
         for answer in answers:
             if answer.right:
