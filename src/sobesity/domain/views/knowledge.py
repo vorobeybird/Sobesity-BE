@@ -10,6 +10,7 @@ from sobesity.domain.exceptions import (
     LevelNotExistViolation,
     SkillExistViolation,
     UserNotExist,
+UserNotFound
 )
 from sobesity.domain.interfaces.services.knowledge import IKnowledgeService
 from sobesity.domain.serializers import (
@@ -21,6 +22,8 @@ from sobesity.domain.serializers import (
     NotFoundSerializer,
     PathKnowledgeId,
     PostKnowledgeBody,
+    KnowledgeIdsSerializer,
+    KnowledgeSerializer,
 )
 from sobesity.domain.utils.response import bad_request_maker
 
@@ -32,12 +35,6 @@ knowledge_bp = APIBlueprint(
     doc_ui=True,
     abp_security=[{"jwt": []}],
 )
-
-
-@knowledge_bp.get("", responses={"200": GetKnowledges})
-@inject
-def get_knowleges(knowledge_service: IKnowledgeService = Provide[Services.knowledge]):
-    return knowledge_service.get_list()
 
 
 @knowledge_bp.get("/<int:knowledgeId>", responses={"200": KnowledgeSerializer})
@@ -88,3 +85,5 @@ def update_question(
         return knowledge_service.update(body.get_to_set(), body.get_where())
     except (SkillExistViolation, UserNotExist, LevelNotExistViolation) as exc:
         return bad_request_maker(BadRequestSerializer(message=exc.message))
+
+

@@ -19,3 +19,4 @@ from .user import (
     UserNotExist,
     UserNotFound,
 )
+from .level import LevelNameUniqueViolation, LevelNotExistViolation, LevelNotFound
