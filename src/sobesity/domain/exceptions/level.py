@@ -14,7 +14,7 @@ class LevelNotExistViolation(Exception):
 
 
 class LevelNotFound(EntityNotFound):
-    def __init__(self, search_params: "KnowledgeFilterEnitity") -> None:
+    def __init__(self, search_params: "KnowledgeFilterEnitity") -> None:  # noqa
         self.message = f"Level not found with params ({search_params})"
         self.search_params = search_params
         super().__init__(self.message)
