@@ -148,7 +148,7 @@ def question_repository(di):
 
 @pytest.fixture
 def questions():
-    return [QuestionEntityFactory() for _ in range(3)]
+    return [QuestionEntityFactory() for _ in range(25)]
 
 
 @pytest.fixture
