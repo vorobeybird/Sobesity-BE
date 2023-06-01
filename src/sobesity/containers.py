@@ -4,6 +4,8 @@ from sobesity.config import Settings
 from sobesity.domain.access_managers import UserAccessManager
 from sobesity.domain.services import (
     AnswerService,
+    KnowledgeService,
+    LevelService,
     QuestionGeneratorService,
     QuestionService,
     ScoringService,
@@ -14,6 +16,8 @@ from sobesity.domain.services import (
 from sobesity.infrastructure.datasource import datasource
 from sobesity.infrastructure.repositories import (
     AnswerRepository,
+    KnowledgeRepository,
+    LevelRepository,
     QuestionRepository,
     SkillRepository,
     TypeRepository,
@@ -40,6 +44,8 @@ class Repositories(containers.DeclarativeContainer):
     type = providers.Singleton(TypeRepository, resources.datasource)
     skill = providers.Singleton(SkillRepository, resources.datasource)
     user = providers.Singleton(UserRepository, resources.datasource)
+    level = providers.Singleton(LevelRepository, resources.datasource)
+    knowledge = providers.Singleton(KnowledgeRepository, resources.datasource)
 
 
 class Services(containers.DeclarativeContainer):
@@ -49,12 +55,14 @@ class Services(containers.DeclarativeContainer):
     type = providers.Singleton(TypeService, repositories.type)
     skill = providers.Singleton(SkillService, repositories.skill)
     user = providers.Singleton(UserService, repositories.user)
+    level = providers.Singleton(LevelService, repositories.level)
     question_generator = providers.Singleton(
         QuestionGeneratorService,
         skill_service=skill,
         question_service=question,
         answer_service=answer,
         type_service=type,
+        level_service=level,
     )
     scoring = providers.Singleton(
         ScoringService,
@@ -63,6 +71,7 @@ class Services(containers.DeclarativeContainer):
         answer_service=answer,
         type_service=type,
     )
+    knowledge = providers.Singleton(KnowledgeService, repositories.knowledge)
 
 
 class AccessManagers(containers.DeclarativeContainer):

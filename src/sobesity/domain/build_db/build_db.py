@@ -5,6 +5,8 @@ import yaml
 from sobesity.domain.entities import (
     AnswerEntity,
     AnswerFilterEnitity,
+    LevelEntity,
+    LevelFilterEnitity,
     QuestionEntity,
     QuestionFilterEnitity,
     SkillEntity,
@@ -27,6 +29,7 @@ def main():
     skill_service = conteiner.services.skill()
     answer_service = conteiner.services.answer()
     type_service = conteiner.services.type()
+    level_service = conteiner.services.level()
 
     for skill in templates:
         exist_skill = skill_service.get_list(SkillFilterEnitity(names=[skill]))
@@ -71,6 +74,24 @@ def main():
                     TypeFilterEnitity(names=[type_of_question])
                 )
 
+                level_of_question = question_with_answers["level"]
+
+                exist_level = level_service.get_list(
+                    LevelFilterEnitity(names=[level_of_question])
+                )
+
+                if not exist_level:
+                    level_service.batch_create(
+                        [LevelEntity(level_id=None, name=level_of_question)]
+                    )
+                    logger.info(f"Create level: '{level_of_question}'")
+                else:
+                    logger.info(f"Level '{level_of_question}' already created:")
+
+                created_level = level_service.get_list(
+                    LevelFilterEnitity(names=[level_of_question])
+                )
+
                 question_to_create = [
                     QuestionEntity(
                         question_id=None,
@@ -78,6 +99,7 @@ def main():
                         type_id=created_type[0].type_id,
                         code=code,
                         skill_id=created_skill[0].skill_id,
+                        level_id=created_level[0].level_id,
                     )
                 ]
                 question_service.batch_create(question_to_create)

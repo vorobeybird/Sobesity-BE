@@ -1,7 +1,210 @@
 Python:
   questions:
+    - question: "Имеется кортеж вида T = (4, 2, 3). Какая из операций приведёт к тому, что имя T будет ссылаться на кортеж (1, 2, 3)?"
+      type: single
+      level: middle
+      answers:
+        - answer: "T[0] = 1"
+        - answer: "T = (1) + T[1:]"
+        - answer: "T = (1,) + T[1:]"
+          right: true
+        - answer: "T.startswith(1)"
+    - question: "Для чего в Python используется встроенная функция enumerate()?"
+      type: single
+      level: middle
+      answers:
+        - answer: "Для определения количества элементов последовательности."
+        - answer: "Для сортировки элементов по значениям id."
+        - answer: "Для одновременного итерирования по самим элементам и их индексам."
+          right: true
+    - question: "Что выведет интерпретатор для следующей программы (версия Python 3.6+)?"
+      code: 'def get_name_and_decades(name, age):
+              print(f"My name is {name} and Im {age / 10:.5f} decades old.")
+              get_name_and_decades("Leo", 31)'
+      type: single
+      level: junior
+      answers:
+        - answer: "My name is Leo and I'm 31.00000 decades old."
+        - answer: "My name is Leo and I'm 3.1 decades old."
+        - answer: "Исключение: перед строкой стоит лишняя буква f."
+        - answer: "My name is Leo and I'm 3.10000 decades old."
+          right: true
+    - question: "Необходимо собрать и вывести все уникальные слова из строки рекламного текста. Какой из перечисленных типов данных Python подходит лучше всего?"
+      type: single
+      level: junior
+      answers:
+        - answer: "кортеж (tuple)"
+        - answer: "список (list)"
+        - answer: "множество (set)"
+          right: true
+        - answer: "словарь (dict)"
+    - question: "Какой результат выведет следующий код?"
+      code: "def f(a, *pargs, **kargs): print(a, pargs, kargs)
+            f(1, 2, 3, x=4, y=5)"
+      type: single
+      level: junior
+      answers:
+        - answer: "1, 2, 3, {'x': 4, 'y': 5}"
+        - answer: "1 (2, 3) {'x': 4, 'y': 5}"
+          right: true
+        - answer: "1, 2, 3, 'x=4', 'y=5'"
+        - answer: "1, 2, 3, 4, 5"
+    - question: "Как вывести список методов и атрибутов объекта x?"
+      type: single
+      level: junior
+      answers:
+        - answer: "help(x)"
+        - answer: "info(x)"
+        - answer: "?x"
+        - answer: "dir(x)"
+          right: true
+    - question: "Как можно более кратко представить следующую запись?"
+      code: "if X:
+                A = Y
+            else:
+                A = Z"
+      type: single
+      level: junior
+      answers:
+        - answer: "A = Y if Z else Y"
+        - answer: "A = Y if X else Z"
+          right: true
+        - answer: "A = X if Z else Y"
+        - answer: "A = X if Y else Z"
+    - question: "Какая из перечисленных инструкций выполнится быстрее всего, если n = 10**6?"
+      type: single
+      level: middle
+      answers:
+        - answer: "a = list(i for i in range(n))"
+        - answer: "a = [i for i in range(n)]"
+        - answer: "a = (i for i in range(n))"
+          right: true
+        - answer: "a = {i for i in range(n)}"
+    - question: "Что выведет на экран следующий код?"
+      code: "a, *b, c = [1, 2]
+            print(a, b, c)"
+      type: single
+      level: junior
+      answers:
+        - answer: "[1] [] [2]"
+        - answer: "1 0 2"
+        - answer: "1 [] 2"
+          right: true
+        - answer: "Будет вызвано исключение: элементов в списке меньше, чем переменных."
+    - question: "С помощью Python нужно записать данные в файл, но только в том случае, если файла ещё нет. Какой режим указать в инструкции open()?"
+      type: single
+      level: junior
+      answers:
+        - answer: "'x'"
+          right: true
+        - answer: "Никакой. Нужна предварительная проверка os.path.exists()"
+        - answer: "'w'"
+        - answer: "'r'"
+    - question: "Для чего в пакетах модулей python в файле __init__.py служит список all?"
+      type: single
+      level: middle
+      answers:
+        - answer: "Для конструкторов классов, как и всё, что связано с init"
+        - answer: "Список определяет, что экспортировать, когда происходит импорт с помощью from *"
+          right: true
+        - answer: "Для перечисления переменных, которые будут скрыты для импортирования."
+    - question: "При объявлении класса с помощью оператора class что пишется в круглых скобках после имени класса?"
+      type: single
+      level: junior
+      answers:
+        - answer: "Имена аргументов, принимаемых методом init."
+        - answer: "Имена принимаемых классом аргументов."
+        - answer: "Имена суперклассов, если класс наследуется от одного или нескольких классов."
+          right: true
+        - answer: "Имена классов, порождаемых данным классом."
+    - question: "Какую роль в описании метода класса выполняет декоратор @property?"
+      type: single
+      level: middle
+      answers:
+        - answer: "Декорированный метод становится статическим, экземпляр не передаётся."
+        - answer: "Декорированный метод становится методом класса: метод получает класс, а не экземпляр."
+        - answer: "Значение, возвращаемое декорированным методом, вычисляется при извлечении. Можно обратиться к методу экземпляра, как к атрибуту."
+          right: true
+    - question: "Что выведет следующий код?"
+      code: " try:
+                  raise IndexError
+              except IndexError:
+                  print('Получено исключение.')
+              else:
+                  print('Но в этом нет ничего страшного.')"
+      type: single
+      level: junior
+      answers:
+        - answer: "IndexError"
+        - answer: "Получено исключение."
+          right: true
+        - answer: "TypeError"
+        - answer: "Получено исключение. Но в этом нет ничего страшного."
+    - question: "Учёт зверей в зоопарке ведётся с помощью приведённого ниже списка словарей. Какая из строчек кода выведет структуру, отсортированную в порядке увеличения возрастов животных?"
+      type: single
+      level: junior
+      answers:
+        - answer: "sorted(animals, key='age')"
+        - answer: "Ни один вариант не является верным, два словаря нельзя сравнивать друг с другом."
+        - answer: "sorted(animals, key=lambda animal: animal['age'])"
+          right: true
+        - answer: "sorted(animals)"
+    - question: "Что выведет следующий код, при его исполнении? Используется Python 3.x."
+      code: "print(type(1 / 2))"
+      type: single
+      level: junior
+      answers:
+        - answer: "class 'int'"
+        - answer: "class 'number'"
+        - answer: "class 'double'"
+        - answer: "class 'float'"
+          right: true
+    - question: "Что делает следующий код?"
+      code: "def a(b, c, d): pass"
+      type: single
+      level: junior
+      answers:
+        - answer: "Определяет список и инициализирует его."
+        - answer: "Определяет функцию, которая ничего не делает."
+          right: true
+        - answer: "Определяет функцию, которая передает параметры."
+        - answer: "Определяет пустой класс."
+    - question: "Что выведет следующий фрагмент кода?"
+      code: " x = 4.5
+              y = 2
+              print(x // y)"
+      type: single
+      level: junior
+      answers:
+        - answer: "2.0"
+          right: true
+        - answer: "2.25"
+        - answer: "9.0"
+        - answer: "20.25"
+    - question: "Что будет напечатано?"
+      code: " kvps  = {'user','bill', 'password','hillary'}
+              print(kvps['password'])"
+      type: single
+      level: junior
+      answers:
+        - answer: "user"
+        - answer: "bill"
+        - answer: "password"
+        - answer: "Ничего. TypeError."
+          right: true
+    - question: ""
+      code: " name = 'snow storm'
+              print('%s' % name[6:8])"
+      type: single
+      level: junior
+      answers:
+        - answer: "st"
+        - answer: "sto"
+        - answer: "to"
+        - answer: "Syntax Error"
     - question: "How to form dict"
       type: multiple
+      level: senior
       answers:
         - answer: "{'a': 1, 'b': 2}"
           right: true
@@ -12,6 +215,7 @@ Python:
 
     - question: "Which menthod used to initiate class"
       type: single
+      level: senior
       answers:
         - answer: "init"
         - answer: "new"
@@ -24,6 +228,7 @@ Python:
 print("Hi, Welcome to Intellipaat")
 function(); # call to the function'
       type: single
+      level: senior
       answers:
         - answer: "A function is a block of code which is executed only when a call is made to the function. def keyword is used to define a particular function as shown below:"
           right: true
@@ -33,6 +238,7 @@ function(); # call to the function'
 
     - question: "What is Python?"
       type: single
+      level: senior
       answers:
         - answer: "A high-level programming language"
           right: true
@@ -42,6 +248,7 @@ function(); # call to the function'
 
     - question: "Which of the following is NOT a Python data type?"
       type: single
+      level: senior
       answers:
         - answer: "Class"
           right: true
@@ -51,6 +258,7 @@ function(); # call to the function'
 
     - question: "Which of the following is a valid way to define a Python function?"
       type: single
+      level: senior
       answers:
         - answer: "def my_function():"
           right: true
@@ -60,6 +268,7 @@ function(); # call to the function'
 
     - question: "What does the 'range()' function do in Python?"
       type: single
+      level: senior
       answers:
         - answer: "It generates a sequence of numbers"
           right: true
@@ -69,6 +278,7 @@ function(); # call to the function'
 
     - question: "Which of the following is NOT a Python comparison operator?"
       type: single
+      level: senior
       answers:
         - answer: "%"
           right: true
@@ -80,6 +290,7 @@ function(); # call to the function'
       code: "x = [1, 2, 3]
       print(x[0])"
       type: single
+      level: senior
       answers:
         - answer: "1"
           right: true
@@ -93,6 +304,7 @@ function(); # call to the function'
       x.append(4)
       print(y)"
       type: single
+      level: senior
       answers:
         - answer: "[1, 2, 3]"
           right: true
@@ -102,6 +314,7 @@ function(); # call to the function'
 
     - question: "What is the difference between a list and a tuple in Python?"
       type: single
+      level: senior
       answers:
         - answer: "A list is mutable, while a tuple is immutable"
           right: true
@@ -114,6 +327,7 @@ function(); # call to the function'
       y = x + \"2\"
       print(y)"
       type: single
+      level: senior
       answers:
         - answer: "TypeError"
           right: true
@@ -123,6 +337,7 @@ function(); # call to the function'
 
     - question: "What is a lambda function in Python?"
       type: single
+      level: senior
       answers:
         - answer: "A function with no name"
           right: true
@@ -134,6 +349,7 @@ HTML:
   questions:
     - question: "What is HTML?"
       type: single
+      level: junior
       answers:
         - answer: "Hypertext Markup Language"
           right: true
@@ -143,6 +359,7 @@ HTML:
 
     - question: "Which tag is used to create a hyperlink?"
       type: single
+      level: junior
       answers:
         - answer: "<a>"
           right: true
@@ -152,6 +369,7 @@ HTML:
 
     - question: "What is the correct HTML for inserting an image?"
       type: single
+      level: junior
       answers:
         - answer: "<img src='image.jpg' alt='MyImage'>"
           right: true
@@ -164,6 +382,7 @@ JavaScript:
   questions:
     - question: "What is JavaScript?"
       type: single
+      level: junior
       answers:
         - answer: "A scripting language used to create and control dynamic website content"
           right: true
@@ -173,6 +392,7 @@ JavaScript:
 
     - question: "What is the difference between '==' and '===' operators in JavaScript?"
       type: single
+      level: junior
       answers:
         - answer: "'==' compares the value only, while '===' compares both value and type"
           right: true
@@ -182,6 +402,7 @@ JavaScript:
 
     - question: "Which keyword is used to declare a variable in JavaScript?"
       type: single
+      level: senior
       answers:
         - answer: "var"
           right: true
@@ -197,6 +418,7 @@ SQL:
   questions:
     - question: "What is SQL?"
       type: single
+      level: senior
       answers:
         - answer: "Structured Query Language"
           right: true
@@ -206,6 +428,7 @@ SQL:
 
     - question: "Which statement is used to retrieve data from a database table in SQL?"
       type: single
+      level: senior
       answers:
         - answer: "SELECT"
           right: true
@@ -215,6 +438,7 @@ SQL:
 
     - question: "Which statement is used to insert data into a database table in SQL?"
       type: single
+      level: senior
       answers:
         - answer: "INSERT INTO"
           right: true
@@ -224,6 +448,7 @@ SQL:
 
     - question: "What is a primary key in SQL?"
       type: single
+      level: senior
       answers:
         - answer: "A unique identifier for a row in a table"
           right: true
@@ -233,6 +458,7 @@ SQL:
 
     - question: "What is a foreign key in SQL?"
       type: single
+      level: senior
       answers:
         - answer: "A field in one table that refers to the primary key of another table"
           right: true
@@ -242,6 +468,7 @@ SQL:
 
     - question: "What is a JOIN in SQL?"
       type: single
+      level: senior
       answers:
         - answer: "A way to combine data from two or more tables"
           right: true
@@ -251,6 +478,7 @@ SQL:
 
     - question: "What is the difference between INNER JOIN and OUTER JOIN?"
       type: single
+      level: senior
       answers:
         - answer: "INNER JOIN returns only the matching rows, while OUTER JOIN returns all rows from both tables"
           right: true
@@ -261,6 +489,7 @@ SQL:
     - question: "What will this SQL code return?"
       code: "SELECT COUNT(*) FROM customers;"
       type: single
+      level: senior
       answers:
         - answer: "The total number of rows in the customers table"
           right: true
@@ -271,6 +500,7 @@ SQL:
     - question: "What will this SQL code return?"
       code: "SELECT AVG(price) FROM products WHERE category = 'Electronics';"
       type: single
+      level: senior
       answers:
         - answer: "The average price of all products in the Electronics category"
           right: true
@@ -281,6 +511,7 @@ SQL:
     - question: "What will this SQL code return?"
       code: "SELECT * FROM orders WHERE customer_id = 123;"
       type: single
+      level: senior
       answers:
         - answer: "All orders where the customer_id is 123"
           right: true
@@ -291,6 +522,7 @@ SQL:
     - question: "What will this SQL code return?"
       code: "SELECT SUM(quantity) FROM order_items WHERE order_id = 456;"
       type: single
+      level: senior
       answers:
         - answer: "The total quantity of items ordered in order number 456"
           right: true
@@ -301,6 +533,7 @@ SQL:
     - question: "What will this SQL code return?"
       code: "SELECT DISTINCT category FROM products;"
       type: single
+      level: senior
       answers:
         - answer: "A list of all unique categories in the products table"
           right: true
@@ -311,7 +544,8 @@ SQL:
 CSS:
   questions:
     - question: "What does CSS stand for?"
-      type: single
+      type: junior
+      level: junior
       answers:
         - answer: "Cascading Style Sheets"
           right: true
@@ -321,6 +555,7 @@ CSS:
 
     - question: "What is the syntax to set a background color in CSS?"
       type: single
+      level: senior
       answers:
         - answer: "background-color:"
           right: true
@@ -330,6 +565,7 @@ CSS:
 
     - question: "How do you center a block element horizontally in CSS?"
       type: single
+      level: senior
       answers:
         - answer: "margin: 0 auto;"
           right: true
@@ -339,6 +575,7 @@ CSS:
 
     - question: "What is the difference between padding and margin in CSS?"
       type: single
+      level: senior
       answers:
         - answer: "Padding is the space within an element, while margin is the space outside an element"
           right: true
@@ -348,6 +585,7 @@ CSS:
 
     - question: "What is the CSS property used to change the font size of an element?"
       type: single
+      level: junior
       answers:
         - answer: "font-size"
           right: true
@@ -357,6 +595,7 @@ CSS:
 
     - question: "What is the box model in CSS?"
       type: single
+      level: senior
       answers:
         - answer: "The box model is a design concept that describes the layout of an HTML page as an invisible box with content, padding, borders, and margins."
           right: true
@@ -366,6 +605,7 @@ CSS:
 
     - question: "What is the difference between the display: none and visibility: hidden properties in CSS?"
       type: single
+      level: middle
       answers:
         - answer: "display: none removes an element from the page, while visibility: hidden hides the element but leaves it in the page layout."
           right: true
@@ -375,6 +615,7 @@ CSS:
 
     - question: "What is the difference between the position: relative and position: absolute properties in CSS?"
       type: single
+      level: middle
       answers:
         - answer: "position: relative positions an element relative to its normal position on the page, while position: absolute positions an element relative to its closest positioned ancestor."
           right: true
@@ -384,6 +625,7 @@ CSS:
 
     - question: "What is a CSS sprite?"
       type: single
+      level: middle
       answers:
         - answer: "A CSS sprite is a single image that combines multiple smaller images, used to reduce the number of HTTP requests made by a web page."
           right: true
@@ -399,6 +641,7 @@ CSS:
       }
       "
       type: single
+      level: middle
       answers:
         - answer: "Margin is the space outside an element, whereas padding is the space inside an element."
           right: true
@@ -408,6 +651,7 @@ CSS:
 
     - question: "What is a CSS selector?"
       type: single
+      level: middle
       answers:
           - answer: "A CSS selector is a pattern that matches one or more HTML elements and is used to apply styles to those elements."
             right: true
@@ -417,6 +661,7 @@ CSS:
 
     - question: "What is the difference between ID and class in CSS?"
       type: single
+      level: middle
       answers:
           - answer: "IDs are unique identifiers for HTML elements, whereas classes can be used to group and apply styles to multiple elements."
             right: true
@@ -426,6 +671,7 @@ CSS:
 
     - question: "What is the CSS float property used for?"
       type: single
+      level: middle
       answers:
           - answer: "The CSS float property is used to position an HTML element to the left or right of its container, allowing text and other elements to wrap around it."
             right: true

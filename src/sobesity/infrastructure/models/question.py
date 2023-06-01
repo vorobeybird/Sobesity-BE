@@ -11,4 +11,5 @@ question_table = Table(
     Column("type_id", Integer, ForeignKey("type.type_id")),
     Column("code", String),
     Column("skill_id", Integer, ForeignKey("skill.skill_id")),
+    Column("level_id", Integer, ForeignKey("level.level_id")),
 )

@@ -11,6 +11,7 @@ class QuestionEntity:
     type_id: int
     code: str
     skill_id: int
+    level_id: int
 
 
 @dataclass
@@ -20,3 +21,4 @@ class QuestionFilterEnitity:
     skill_ids: Optional[list[int]] = None
     type_ids: Optional[list[int]] = None
     codes: Optional[list[str]] = None
+    level_ids: Optional[list[int]] = None

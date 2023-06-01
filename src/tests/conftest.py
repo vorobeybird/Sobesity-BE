@@ -7,6 +7,7 @@ from http_constants.headers import HttpHeaders
 
 from sobesity.domain.constants import TypeName
 from sobesity.domain.entities import (
+    LevelFilterEnitity,
     QuestionFilterEnitity,
     SkillFilterEnitity,
     UserFilter,
@@ -16,6 +17,7 @@ from sobesity.webapp import create_app
 from tests.factories import (
     AnswerEntityFactory,
     CreateUserFactory,
+    LevelEntityFactory,
     QuestionEntityFactory,
     SkillEntityFactory,
     TypeEntityFactory,
@@ -146,7 +148,7 @@ def question_repository(di):
 
 @pytest.fixture
 def questions():
-    return [QuestionEntityFactory() for _ in range(3)]
+    return [QuestionEntityFactory() for _ in range(25)]
 
 
 @pytest.fixture
@@ -281,6 +283,11 @@ def answer_service(di):
 
 
 @pytest.fixture
+def level_service(di):
+    return di.services.level()
+
+
+@pytest.fixture
 def exist_skill(skill_service, question_service):
     def skill_sercher(answer):
         question = question_service.get_list(
@@ -315,3 +322,32 @@ def not_valid_scoring_not_exit_answer_body(created_answers, question_service):
         list_question_with_right_answers[f"{question.question_id}"] = [0]
 
     return {"question_with_list_answer": list_question_with_right_answers}
+
+
+@pytest.fixture
+def levels():
+    return [LevelEntityFactory() for _ in range(random.randint(3, 5))]
+
+
+@pytest.fixture
+def level(levels):
+    return levels[0]
+
+
+@pytest.fixture
+def level_repository(di):
+    return di.repositories.level()
+
+
+@pytest.fixture
+def exist_level(level_service, question_service):
+    def level_sercher(answer):
+        question = question_service.get_list(
+            QuestionFilterEnitity(question_ids=[answer.question_id])
+        )
+        level = level_service.get_list(
+            LevelFilterEnitity(level_ids=[question[0].level_id])
+        )
+        return level
+
+    return level_sercher

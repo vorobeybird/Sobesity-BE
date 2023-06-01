@@ -7,7 +7,12 @@ from sobesity.domain.entities import TypeFilterEnitity
 
 @pytest.fixture
 def created_questions(
-    created_skills, question_repository, questions, type_repository, types
+    created_skills,
+    question_repository,
+    questions,
+    type_repository,
+    types,
+    created_levels,
 ):
     type_repository.batch_create(types)
     created_types = type_repository.get_list()
@@ -15,6 +20,7 @@ def created_questions(
     for question in questions:
         question.skill_id = created_skills[0].skill_id
         question.type_id = created_types[random.randint(0, 1)].type_id
+        question.level_id = created_levels[0].level_id
 
     question_repository.batch_create(questions)
     return question_repository.get_list()
@@ -55,3 +61,9 @@ def created_answers(
 def created_skills(skill_repository, skills):
     skill_repository.batch_create(skills)
     return skill_repository.get_list()
+
+
+@pytest.fixture
+def created_levels(level_repository, levels):
+    level_repository.batch_create(levels)
+    return level_repository.get_list()

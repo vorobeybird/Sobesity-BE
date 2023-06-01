@@ -1,5 +1,6 @@
 from .answer import AnswerNameUniqueViolation, AnswerNotExistViolation
 from .jwt import CorruptedToken, ExpiredToken
+from .level import LevelNameUniqueViolation, LevelNotExistViolation, LevelNotFound
 from .question import (
     QuestionExistViolation,
     QuestionNameUniqueViolation,
@@ -14,5 +15,6 @@ from .user import (
     NicknameUniqueViolation,
     PasswordNotMatch,
     UserFilterParamError,
+    UserNotExist,
     UserNotFound,
 )

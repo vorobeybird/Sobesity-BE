@@ -9,6 +9,7 @@ class AnswerSerializer(BaseModel):
 class DefineKnowledgeSerializer(BaseModel):
     question: str
     type: str
+    code: str
     answers: list[AnswerSerializer]
 
 

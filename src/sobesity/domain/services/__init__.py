@@ -1,5 +1,7 @@
 from .answer import AnswerService
 from .generate_questions import QuestionGeneratorService
+from .knowledge import KnowledgeService
+from .level import LevelService
 from .question import QuestionService
 from .scoring import ScoringService
 from .skill import SkillService

@@ -15,6 +15,7 @@ class QuestionSerializer(BaseModel):
     type_id: int
     code: str
     skill_id: int
+    level_id: int
 
     def to_domain(self) -> QuestionEntity:
         return QuestionEntity(
@@ -23,6 +24,7 @@ class QuestionSerializer(BaseModel):
             type_id=self.type_id,
             code=self.code,
             skill_id=self.skill_id,
+            level_id=self.level_id,
         )
 
     @classmethod
@@ -33,6 +35,7 @@ class QuestionSerializer(BaseModel):
             type_id=question.type_id,
             code=question.code,
             skill_id=question.skill_id,
+            level_id=question.level_id,
         )
 
 
@@ -41,6 +44,7 @@ class QuestionBodyElem(BaseModel):
     type_id: int
     code: str
     skill_id: int
+    level_id: int
 
     def to_domain(self) -> QuestionEntity:
         return QuestionEntity(
@@ -49,6 +53,7 @@ class QuestionBodyElem(BaseModel):
             type_id=self.type_id,
             code=self.code,
             skill_id=self.skill_id,
+            level_id=self.level_id,
         )
 
 
@@ -87,6 +92,7 @@ class PatchQuestionBody(BaseModel):
     type_id: int
     code: str
     skill_id: int
+    level_id: int
 
     def get_to_set(self):
         return QuestionEntity(
@@ -95,6 +101,7 @@ class PatchQuestionBody(BaseModel):
             type_id=self.type_id,
             code=self.code,
             skill_id=self.skill_id,
+            level_id=self.level_id,
         )
 
     def get_where(self) -> list[QuestionFilterEnitity]:
