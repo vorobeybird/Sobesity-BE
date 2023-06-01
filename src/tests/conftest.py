@@ -7,6 +7,7 @@ from http_constants.headers import HttpHeaders
 
 from sobesity.domain.constants import TypeName
 from sobesity.domain.entities import (
+    LevelFilterEnitity,
     QuestionFilterEnitity,
     SkillFilterEnitity,
     UserFilter,
@@ -282,6 +283,11 @@ def answer_service(di):
 
 
 @pytest.fixture
+def level_service(di):
+    return di.services.level()
+
+
+@pytest.fixture
 def exist_skill(skill_service, question_service):
     def skill_sercher(answer):
         question = question_service.get_list(
@@ -331,3 +337,17 @@ def level(levels):
 @pytest.fixture
 def level_repository(di):
     return di.repositories.level()
+
+
+@pytest.fixture
+def exist_level(level_service, question_service):
+    def level_sercher(answer):
+        question = question_service.get_list(
+            QuestionFilterEnitity(question_ids=[answer.question_id])
+        )
+        level = level_service.get_list(
+            LevelFilterEnitity(level_ids=[question[0].level_id])
+        )
+        return level
+
+    return level_sercher

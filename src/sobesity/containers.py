@@ -55,12 +55,14 @@ class Services(containers.DeclarativeContainer):
     type = providers.Singleton(TypeService, repositories.type)
     skill = providers.Singleton(SkillService, repositories.skill)
     user = providers.Singleton(UserService, repositories.user)
+    level = providers.Singleton(LevelService, repositories.level)
     question_generator = providers.Singleton(
         QuestionGeneratorService,
         skill_service=skill,
         question_service=question,
         answer_service=answer,
         type_service=type,
+        level_service=level,
     )
     scoring = providers.Singleton(
         ScoringService,
@@ -69,7 +71,6 @@ class Services(containers.DeclarativeContainer):
         answer_service=answer,
         type_service=type,
     )
-    level = providers.Singleton(LevelService, repositories.level)
     knowledge = providers.Singleton(KnowledgeService, repositories.knowledge)
 
 

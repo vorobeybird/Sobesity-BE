@@ -4,6 +4,7 @@ from flask_openapi3 import APIBlueprint, Tag
 
 from sobesity.domain.exceptions import (
     AnswerNotExistViolation,
+    LevelNotExistViolation,
     QuestionExistViolation,
     QuestionsNotExistViolation,
     SkillExistViolation,
@@ -43,6 +44,8 @@ def get_generate_questions(query: ThemeQuery):
     except QuestionsNotExistViolation as exc:
         return bad_request_maker(BadRequestSerializer(message=exc.message))
     except SkillExistViolation as exc:
+        return bad_request_maker(BadRequestSerializer(message=exc.message))
+    except LevelNotExistViolation as exc:
         return bad_request_maker(BadRequestSerializer(message=exc.message))
     return list_questions
 

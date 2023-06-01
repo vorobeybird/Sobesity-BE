@@ -23,7 +23,6 @@ def test_update__particular_rows_updated(
     created_answers, answer_repository, answers, question_repository
 ):
     answer_before = created_answers[0]
-
     to_set = answers[1]
     where = AnswerFilterEnitity(answer_ids=[answer_before.answer_id])
     updated_ids = answer_repository.update(to_set, where)

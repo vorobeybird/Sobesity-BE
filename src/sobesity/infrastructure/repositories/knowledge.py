@@ -12,10 +12,9 @@ from sobesity.domain.entities import (
 )
 from sobesity.domain.exceptions import (
     LevelNotExistViolation,
+    LevelNotFound,
     SkillExistViolation,
     UserNotExist,
-    LevelNotExistViolation,
-LevelNotFound,
 )
 from sobesity.domain.interfaces import IKnowledgeRepository
 from sobesity.infrastructure.constants import ModelFields
@@ -125,7 +124,9 @@ class KnowledgeRepository(IKnowledgeRepository):
         with self.datasource() as conn:
             conn.execute(query)
 
-    def get_level_for_user_or_skill(self, knowledge_filter: KnowledgeFilterEnitity) -> KnowledgeEntity:
+    def get_level_for_user_or_skill(
+        self, knowledge_filter: KnowledgeFilterEnitity
+    ) -> KnowledgeEntity:
         query = self._patch_query(select(knowledge_table), knowledge_filter)
 
         with self._datasource() as conn:

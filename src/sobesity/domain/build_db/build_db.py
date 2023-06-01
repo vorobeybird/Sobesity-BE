@@ -5,14 +5,14 @@ import yaml
 from sobesity.domain.entities import (
     AnswerEntity,
     AnswerFilterEnitity,
+    LevelEntity,
+    LevelFilterEnitity,
     QuestionEntity,
     QuestionFilterEnitity,
     SkillEntity,
     SkillFilterEnitity,
     TypeEntity,
     TypeFilterEnitity,
-    LevelEntity,
-    LevelFilterEnitity,
 )
 from sobesity.webapp import init_dependency
 

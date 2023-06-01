@@ -7,18 +7,26 @@ def test_generate_questions__return_200(
     created_answers,
     exist_skill,
     skill_service,
+    exist_level,
 ):
 
     skill = exist_skill(created_answers[0])
-    level = "any"
+    level = exist_level(created_answers[0])
     response = client.get(
-        f"api/define_knowledge/generate_questions?theme={skill[0].name}&level={level}",
+        f"api/define_knowledge/generate_questions?theme={skill[0].name}&level={level[0].name}",
         headers=auth_header,
     )
     assert response.status_code == HTTPStatus.OK
 
     response = client.get(
         f"api/define_knowledge/generate_questions?theme=NonExistTheme&level={level}",
+        headers=auth_header,
+    )
+    assert response.status_code == HTTPStatus.BAD_REQUEST
+    assert response.json != []
+
+    response = client.get(
+        f"api/define_knowledge/generate_questions?theme={skill[0].name}&level=NotExistLevel",
         headers=auth_header,
     )
     assert response.status_code == HTTPStatus.BAD_REQUEST

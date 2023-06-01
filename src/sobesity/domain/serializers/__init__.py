@@ -14,7 +14,6 @@ from .define_knowledge import (
     ScoringSerializer,
     ThemeQuery,
 )
-
 from .knowledge import (
     DeleteKnowledgeBody,
     GetKnowledges,
@@ -33,7 +32,6 @@ from .level import (
     PathLevelId,
     PostLevelBody,
 )
-
 from .question import (
     DeleteQuestionBody,
     GetQuestions,
@@ -67,29 +65,4 @@ from .user import (
     GetUserSerializer,
     LoginUserSerializer,
     UserQuery,
-)
-
-from .define_knowledge import (
-    ThemeQuery,
-    DefineKnowledgeSerializer,
-    ScoringBody,
-    ScoringSerializer,
-)
-from .level import (
-    DeleteLevelBody,
-    GetLevels,
-    PatchLevelBody,
-    PathLevelId,
-    PostLevelBody,
-    LevelIdsSerializer,
-    LevelSerializer,
-)
-from .knowledge import (
-    DeleteKnowledgeBody,
-    GetKnowledges,
-    PatchKnowledgeBody,
-    PathKnowledgeId,
-    PostKnowledgeBody,
-    KnowledgeIdsSerializer,
-    KnowledgeSerializer,
 )

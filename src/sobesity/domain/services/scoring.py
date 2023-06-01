@@ -8,7 +8,6 @@ from sobesity.domain.entities import (
 )
 from sobesity.domain.exceptions import AnswerNotExistViolation, QuestionExistViolation
 
-
 logger = logging.getLogger(__name__)
 
 
