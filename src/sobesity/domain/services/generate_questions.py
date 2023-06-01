@@ -84,7 +84,7 @@ class QuestionGeneratorService:
 
     def take_question_for_theme(self, theme, level):
         if not level == "junior":
-            questions = self.generate_questions(theme, level, 2)
+            questions = self.generate_questions(theme, level, 15)
         else:
-            questions = self.generate_questions(theme, level, 3)
+            questions = self.generate_questions(theme, level, 5)
         return questions
