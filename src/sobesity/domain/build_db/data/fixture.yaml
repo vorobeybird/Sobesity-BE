@@ -1,8 +1,210 @@
 Python:
   questions:
+    - question: "Имеется кортеж вида T = (4, 2, 3). Какая из операций приведёт к тому, что имя T будет ссылаться на кортеж (1, 2, 3)?"
+      type: single
+      level: middle
+      answers:
+        - answer: "T[0] = 1"
+        - answer: "T = (1) + T[1:]"
+        - answer: "T = (1,) + T[1:]"
+          right: true
+        - answer: "T.startswith(1)"
+    - question: "Для чего в Python используется встроенная функция enumerate()?"
+      type: single
+      level: middle
+      answers:
+        - answer: "Для определения количества элементов последовательности."
+        - answer: "Для сортировки элементов по значениям id."
+        - answer: "Для одновременного итерирования по самим элементам и их индексам."
+          right: true
+    - question: "Что выведет интерпретатор для следующей программы (версия Python 3.6+)?"
+      code: 'def get_name_and_decades(name, age):
+              print(f"My name is {name} and Im {age / 10:.5f} decades old.")
+              get_name_and_decades("Leo", 31)'
+      type: single
+      level: junior
+      answers:
+        - answer: "My name is Leo and I'm 31.00000 decades old."
+        - answer: "My name is Leo and I'm 3.1 decades old."
+        - answer: "Исключение: перед строкой стоит лишняя буква f."
+        - answer: "My name is Leo and I'm 3.10000 decades old."
+          right: true
+    - question: "Необходимо собрать и вывести все уникальные слова из строки рекламного текста. Какой из перечисленных типов данных Python подходит лучше всего?"
+      type: single
+      level: junior
+      answers:
+        - answer: "кортеж (tuple)"
+        - answer: "список (list)"
+        - answer: "множество (set)"
+          right: true
+        - answer: "словарь (dict)"
+    - question: "Какой результат выведет следующий код?"
+      code: "def f(a, *pargs, **kargs): print(a, pargs, kargs)
+            f(1, 2, 3, x=4, y=5)"
+      type: single
+      level: junior
+      answers:
+        - answer: "1, 2, 3, {'x': 4, 'y': 5}"
+        - answer: "1 (2, 3) {'x': 4, 'y': 5}"
+          right: true
+        - answer: "1, 2, 3, 'x=4', 'y=5'"
+        - answer: "1, 2, 3, 4, 5"
+    - question: "Как вывести список методов и атрибутов объекта x?"
+      type: single
+      level: junior
+      answers:
+        - answer: "help(x)"
+        - answer: "info(x)"
+        - answer: "?x"
+        - answer: "dir(x)"
+          right: true
+    - question: "Как можно более кратко представить следующую запись?"
+      code: "if X:
+                A = Y
+            else:
+                A = Z"
+      type: single
+      level: junior
+      answers:
+        - answer: "A = Y if Z else Y"
+        - answer: "A = Y if X else Z"
+          right: true
+        - answer: "A = X if Z else Y"
+        - answer: "A = X if Y else Z"
+    - question: "Какая из перечисленных инструкций выполнится быстрее всего, если n = 10**6?"
+      type: single
+      level: middle
+      answers:
+        - answer: "a = list(i for i in range(n))"
+        - answer: "a = [i for i in range(n)]"
+        - answer: "a = (i for i in range(n))"
+          right: true
+        - answer: "a = {i for i in range(n)}"
+    - question: "Что выведет на экран следующий код?"
+      code: "a, *b, c = [1, 2]
+            print(a, b, c)"
+      type: single
+      level: junior
+      answers:
+        - answer: "[1] [] [2]"
+        - answer: "1 0 2"
+        - answer: "1 [] 2"
+          right: true
+        - answer: "Будет вызвано исключение: элементов в списке меньше, чем переменных."
+    - question: "С помощью Python нужно записать данные в файл, но только в том случае, если файла ещё нет. Какой режим указать в инструкции open()?"
+      type: single
+      level: junior
+      answers:
+        - answer: "'x'"
+          right: true
+        - answer: "Никакой. Нужна предварительная проверка os.path.exists()"
+        - answer: "'w'"
+        - answer: "'r'"
+    - question: "Для чего в пакетах модулей python в файле __init__.py служит список all?"
+      type: single
+      level: middle
+      answers:
+        - answer: "Для конструкторов классов, как и всё, что связано с init"
+        - answer: "Список определяет, что экспортировать, когда происходит импорт с помощью from *"
+          right: true
+        - answer: "Для перечисления переменных, которые будут скрыты для импортирования."
+    - question: "При объявлении класса с помощью оператора class что пишется в круглых скобках после имени класса?"
+      type: single
+      level: junior
+      answers:
+        - answer: "Имена аргументов, принимаемых методом init."
+        - answer: "Имена принимаемых классом аргументов."
+        - answer: "Имена суперклассов, если класс наследуется от одного или нескольких классов."
+          right: true
+        - answer: "Имена классов, порождаемых данным классом."
+    - question: "Какую роль в описании метода класса выполняет декоратор @property?"
+      type: single
+      level: middle
+      answers:
+        - answer: "Декорированный метод становится статическим, экземпляр не передаётся."
+        - answer: "Декорированный метод становится методом класса: метод получает класс, а не экземпляр."
+        - answer: "Значение, возвращаемое декорированным методом, вычисляется при извлечении. Можно обратиться к методу экземпляра, как к атрибуту."
+          right: true
+    - question: "Что выведет следующий код?"
+      code: " try:
+                  raise IndexError
+              except IndexError:
+                  print('Получено исключение.')
+              else:
+                  print('Но в этом нет ничего страшного.')"
+      type: single
+      level: junior
+      answers:
+        - answer: "IndexError"
+        - answer: "Получено исключение."
+          right: true
+        - answer: "TypeError"
+        - answer: "Получено исключение. Но в этом нет ничего страшного."
+    - question: "Учёт зверей в зоопарке ведётся с помощью приведённого ниже списка словарей. Какая из строчек кода выведет структуру, отсортированную в порядке увеличения возрастов животных?"
+      type: single
+      level: junior
+      answers:
+        - answer: "sorted(animals, key='age')"
+        - answer: "Ни один вариант не является верным, два словаря нельзя сравнивать друг с другом."
+        - answer: "sorted(animals, key=lambda animal: animal['age'])"
+          right: true
+        - answer: "sorted(animals)"
+    - question: "Что выведет следующий код, при его исполнении? Используется Python 3.x."
+      code: "print(type(1 / 2))"
+      type: single
+      level: junior
+      answers:
+        - answer: "class 'int'"
+        - answer: "class 'number'"
+        - answer: "class 'double'"
+        - answer: "class 'float'"
+          right: true
+    - question: "Что делает следующий код?"
+      code: "def a(b, c, d): pass"
+      type: single
+      level: junior
+      answers:
+        - answer: "Определяет список и инициализирует его."
+        - answer: "Определяет функцию, которая ничего не делает."
+          right: true
+        - answer: "Определяет функцию, которая передает параметры."
+        - answer: "Определяет пустой класс."
+    - question: "Что выведет следующий фрагмент кода?"
+      code: " x = 4.5
+              y = 2
+              print(x // y)"
+      type: single
+      level: junior
+      answers:
+        - answer: "2.0"
+          right: true
+        - answer: "2.25"
+        - answer: "9.0"
+        - answer: "20.25"
+    - question: "Что будет напечатано?"
+      code: " kvps  = {'user','bill', 'password','hillary'}
+              print(kvps['password'])"
+      type: single
+      level: junior
+      answers:
+        - answer: "user"
+        - answer: "bill"
+        - answer: "password"
+        - answer: "Ничего. TypeError."
+          right: true
+    - question: ""
+      code: " name = 'snow storm'
+              print('%s' % name[6:8])"
+      type: single
+      level: junior
+      answers:
+        - answer: "st"
+        - answer: "sto"
+        - answer: "to"
+        - answer: "Syntax Error"
     - question: "How to form dict"
       type: multiple
-      level: junior
+      level: senior
       answers:
         - answer: "{'a': 1, 'b': 2}"
           right: true
@@ -13,7 +215,7 @@ Python:
 
     - question: "Which menthod used to initiate class"
       type: single
-      level: junior
+      level: senior
       answers:
         - answer: "init"
         - answer: "new"
@@ -26,7 +228,7 @@ Python:
 print("Hi, Welcome to Intellipaat")
 function(); # call to the function'
       type: single
-      level: junior
+      level: senior
       answers:
         - answer: "A function is a block of code which is executed only when a call is made to the function. def keyword is used to define a particular function as shown below:"
           right: true
@@ -36,7 +238,7 @@ function(); # call to the function'
 
     - question: "What is Python?"
       type: single
-      level: junior
+      level: senior
       answers:
         - answer: "A high-level programming language"
           right: true
@@ -46,7 +248,7 @@ function(); # call to the function'
 
     - question: "Which of the following is NOT a Python data type?"
       type: single
-      level: junior
+      level: senior
       answers:
         - answer: "Class"
           right: true
@@ -56,7 +258,7 @@ function(); # call to the function'
 
     - question: "Which of the following is a valid way to define a Python function?"
       type: single
-      level: junior
+      level: senior
       answers:
         - answer: "def my_function():"
           right: true
@@ -66,7 +268,7 @@ function(); # call to the function'
 
     - question: "What does the 'range()' function do in Python?"
       type: single
-      level: junior
+      level: senior
       answers:
         - answer: "It generates a sequence of numbers"
           right: true
@@ -76,7 +278,7 @@ function(); # call to the function'
 
     - question: "Which of the following is NOT a Python comparison operator?"
       type: single
-      level: junior
+      level: senior
       answers:
         - answer: "%"
           right: true
@@ -88,7 +290,7 @@ function(); # call to the function'
       code: "x = [1, 2, 3]
       print(x[0])"
       type: single
-      level: junior
+      level: senior
       answers:
         - answer: "1"
           right: true
@@ -102,7 +304,7 @@ function(); # call to the function'
       x.append(4)
       print(y)"
       type: single
-      level: middle
+      level: senior
       answers:
         - answer: "[1, 2, 3]"
           right: true
@@ -112,7 +314,7 @@ function(); # call to the function'
 
     - question: "What is the difference between a list and a tuple in Python?"
       type: single
-      level: middle
+      level: senior
       answers:
         - answer: "A list is mutable, while a tuple is immutable"
           right: true
@@ -125,7 +327,7 @@ function(); # call to the function'
       y = x + \"2\"
       print(y)"
       type: single
-      level: middle
+      level: senior
       answers:
         - answer: "TypeError"
           right: true
@@ -135,7 +337,7 @@ function(); # call to the function'
 
     - question: "What is a lambda function in Python?"
       type: single
-      level: middle
+      level: senior
       answers:
         - answer: "A function with no name"
           right: true

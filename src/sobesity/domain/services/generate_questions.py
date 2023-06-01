@@ -73,6 +73,7 @@ class QuestionGeneratorService:
                     "question": question.question,
                     "type": type[0].name,
                     "answers": output_answers,
+                    "code": question.code,
                 }
                 logger.info(f"Gathered the question: '{question_for_output}'")
                 output_questions.append(question_for_output)
@@ -84,7 +85,7 @@ class QuestionGeneratorService:
 
     def take_question_for_theme(self, theme, level):
         if not level == "junior":
-            questions = self.generate_questions(theme, level, 15)
-        else:
             questions = self.generate_questions(theme, level, 5)
+        else:
+            questions = self.generate_questions(theme, level, 15)
         return questions
