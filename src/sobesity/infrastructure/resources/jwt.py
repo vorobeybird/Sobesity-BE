@@ -47,7 +47,7 @@ class JWTResource(IJWTResource):
         abort(response)
 
     def get_token(self):
-        auth_header = request.headers.get(HttpHeaders.AUTHORIZATION)
+        auth_header = request.headers.get("Authentication")
         if auth_header is None:
             self.unauthorized_abort("No token provided")
 
@@ -60,6 +60,10 @@ class JWTResource(IJWTResource):
 
     def verify_jwt(self):
         if not self.is_endpoint_protected(request.endpoint):
+            return
+
+        if request.method == "OPTIONS":
+            logger.debug('Endpoint is optional. Skipping')
             return
 
         token = self.get_token()
