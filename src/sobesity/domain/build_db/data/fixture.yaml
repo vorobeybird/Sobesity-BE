@@ -18,8 +18,8 @@ Python:
         - answer: "Для одновременного итерирования по самим элементам и их индексам."
           right: true
     - question: "Что выведет интерпретатор для следующей программы (версия Python 3.6+)?"
-      code: 'def get_name_and_decades(name, age):
-              print(f"My name is {name} and Im {age / 10:.5f} decades old.")
+      code: 'def get_name_and_decades(name, age): \n
+              print(f"My name is {name} and Im {age / 10:.5f} decades old.") \n
               get_name_and_decades("Leo", 31)'
       type: single
       level: junior
@@ -39,7 +39,7 @@ Python:
           right: true
         - answer: "словарь (dict)"
     - question: "Какой результат выведет следующий код?"
-      code: "def f(a, *pargs, **kargs): print(a, pargs, kargs)
+      code: "def f(a, *pargs, **kargs): print(a, pargs, kargs) \n
             f(1, 2, 3, x=4, y=5)"
       type: single
       level: junior
@@ -59,9 +59,9 @@ Python:
         - answer: "dir(x)"
           right: true
     - question: "Как можно более кратко представить следующую запись?"
-      code: "if X:
-                A = Y
-            else:
+      code: "if X: \n
+                A = Y \n
+            else: \n
                 A = Z"
       type: single
       level: junior
@@ -81,7 +81,7 @@ Python:
           right: true
         - answer: "a = {i for i in range(n)}"
     - question: "Что выведет на экран следующий код?"
-      code: "a, *b, c = [1, 2]
+      code: "a, *b, c = [1, 2] \n
             print(a, b, c)"
       type: single
       level: junior
@@ -126,11 +126,11 @@ Python:
         - answer: "Значение, возвращаемое декорированным методом, вычисляется при извлечении. Можно обратиться к методу экземпляра, как к атрибуту."
           right: true
     - question: "Что выведет следующий код?"
-      code: " try:
-                  raise IndexError
-              except IndexError:
-                  print('Получено исключение.')
-              else:
+      code: " try: \n
+                  raise IndexError \n
+              except IndexError: \n
+                  print('Получено исключение.') \n
+              else: \n
                   print('Но в этом нет ничего страшного.')"
       type: single
       level: junior
@@ -170,8 +170,8 @@ Python:
         - answer: "Определяет функцию, которая передает параметры."
         - answer: "Определяет пустой класс."
     - question: "Что выведет следующий фрагмент кода?"
-      code: " x = 4.5
-              y = 2
+      code: " x = 4.5 \n
+              y = 2 \n
               print(x // y)"
       type: single
       level: junior
@@ -182,7 +182,7 @@ Python:
         - answer: "9.0"
         - answer: "20.25"
     - question: "Что будет напечатано?"
-      code: " kvps  = {'user','bill', 'password','hillary'}
+      code: " kvps  = {'user','bill', 'password','hillary'} \n
               print(kvps['password'])"
       type: single
       level: junior
@@ -193,7 +193,7 @@ Python:
         - answer: "Ничего. TypeError."
           right: true
     - question: ""
-      code: " name = 'snow storm'
+      code: " name = 'snow storm' \n
               print('%s' % name[6:8])"
       type: single
       level: junior
@@ -201,6 +201,7 @@ Python:
         - answer: "st"
         - answer: "sto"
         - answer: "to"
+          right: true
         - answer: "Syntax Error"
     - question: "How to form dict"
       type: multiple
@@ -224,8 +225,8 @@ Python:
         - answer: "__new__"
 
     - question: "What are functions in Python"
-      code: 'def function():
-print("Hi, Welcome to Intellipaat")
+      code: 'def function(): \n
+print("Hi, Welcome to Intellipaat") \n
 function(); # call to the function'
       type: single
       level: senior
@@ -287,7 +288,7 @@ function(); # call to the function'
         - answer: ">"
 
     - question: "What is the output of the following code?"
-      code: "x = [1, 2, 3]
+      code: "x = [1, 2, 3] \n
       print(x[0])"
       type: single
       level: senior
