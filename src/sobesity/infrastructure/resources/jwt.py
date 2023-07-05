@@ -2,7 +2,8 @@ import logging
 import re
 from dataclasses import asdict
 from datetime import datetime, timedelta
-from http import HTTPStatus
+from http import HTTPStatus, HTTPMethod
+
 
 import jwt
 from flask import abort, jsonify, request
@@ -60,10 +61,11 @@ class JWTResource(IJWTResource):
 
     def verify_jwt(self):
         if not self.is_endpoint_protected(request.endpoint):
+            logger.debug('Endpoint is optional. Skipping JWT verification')
             return
 
-        if request.method == "OPTIONS":
-            logger.debug('Endpoint is optional. Skipping')
+        if request.method == HTTPMethod.OPTIONS:
+            logger.debug('Endpoint is optional. Skipping JWT verification')
             return
 
         token = self.get_token()
