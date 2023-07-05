@@ -2,12 +2,10 @@ import logging
 import re
 from dataclasses import asdict
 from datetime import datetime, timedelta
-from http import HTTPStatus, HTTPMethod
-
+from http import HTTPMethod, HTTPStatus
 
 import jwt
 from flask import abort, jsonify, request
-from http_constants.headers import HttpHeaders
 
 from sobesity.domain.entities import JWTEntity, JWTToken, UserId
 from sobesity.domain.exceptions import CorruptedToken, ExpiredToken
@@ -61,11 +59,11 @@ class JWTResource(IJWTResource):
 
     def verify_jwt(self):
         if not self.is_endpoint_protected(request.endpoint):
-            logger.debug('Endpoint is optional. Skipping JWT verification')
+            logger.debug("Endpoint is optional. Skipping JWT verification")
             return
 
         if request.method == HTTPMethod.OPTIONS:
-            logger.debug('Endpoint is optional. Skipping JWT verification')
+            logger.debug("Endpoint is optional. Skipping JWT verification")
             return
 
         token = self.get_token()
