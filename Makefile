@@ -62,8 +62,12 @@ migrate:
 create-migration:
 	${DOCKER_COMPOSE} run --rm migrator alembic revision -m "$(message)"
 
+.PHONY: checkv
+checkv:
+	docker compose version
+
 .PHONY: lint
-lint: flake8 import-check format-check
+lint: checkv flake8 import-check format-check
 
 .PHONY: format
 format: format-black fix-imports
