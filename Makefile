@@ -36,23 +36,23 @@ app-bash:
 
 .PHONY: format-black
 format-black:
-	${DOCKER_COMPOSE} run --rm --no-deps app sh -c "black ${PROJECT_CODE_PATH}"
+	${DOCKER_COMPOSE} run --rm app sh -c "black ${PROJECT_CODE_PATH}"
 
 .PHONY: format-check
 format-check:
-	${DOCKER_COMPOSE} run --rm --no-deps app sh -c "black --check ${PROJECT_CODE_PATH}"
+	${DOCKER_COMPOSE} run --rm app sh -c "black --check ${PROJECT_CODE_PATH}"
 
 .PHONY: import-check
 import-check:
-	${DOCKER_COMPOSE} run --rm --no-deps app sh -c "isort --check ${PROJECT_CODE_PATH}"
+	${DOCKER_COMPOSE} run --rm app sh -c "isort --check ${PROJECT_CODE_PATH}"
 
 .PHONY: fix-imports
 fix-imports:
-	${DOCKER_COMPOSE} run --rm --no-deps app sh -c "autoflake -r --in-place --ignore-init-module-imports --remove-all-unused-imports ${PROJECT_CODE_PATH} && isort ${PROJECT_CODE_PATH}"
+	${DOCKER_COMPOSE} run --rm app sh -c "autoflake -r --in-place --ignore-init-module-imports --remove-all-unused-imports ${PROJECT_CODE_PATH} && isort ${PROJECT_CODE_PATH}"
 
 .PHONY: flake8
 flake8:
-	${DOCKER_COMPOSE} run --rm --no-deps app flake8 ${PROJECT_CODE_PATH}
+	${DOCKER_COMPOSE} run --rm app flake8 ${PROJECT_CODE_PATH}
 
 .PHONY: migrate
 migrate:

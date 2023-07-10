@@ -12,7 +12,7 @@ ENV PYTHONFAULTHANDLER=1 \
 RUN apt-get update && \
     apt-get upgrade -qqy && \
     apt-get install -qqy --no-install-recommends\
-    libpq-dev python-dev gcc
+    libpq-dev gcc
 
 WORKDIR $CODE_FOLDER
 
@@ -30,8 +30,9 @@ ENV PYTHONPATH=$CODE_FOLDER \
     VENV_FOLDER=$CODE_FOLDER/.venv
 
 RUN apt-get update && \
+    apt-get upgrade -qqy && \
     apt-get install -y\
-    netcat libpq-dev &&\
+    libpq-dev &&\
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR $CODE_FOLDER
