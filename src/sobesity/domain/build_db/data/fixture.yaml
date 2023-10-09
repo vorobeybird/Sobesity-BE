@@ -544,7 +544,7 @@ SQL:
 CSS:
   questions:
     - question: "What does CSS stand for?"
-      type: junior
+      type: single
       level: junior
       answers:
         - answer: "Cascading Style Sheets"

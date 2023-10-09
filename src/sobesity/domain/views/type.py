@@ -5,19 +5,19 @@ from flask import Response
 from flask_openapi3 import APIBlueprint, Tag
 
 from sobesity.containers import Services
-from sobesity.domain.entities import TypeFilterEnitity
+from sobesity.domain.entities import QuestionTypeFilterEnitity
 from sobesity.domain.exceptions.type import TypeNameUniqueViolation
 from sobesity.domain.interfaces.services import ITypeService
 from sobesity.domain.serializers import (
     BadRequestSerializer,
-    DeleteTypeBody,
-    GetTypes,
+    DeleteQuestionTypeBody,
+    GetQuestionTypes,
     NotFoundSerializer,
-    PatchTypeBody,
-    PathTypeId,
-    PostTypeBody,
-    TypeIdsSerializer,
-    TypeSerializer,
+    PatchQuestionTypeBody,
+    PathQuestionTypeId,
+    PostQuestionTypeBody,
+    QuestionTypeIdsSerializer,
+    QuestionTypeSerializer,
 )
 from sobesity.domain.utils.response import bad_request_maker
 
@@ -31,25 +31,27 @@ type_bp = APIBlueprint(
 )
 
 
-@type_bp.get("", responses={"200": GetTypes})
+@type_bp.get("", responses={"200": GetQuestionTypes})
 @inject
 def get_types(type_service: ITypeService = Provide[Services.type]):
     return type_service.get_list()
 
 
-@type_bp.get("/<int:typeId>", responses={"200": TypeSerializer})
+@type_bp.get("/<int:typeId>", responses={"200": QuestionTypeSerializer})
 @inject
-def get_type(path: PathTypeId, type_service: ITypeService = Provide[Services.type]):
-    types = type_service.get_list(TypeFilterEnitity(type_ids=[path.type_id]))
+def get_type(
+    path: PathQuestionTypeId, type_service: ITypeService = Provide[Services.type]
+):
+    types = type_service.get_list(QuestionTypeFilterEnitity(type_ids=[path.type_id]))
     if not types:
         return bad_request_maker(NotFoundSerializer(message="Type not exists"))
-    return TypeSerializer.from_domain(types[0]).dict()
+    return QuestionTypeSerializer.from_domain(types[0]).dict()
 
 
 @type_bp.post("", responses={"201": None, "400": BadRequestSerializer})
 @inject
 def create_types(
-    body: PostTypeBody, type_service: ITypeService = Provide[Services.type]
+    body: PostQuestionTypeBody, type_service: ITypeService = Provide[Services.type]
 ):
     try:
         type_service.batch_create(body.to_domain())
@@ -61,15 +63,15 @@ def create_types(
 @type_bp.delete("", responses={"204": None})
 @inject
 def delete_types(
-    body: DeleteTypeBody, type_service: ITypeService = Provide[Services.type]
+    body: DeleteQuestionTypeBody, type_service: ITypeService = Provide[Services.type]
 ):
     type_service.delete(body.to_domain())
     return Response(), HTTPStatus.NO_CONTENT
 
 
-@type_bp.patch("", responses={"200": TypeIdsSerializer})
+@type_bp.patch("", responses={"200": QuestionTypeIdsSerializer})
 @inject
 def update_skills(
-    body: PatchTypeBody, type_service: ITypeService = Provide[Services.type]
+    body: PatchQuestionTypeBody, type_service: ITypeService = Provide[Services.type]
 ):
     return type_service.update(body.get_to_set(), body.get_where())

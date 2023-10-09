@@ -4,7 +4,7 @@ from sobesity.domain.constants import TypeName
 from sobesity.domain.entities import (
     AnswerFilterEnitity,
     QuestionFilterEnitity,
-    TypeFilterEnitity,
+    QuestionTypeFilterEnitity,
 )
 from sobesity.domain.exceptions import AnswerNotExistViolation, QuestionExistViolation
 
@@ -26,7 +26,7 @@ class ScoringService:
             )
             if question:
                 type_of_question = self.type_service.get_list(
-                    TypeFilterEnitity(type_ids=[question[0].type_id])
+                    QuestionTypeFilterEnitity(type_ids=[question[0].type_id])
                 )
 
                 if type_of_question[0].name == TypeName.MULTIPLY:

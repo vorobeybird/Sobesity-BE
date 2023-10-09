@@ -9,6 +9,12 @@ class SkillService(ISkillService):
     def __init__(self, skill_repository: ISkillRepository) -> None:
         self._skill_repository = skill_repository
 
+    def get_one(self, skill_filter: Optional[SkillFilterEnitity] = None):
+        skills = self.get_list(skill_filter)
+        if not skills:
+            raise SkillExistViolation()
+        return skills[0]
+
     def get_list(
         self, skill_filter: Optional[SkillFilterEnitity] = None
     ) -> list[SkillEntity]:

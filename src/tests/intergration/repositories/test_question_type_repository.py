@@ -1,6 +1,6 @@
 import pytest
 
-from sobesity.domain.entities.type import TypeFilterEnitity
+from sobesity.domain.entities import QuestionTypeFilterEnitity
 from sobesity.domain.exceptions import TypeNameUniqueViolation
 
 
@@ -29,7 +29,7 @@ def test_update__particular_rows_udated(type_repository, types):
     type_before = type_repository.get_list()[0]
 
     to_set = types[1]
-    where = TypeFilterEnitity(type_ids=[type_before.type_id])
+    where = QuestionTypeFilterEnitity(type_ids=[type_before.type_id])
     updated_ids = type_repository.update(to_set, where)
 
     type_after = type_repository.get_list()[0]

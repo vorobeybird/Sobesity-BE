@@ -11,6 +11,9 @@ class AnswerSerializer(BaseModel):
     right: bool
     question_id: int
 
+    class Config:
+        allow_population_by_field_name = True
+
     def to_domain(self) -> AnswerEntity:
         return AnswerEntity(
             answer_id=self.answer_id,

@@ -1,18 +1,31 @@
-from dataclasses import dataclass
-from typing import NewType, Optional
+from dataclasses import dataclass, field
+from typing import NewType, Optional, Union
+
+from sobesity.domain.entities.answer import AnswerEntity
+from sobesity.domain.entities.base import BaseEntity, Unset, unset
+from sobesity.domain.entities.level import LevelEntity
+from sobesity.domain.entities.question_type import QuestionTypeEntity
+from sobesity.domain.entities.skill import SkillEntity
 
 QuestionId = NewType("QuestionId", int)
 
 
 @dataclass
-class QuestionEntity:
+class QuestionEntity(BaseEntity):
     question_id: QuestionId
     question: str
-    type_id: int
+    question_type: QuestionTypeEntity
     code: str
-    skill_id: int
-    level_id: int
+    skill: SkillEntity
+    level: LevelEntity
+    answers: list[AnswerEntity] = field(default_factory=list)
 
+
+@dataclass
+class UpdateQuestionEntity:
+    question_id: QuestionId
+    question: Union[str, None, Unset] = unset
+    code: Union[str, None, Unset] = unset
 
 @dataclass
 class QuestionFilterEnitity:

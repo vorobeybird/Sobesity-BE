@@ -1,11 +1,13 @@
 from dataclasses import dataclass
 from typing import NewType, Optional
 
+from sobesity.domain.entities.base import BaseEntity
+
 SkillId = NewType("SkillId", int)
 
 
 @dataclass
-class SkillEntity:
+class SkillEntity(BaseEntity):
     skill_id: Optional[SkillId]
     name: str
 

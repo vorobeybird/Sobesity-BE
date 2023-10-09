@@ -9,10 +9,10 @@ from sobesity.domain.entities import (
     LevelFilterEnitity,
     QuestionEntity,
     QuestionFilterEnitity,
+    QuestionTypeEntity,
+    QuestionTypeFilterEnitity,
     SkillEntity,
     SkillFilterEnitity,
-    TypeEntity,
-    TypeFilterEnitity,
 )
 from sobesity.webapp import init_dependency
 
@@ -59,19 +59,19 @@ def main():
                 type_of_question = question_with_answers["type"]
 
                 exist_type = type_service.get_list(
-                    TypeFilterEnitity(names=[type_of_question])
+                    QuestionTypeFilterEnitity(names=[type_of_question])
                 )
 
                 if not exist_type:
                     type_service.batch_create(
-                        [TypeEntity(type_id=None, name=type_of_question)]
+                        [QuestionTypeEntity(type_id=None, name=type_of_question)]
                     )
                     logger.info(f"Create type: '{type_of_question}'")
                 else:
                     logger.info(f"Type '{type_of_question}' already created:")
 
                 created_type = type_service.get_list(
-                    TypeFilterEnitity(names=[type_of_question])
+                    QuestionTypeFilterEnitity(names=[type_of_question])
                 )
 
                 level_of_question = question_with_answers["level"]

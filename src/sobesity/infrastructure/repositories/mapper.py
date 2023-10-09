@@ -3,8 +3,8 @@ from sobesity.domain.entities import (
     KnowledgeEntity,
     LevelEntity,
     QuestionEntity,
+    QuestionTypeEntity,
     SkillEntity,
-    TypeEntity,
     UserEntity,
 )
 
@@ -17,13 +17,14 @@ def build_skill_entity(cursor) -> SkillEntity:
 
 
 def build_question_entity(cursor) -> QuestionEntity:
+    # breakpoint()
     return QuestionEntity(
         question_id=cursor.question_id,
         question=cursor.question,
-        type_id=cursor.type_id,
+        question_type=build_type_entity(cursor),
         code=cursor.code,
-        skill_id=cursor.skill_id,
-        level_id=cursor.level_id,
+        skill=build_skill_entity(cursor),
+        level=build_level_entity(cursor),
     )
 
 
@@ -36,8 +37,8 @@ def build_answer_entity(cursor) -> AnswerEntity:
     )
 
 
-def build_type_entity(cursor) -> TypeEntity:
-    return TypeEntity(
+def build_type_entity(cursor) -> QuestionTypeEntity:
+    return QuestionTypeEntity(
         type_id=cursor.type_id,
         name=cursor.name,
     )

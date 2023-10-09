@@ -8,8 +8,8 @@ class LevelNameUniqueViolation(DomainException):
 
 
 class LevelNotExistViolation(Exception):
-    def __init__(self) -> None:
-        self.message = "Level not exist"
+    def __init__(self, level=None) -> None:
+        self.message = f"Level not exist {level}"
         super().__init__(self.message)
 
 

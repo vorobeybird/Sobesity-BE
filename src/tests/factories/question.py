@@ -1,12 +1,17 @@
 import factory
 
 from sobesity.domain.entities import (
-    LevelId,
+    AnswerEntity,
+    LevelEntity,
     QuestionEntity,
     QuestionId,
-    SkillId,
-    TypeId,
+    QuestionTypeEntity,
+    SkillEntity,
 )
+from tests.factories.answer import AnswerEntityFactory
+from tests.factories.level import LevelEntityFactory
+from tests.factories.question_type import QuestionTypeEntityFactory
+from tests.factories.skill import SkillEntityFactory
 
 
 class QuestionEntityFactory(factory.Factory):
@@ -15,7 +20,10 @@ class QuestionEntityFactory(factory.Factory):
 
     question_id = factory.Sequence(lambda n: QuestionId(n))
     question = factory.Faker("word")
-    type_id = factory.Sequence(lambda n: TypeId(n))
     code = factory.Faker("sentence")
-    skill_id = factory.Sequence(lambda n: SkillId(n))
-    level_id = factory.Sequence(lambda n: LevelId(n))
+    question_type: QuestionTypeEntity = factory.SubFactory(QuestionTypeEntityFactory)
+    skill: SkillEntity = factory.SubFactory(SkillEntityFactory)
+    level: LevelEntity = factory.SubFactory(LevelEntityFactory)
+    answers: list[AnswerEntity] = factory.List(
+        [factory.SubFactory(AnswerEntityFactory) for _ in range(5)]
+    )

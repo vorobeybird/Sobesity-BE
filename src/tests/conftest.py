@@ -19,8 +19,8 @@ from tests.factories import (
     CreateUserFactory,
     LevelEntityFactory,
     QuestionEntityFactory,
+    QuestionTypeEntityFactory,
     SkillEntityFactory,
-    TypeEntityFactory,
     UserEntityFactory,
 )
 
@@ -179,8 +179,8 @@ def type_repository(di):
 @pytest.fixture
 def types():
     return [
-        TypeEntityFactory(name=TypeName.MULTIPLY),
-        TypeEntityFactory(name=TypeName.SINGLE),
+        QuestionTypeEntityFactory(name=TypeName.MULTIPLY),
+        QuestionTypeEntityFactory(name=TypeName.SINGLE),
     ]
 
 

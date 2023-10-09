@@ -9,6 +9,9 @@ class LevelSerializer(BaseModel):
     level_id: LevelId = level_id_field
     name: str
 
+    class Config:
+        allow_population_by_field_name = True
+
     def to_domain(self) -> LevelEntity:
         return LevelEntity(level_id=self.level_id, name=self.name)
 

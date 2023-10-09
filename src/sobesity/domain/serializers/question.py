@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel, Field
 
 from sobesity.domain.entities.question import (
@@ -5,6 +6,10 @@ from sobesity.domain.entities.question import (
     QuestionFilterEnitity,
     QuestionId,
 )
+from sobesity.domain.serializers.answer import AnswerSerializer
+from sobesity.domain.serializers.level import LevelSerializer
+from sobesity.domain.serializers.question_type import QuestionTypeSerializer
+from sobesity.domain.serializers.skill import SkillSerializer
 
 question_id_field = Field(..., alias="questionId")
 
@@ -12,10 +17,11 @@ question_id_field = Field(..., alias="questionId")
 class QuestionSerializer(BaseModel):
     question_id: QuestionId = question_id_field
     question: str
-    type_id: int
+    question_type: QuestionTypeSerializer
     code: str
-    skill_id: int
-    level_id: int
+    skill: SkillSerializer
+    level: LevelSerializer
+    answers: list[AnswerSerializer] =  Field(default_factory=list)
 
     def to_domain(self) -> QuestionEntity:
         return QuestionEntity(
@@ -32,10 +38,10 @@ class QuestionSerializer(BaseModel):
         return cls(
             questionId=question.question_id,
             question=question.question,
-            type_id=question.type_id,
+            question_type=question.question_type.to_dict(),
             code=question.code,
-            skill_id=question.skill_id,
-            level_id=question.level_id,
+            skill=question.skill.to_dict(),
+            level=question.level.to_dict(),
         )
 
 
@@ -89,19 +95,13 @@ class DeleteQuestionBody(QuestionIdsSerializer):
 class PatchQuestionBody(BaseModel):
     question_id: QuestionId = question_id_field
     question: str
-    type_id: int
     code: str
-    skill_id: int
-    level_id: int
 
     def get_to_set(self):
         return QuestionEntity(
             question_id=None,
             question=self.question,
-            type_id=self.type_id,
             code=self.code,
-            skill_id=self.skill_id,
-            level_id=self.level_id,
         )
 
     def get_where(self) -> list[QuestionFilterEnitity]:

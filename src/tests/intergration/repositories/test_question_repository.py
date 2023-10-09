@@ -24,12 +24,14 @@ def test_batch_create__get_all_rows(
     level_repository.batch_create([level])
     created_level = level_repository.get_list()
 
+    questions = questions[:3]
     for question in questions:
-        question.skill_id = created_skill[0].skill_id
-        question.type_id = created_type[0].type_id
-        question.level_id = created_level[0].level_id
+        question.skill.skill_id = created_skill[0].skill_id
+        question.question_type.type_id = created_type[0].type_id
+        question.level.level_id = created_level[0].level_id
 
     question_repository.batch_create(questions)
+    breakpoint()
     created_questions = question_repository.get_list()
     created_questions_map = {
         question.question: question for question in created_questions

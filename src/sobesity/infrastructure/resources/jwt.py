@@ -6,6 +6,7 @@ from http import HTTPMethod, HTTPStatus
 
 import jwt
 from flask import abort, jsonify, request
+from http_constants.headers import HttpHeaders
 
 from sobesity.domain.entities import JWTEntity, JWTToken, UserId
 from sobesity.domain.exceptions import CorruptedToken, ExpiredToken
@@ -46,7 +47,7 @@ class JWTResource(IJWTResource):
         abort(response)
 
     def get_token(self):
-        auth_header = request.headers.get("Authentication")
+        auth_header = request.headers.get(HttpHeaders.AUTHORIZATION)
         if auth_header is None:
             self.unauthorized_abort("No token provided")
 

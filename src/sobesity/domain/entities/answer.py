@@ -1,11 +1,13 @@
 from dataclasses import dataclass
 from typing import NewType, Optional
 
+from sobesity.domain.entities.base import BaseEntity
+
 AnswerId = NewType("AnswerId", int)
 
 
 @dataclass
-class AnswerEntity:
+class AnswerEntity(BaseEntity):
     answer_id: AnswerId
     answer: str
     right: bool

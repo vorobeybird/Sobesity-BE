@@ -12,8 +12,11 @@ from sobesity.domain.exceptions import (
     TypeNotExist,
 )
 from sobesity.domain.interfaces import IQuestionRepository
-from sobesity.infrastructure.constants import ModelFields
-from sobesity.infrastructure.models import question_table
+from sobesity.infrastructure.models import (
+    answer_table,
+    question_table,
+    question_type_table,
+)
 from sobesity.infrastructure.repositories.mapper import build_question_entity
 
 logger = logging.getLogger(__name__)
@@ -22,6 +25,10 @@ logger = logging.getLogger(__name__)
 class QuestionRepository(IQuestionRepository):
     def __init__(self, datasource) -> None:
         self.datasource = datasource
+        self.allowed_create_columns = [
+            "question",
+            "code",
+        ]
 
     def _patch_query(self, query, question_filter: QuestionFilterEnitity):
         if question_filter.question_ids is not None:
@@ -50,11 +57,21 @@ class QuestionRepository(IQuestionRepository):
     def get_list(
         self, question_filter: Optional[QuestionFilterEnitity] = None
     ) -> list[QuestionEntity]:
-        query = select(question_table)
+        query = (
+            select(question_table)
+            .join(
+                answer_table, answer_table.c.question_id == question_table.c.question_id
+            )
+            .join(
+                question_type_table,
+                question_type_table.c.type_id == question_table.c.type_id,
+            )
+        )
 
         if question_filter is not None:
             query = self._patch_query(query, question_filter)
 
+        breakpoint()
         with self.datasource() as conn:
             result = conn.execute(query).fetchall()
 
@@ -63,8 +80,16 @@ class QuestionRepository(IQuestionRepository):
     def batch_create(self, questions: list[QuestionEntity]) -> None:
         values = []
         for question in questions:
-            question_value = asdict(question)
-            question_value.pop(ModelFields.QUESTION_ID)
+            raw_value = asdict(question)
+            question_value = {
+                key: value
+                for key, value in raw_value.items()
+                if key in self.allowed_create_columns
+            }
+            question_value["type_id"] = question.question_type.type_id
+            question_value["skill_id"] = question.skill.skill_id
+            question_value["level_id"] = question.level.level_id
+
             values.append(question_value)
 
         query = insert(question_table).values(values)

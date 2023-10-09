@@ -2,7 +2,7 @@ import random
 
 import pytest
 
-from sobesity.domain.entities import TypeFilterEnitity
+from sobesity.domain.entities import QuestionTypeFilterEnitity
 
 
 @pytest.fixture
@@ -34,7 +34,7 @@ def created_answers(
         answers_for_create = random.sample(answers, 4)
 
         type_of_question = type_repository.get_list(
-            TypeFilterEnitity(type_ids=[question.type_id])
+            QuestionTypeFilterEnitity(type_ids=[question.type_id])
         )
 
         for answer in answers_for_create:

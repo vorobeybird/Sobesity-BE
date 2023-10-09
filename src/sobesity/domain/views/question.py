@@ -89,6 +89,7 @@ def update_question(
     question_service: IQuestionService = Provide[Services.question],
 ):
     try:
+        breakpoint()
         return question_service.update(body.get_to_set(), body.get_where())
     except (
         SkillExistViolation,

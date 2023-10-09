@@ -9,6 +9,9 @@ class SkillSerializer(BaseModel):
     skill_id: SkillId = skill_id_field
     name: str
 
+    class Config:
+        allow_population_by_field_name = True
+
     def to_domain(self) -> SkillEntity:
         return SkillEntity(skill_id=self.skill_id, name=self.name)
 

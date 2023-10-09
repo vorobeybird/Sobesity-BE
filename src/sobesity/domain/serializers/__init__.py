@@ -41,6 +41,15 @@ from .question import (
     QuestionIdsSerializer,
     QuestionSerializer,
 )
+from .question_type import (
+    DeleteQuestionTypeBody,
+    GetQuestionTypes,
+    PatchQuestionTypeBody,
+    PathQuestionTypeId,
+    PostQuestionTypeBody,
+    QuestionTypeIdsSerializer,
+    QuestionTypeSerializer,
+)
 from .skill import (
     DeleteSkillBody,
     GetSkills,
@@ -49,15 +58,6 @@ from .skill import (
     PostSkillBody,
     SkillIdsSerializer,
     SkillSerializer,
-)
-from .type import (
-    DeleteTypeBody,
-    GetTypes,
-    PatchTypeBody,
-    PathTypeId,
-    PostTypeBody,
-    TypeIdsSerializer,
-    TypeSerializer,
 )
 from .user import (
     AccessGrantedSerializer,
